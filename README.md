@@ -5,7 +5,7 @@
   </p>
   <h2>To-do</h2>
   <ul>
-    <li>Implement RTC VRAM data logging and redundancy</li>
+    <li>Implement RTC NVRAM data logging and redundancy</li>
   </ul>
 
   <h2>References</h2>
