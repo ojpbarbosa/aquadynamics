@@ -68,10 +68,10 @@ void loop()
   DateTime timestamp = rtc.now();
 
   // format the current date
-  String month = timestamp.month() < 10 ? "0" + String(timestamp.month()) : String(timestamp.month());
   String day = timestamp.day() < 10 ? "0" + String(timestamp.day()) : String(timestamp.day());
-  String date = String(timestamp.year()) + "/" + month + "/" + day;
-
+  String month = timestamp.month() < 10 ? "0" + String(timestamp.month()) : String(timestamp.month());
+  String date = day + "/" + month + "/" + String(timestamp.year());
+  
   // format the current time
   String hour = timestamp.hour() < 10 ? "0" + String(timestamp.hour()) : String(timestamp.hour());
   String minute = timestamp.minute() < 10 ? "0" + String(timestamp.minute()) : String(timestamp.minute());
