@@ -3,7 +3,6 @@ import { type Device } from '@core/entities'
 export type TFindDevicesRepositoryParameters = {
   id?: Device['id']
   name?: Device['name']
-  address?: Device['address']
   state?: Device['state']
 
   order?: 'ascend' | 'descend'
@@ -12,5 +11,5 @@ export type TFindDevicesRepositoryParameters = {
 }
 
 export interface IFindDevicesRepository {
-  find: (parameters: TFindDevicesRepositoryParameters) => Promise<Device[] | Device>
+  find: (parameters?: TFindDevicesRepositoryParameters) => Promise<Device[] | Device>
 }
