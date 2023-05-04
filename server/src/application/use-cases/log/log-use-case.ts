@@ -4,7 +4,7 @@ import {
   type IFindDevicesRepository,
   type IFindLogsRepository
 } from '@application/ports/repositories'
-import { ICryptographyProvider } from '@application/ports/providers'
+import { ICryptographyProvider, IUniqueIdProvider } from '@application/ports/providers'
 import { ADDRESS_ENCRYPTION_SECRET_KEY } from '@main/configuration'
 import { type Device, type Log } from '@core/entities'
 import { ConflictError, NotFoundError } from '@application/errors'
@@ -14,7 +14,8 @@ export class LogUseCase implements ILogUseCase {
     private readonly findDevicesRepository: IFindDevicesRepository,
     private readonly cryptographyProvider: ICryptographyProvider,
     private readonly findLogsRepository: IFindLogsRepository,
-    private readonly createLogRepository: ICreateLogRepository
+    private readonly createLogRepository: ICreateLogRepository,
+    private readonly uniqueIdProvider: IUniqueIdProvider
   ) {}
 
   async log(data: TLogDTO): Promise<Log> {
@@ -31,6 +32,11 @@ export class LogUseCase implements ILogUseCase {
     if (await this.findLogsRepository.find({ deviceId: device.id, data: data.data }))
       throw new ConflictError('Log already exists')
 
-    return await this.createLogRepository.create(data)
+    return await this.createLogRepository.create({
+      id: this.uniqueIdProvider.generate(),
+      deviceId: device.id,
+      data: data.data,
+      timestamp: new Date()
+    })
   }
 }

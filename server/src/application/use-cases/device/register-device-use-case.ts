@@ -3,7 +3,7 @@ import {
   type IFindDevicesRepository,
   type ICreateDeviceRepository
 } from '@application/ports/repositories'
-import { ICryptographyProvider } from '@application/ports/providers'
+import { ICryptographyProvider, IUniqueIdProvider } from '@application/ports/providers'
 import { type Device } from '@core/entities'
 import { NotFoundError } from '@application/errors'
 import { ADDRESS_ENCRYPTION_SECRET_KEY } from '@main/configuration'
@@ -12,7 +12,8 @@ export class RegisterDeviceUseCase implements IRegisterDeviceUseCase {
   constructor(
     private readonly findDevicesRepository: IFindDevicesRepository,
     private readonly cryptographyProvider: ICryptographyProvider,
-    private readonly createDeviceRepository: ICreateDeviceRepository
+    private readonly createDeviceRepository: ICreateDeviceRepository,
+    private readonly uniqueIdProvider: IUniqueIdProvider
   ) {}
 
   async register(data: TRegisterDeviceDTO): Promise<Device> {
@@ -27,6 +28,9 @@ export class RegisterDeviceUseCase implements IRegisterDeviceUseCase {
     )
       throw new NotFoundError('Device does not exist')
 
-    return await this.createDeviceRepository.create(data)
+    return await this.createDeviceRepository.create({
+      id: this.uniqueIdProvider.generate(),
+      ...data
+    })
   }
 }

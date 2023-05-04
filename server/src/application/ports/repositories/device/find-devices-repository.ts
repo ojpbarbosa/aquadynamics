@@ -5,7 +5,8 @@ export type TFindDevicesRepositoryParameters = {
   name?: Device['name']
   state?: Device['state']
 
-  order?: 'ascend' | 'descend'
+  orderBy?: 'id' | 'name' | 'state' | 'registeredAt' | 'updatedAt'
+  order?: 'asc' | 'desc'
   page?: number
   perPage?: number
 }

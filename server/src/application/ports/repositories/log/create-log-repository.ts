@@ -1,8 +1,10 @@
 import { type Device, type Log } from '@core/entities'
 
 export type TCreateLogRepositoryDTO = {
-  address: Device['address']
+  id: Log['id']
+  deviceId: Device['id']
   data: Log['data']
+  timestamp: Log['timestamp']
 }
 
 export interface ICreateLogRepository {

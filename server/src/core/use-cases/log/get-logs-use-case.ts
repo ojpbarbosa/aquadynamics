@@ -1,7 +1,7 @@
 import { type Log } from '@core/entities'
 
 export type TGetLogsDTO = {
-  order?: 'ascend' | 'descend'
+  order?: 'asc' | 'desc'
   page?: number
   perPage?: number
 
@@ -12,3 +12,4 @@ export type TGetLogsDTO = {
 export interface IGetLogsUseCase {
   get: (data: TGetLogsDTO) => Promise<Log[] | Log>
 }
+

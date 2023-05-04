@@ -1,7 +1,7 @@
 import { type Device } from '@core/entities'
 
 export type TGetDevicesDTO = {
-  order?: 'ascend' | 'descend'
+  order?: 'asc' | 'desc'
   page?: number
   perPage?: number
 
