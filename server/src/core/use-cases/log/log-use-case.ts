@@ -1,7 +1,7 @@
-import { type Device, type Log } from '@core/entities'
+import { type Log } from '@core/entities'
 
 export type TLogDTO = {
-  address: Device['address']
+  deviceId: Log['deviceId']
   data: Log['data']
 }
 

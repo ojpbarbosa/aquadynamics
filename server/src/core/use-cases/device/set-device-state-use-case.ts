@@ -1,7 +1,7 @@
 import { type Device } from '@core/entities'
 
 export type TSetDeviceStateDTO = {
-  address: Device['address']
+  id: Device['id']
   state: Device['state']
 }
 

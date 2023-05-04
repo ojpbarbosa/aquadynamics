@@ -16,17 +16,19 @@ export class LogSQLiteRepositories implements ILogRepositories {
   }
 
   async find(parameters: TFindLogsRepositoryParameters): Promise<Log[] | Log> {
-    const { id, deviceId, data, orderBy, order, page, perPage } = parameters
+    const { id, deviceId, data, device, orderBy, order, page, perPage } = parameters
 
-    if (id) {
-      return (await this.prisma.log.findUnique({
-        where: { id }
-      })) as Log
+    const relationOptions = {
+      include: device
+        ? {
+            device: true
+          }
+        : {}
     }
 
-    let orderByParameters = {}
+    let orderOptions = {}
     if (orderBy && order) {
-      orderByParameters = {
+      orderOptions = {
         orderBy: [
           {
             [orderBy as string]: order
@@ -35,41 +37,23 @@ export class LogSQLiteRepositories implements ILogRepositories {
       }
     }
 
-    let paginationParameters = {}
+    let pageOptions = {}
     if (page && perPage) {
-      paginationParameters = {
+      pageOptions = {
         skip: ((page - 1) * perPage) as number,
         take: perPage as number
       }
     }
 
-    if (deviceId && data) {
-      return (await this.prisma.log.findMany({
-        where: { deviceId, data },
-        ...orderByParameters,
-        ...paginationParameters
-      })) as Log[]
-    }
-
-    if (deviceId) {
-      return (await this.prisma.log.findMany({
-        where: { deviceId },
-        ...orderByParameters,
-        ...paginationParameters
-      })) as Log[]
-    }
-
-    if (data) {
-      return (await this.prisma.log.findMany({
-        where: { data },
-        ...orderByParameters,
-        ...paginationParameters
-      })) as Log[]
+    const options = {
+      ...relationOptions,
+      ...orderOptions,
+      ...pageOptions
     }
 
     return (await this.prisma.log.findMany({
-      ...orderByParameters,
-      ...paginationParameters
+      where: { id, deviceId, data },
+      ...options
     })) as Log[]
   }
 }

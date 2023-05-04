@@ -12,10 +12,14 @@ export class GetDevicesUseCase implements IGetDevicesUseCase {
   ) {}
 
   async get(data: TGetDevicesDTO): Promise<Device[] | Device> {
-    const { address } = data
+    const { address, logs } = data
 
     if (address) {
-      const device = ((await this.findDevicesRepository.find()) as Device[]).find(
+      const device = (
+        (await this.findDevicesRepository.find({
+          logs
+        })) as Device[]
+      ).find(
         (device) =>
           this.cryptographyProvider.decrypt(
             device.address,

@@ -12,22 +12,31 @@ export class DeviceSQLiteRepositories implements IDeviceRepositories {
 
   async create(data: TCreateDeviceRepositoryDTO): Promise<Device> {
     return (await this.prisma.device.create({
-      data
+      data,
+      select: {
+        id: true,
+        name: true,
+        state: true,
+        registeredAt: true,
+        updatedAt: true
+      }
     })) as Device
   }
 
   async find(parameters: TFindDevicesRepositoryParameters): Promise<Device[] | Device> {
-    const { id, name, state, orderBy, order, page, perPage } = parameters
+    const { id, name, state, logs, orderBy, order, page, perPage } = parameters
 
-    if (id) {
-      return (await this.prisma.device.findUnique({
-        where: { id }
-      })) as Device
+    const relationOptions = {
+      include: logs
+        ? {
+            logs: true
+          }
+        : {}
     }
 
-    let orderByParameters = {}
+    let orderOptions = {}
     if (orderBy && order) {
-      orderByParameters = {
+      orderOptions = {
         orderBy: [
           {
             [orderBy as string]: order
@@ -36,33 +45,23 @@ export class DeviceSQLiteRepositories implements IDeviceRepositories {
       }
     }
 
-    let paginationParameters = {}
+    let pageOptions = {}
     if (page && perPage) {
-      paginationParameters = {
+      pageOptions = {
         skip: ((page - 1) * perPage) as number,
         take: perPage as number
       }
     }
 
-    if (name) {
-      return (await this.prisma.device.findMany({
-        where: { name },
-        ...orderByParameters,
-        ...paginationParameters
-      })) as Device[]
-    }
-
-    if (state) {
-      return (await this.prisma.device.findFirst({
-        where: { state },
-        ...orderByParameters,
-        ...paginationParameters
-      })) as Device
+    const options = {
+      ...relationOptions,
+      ...orderOptions,
+      ...pageOptions
     }
 
     return (await this.prisma.device.findMany({
-      ...orderByParameters,
-      ...paginationParameters
+      where: { id, name, state },
+      ...options
     })) as Device[]
   }
 

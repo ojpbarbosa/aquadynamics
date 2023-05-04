@@ -5,6 +5,8 @@ export type TFindLogsRepositoryParameters = {
   deviceId?: Device['id']
   data?: Log['data']
 
+  device?: boolean
+
   orderBy?: 'id' | 'data' | 'timestamp' | 'registeredAt' | 'updatedAt'
   order?: 'asc' | 'desc'
   page?: number
