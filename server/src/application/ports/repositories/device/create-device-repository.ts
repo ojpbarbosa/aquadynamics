@@ -4,7 +4,7 @@ export type TCreateDeviceRepositoryDTO = {
   id: Device['id']
   name: Device['name']
   address: Device['address']
-  state?: Device['state']
+  status?: Device['status']
 }
 
 export interface ICreateDeviceRepository {

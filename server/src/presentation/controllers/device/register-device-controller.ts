@@ -25,14 +25,14 @@ export class RegisterDeviceController implements IController {
 
       if (error) return errorResponse(error)
 
-      const { id, state, registeredAt } = await this.registerDeviceUseCase.register({
+      const { id, status, registeredAt } = await this.registerDeviceUseCase.register({
         name,
         address
       })
 
       return createdResponse({
         id,
-        state,
+        status,
         registeredAt
       })
     } catch (error) {

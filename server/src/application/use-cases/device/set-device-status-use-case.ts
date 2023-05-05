@@ -1,11 +1,11 @@
-import { type ISetDeviceStateUseCase, type TSetDeviceStateDTO } from '@core/use-cases'
+import { type ISetDeviceStatusUseCase, type TSetDeviceStatusDTO } from '@core/use-cases'
 import { type IUpdateDeviceRepository } from '@application/ports/repositories'
 import { type Device } from '@core/entities'
 
-export class SetDeviceStateUseCase implements ISetDeviceStateUseCase {
+export class SetDeviceStatusUseCase implements ISetDeviceStatusUseCase {
   constructor(private readonly updateDeviceRepository: IUpdateDeviceRepository) {}
 
-  async setState(data: TSetDeviceStateDTO): Promise<Device> {
+  async setStatus(data: TSetDeviceStatusDTO): Promise<Device> {
     return await this.updateDeviceRepository.update(data)
   }
 }

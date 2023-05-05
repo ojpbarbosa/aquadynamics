@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
-  tsconfig: './tsconfig.build.json',
+  tsconfig: './tsconfig.json',
   entry: ['./src'],
   splitting: false,
   sourcemap: true,

@@ -38,7 +38,7 @@ export class GetLogsController implements IController {
                 Object.assign(data, {
                   device: {
                     name: log.device.name,
-                    state: log.device.state,
+                    status: log.device.status,
                     registeredAt: log.device.registeredAt,
                     updatedAt: log.device.updatedAt
                   }

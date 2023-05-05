@@ -9,13 +9,13 @@ export class GetDevicesController implements IController {
   async handle(request: IRequest): Promise<IResponse> {
     try {
       const { id } = request.parameters
-      const { name, address, state, logs, orderBy, order, page, perPage } = request.query
+      const { name, address, status, logs, orderBy, order, page, perPage } = request.query
 
       const devices = (await this.getDevicesUseCase.get({
         id,
         name,
         address,
-        state,
+        status,
         logs: logs === 'true' || logs === 'false' ? JSON.parse(logs) : undefined,
         orderBy,
         order,
@@ -29,7 +29,7 @@ export class GetDevicesController implements IController {
               const data = {
                 id: device.id,
                 name: device.name,
-                state: device.state,
+                status: device.status,
                 registeredAt: device.registeredAt,
                 updatedAt: device.updatedAt
               }

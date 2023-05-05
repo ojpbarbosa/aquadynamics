@@ -11,7 +11,7 @@ model Device {
   id           String   @id
   name         String
   address      String   @unique
-  state        String   @default("disconnected")
+  status       String   @default("disconnected")
   registeredAt DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

@@ -16,7 +16,7 @@ export class DeviceSqliteRepositories implements IDeviceRepositories {
       select: {
         id: true,
         name: true,
-        state: true,
+        status: true,
         registeredAt: true,
         updatedAt: true
       }
@@ -25,7 +25,7 @@ export class DeviceSqliteRepositories implements IDeviceRepositories {
 
   async find(parameters: TFindDevicesRepositoryParameters): Promise<Device[] | Device> {
     if (parameters) {
-      const { id, name, state, logs, orderBy, order, page, perPage } = parameters
+      const { id, name, status, logs, orderBy, order, page, perPage } = parameters
 
       let orderOptions = {}
       if (orderBy && order) {
@@ -59,7 +59,7 @@ export class DeviceSqliteRepositories implements IDeviceRepositories {
         })
 
       return (await this.prisma.device.findMany({
-        where: { id, name, state },
+        where: { id, name, status },
         ...options
       })) as Device[]
     }
@@ -68,11 +68,11 @@ export class DeviceSqliteRepositories implements IDeviceRepositories {
   }
 
   async update(data: TUpdateDeviceRepositoryDTO): Promise<Device> {
-    const { id, name, address, state } = data
+    const { id, name, address, status } = data
 
     return (await this.prisma.device.update({
       where: { id },
-      data: { name, address, state }
+      data: { name, address, status }
     })) as Device
   }
 }

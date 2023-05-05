@@ -3,7 +3,7 @@ import { adaptController, adaptMiddleware } from '@main/adapters'
 import {
   getDevicesControllerFactory,
   registerDeviceControllerFactory,
-  setDeviceStateControllerFactory
+  setDeviceStatusControllerFactory
 } from '@main/factories/controllers'
 import { requireRegisteredDeviceMiddlewareFactory } from '@main/factories/middlewares'
 
@@ -16,6 +16,6 @@ export const setUpDeviceRoutes = (router: Router): void => {
   router.patch(
     '/devices',
     adaptMiddleware(requireRegisteredDeviceMiddlewareFactory()),
-    adaptController(setDeviceStateControllerFactory())
+    adaptController(setDeviceStatusControllerFactory())
   )
 }

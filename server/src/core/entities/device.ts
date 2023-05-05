@@ -4,7 +4,7 @@ export interface Device {
   id: string
   name: string
   address: string
-  state: 'connected' | 'disconnected'
+  status: 'connected' | 'disconnected'
   registeredAt: Date
   updatedAt: Date
 
