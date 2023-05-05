@@ -1,6 +1,16 @@
-import { IController, IRequest, IResponse, IValidator } from '@application/ports/presentation'
-import { ISetDeviceStateUseCase } from '@core/use-cases'
-import { errorResponse, okResponse, unauthorizedResponse } from '@presentation/responses'
+import {
+  type IController,
+  type IRequest,
+  type IResponse,
+  type IValidator
+} from '@application/ports/presentation'
+import { type ISetDeviceStateUseCase } from '@core/use-cases'
+import {
+  errorResponse,
+  notModifiedResponse,
+  okResponse,
+  unauthorizedResponse
+} from '@presentation/responses'
 
 export class SetDeviceStateController implements IController {
   constructor(
@@ -9,23 +19,25 @@ export class SetDeviceStateController implements IController {
   ) {}
 
   async handle(request: IRequest): Promise<IResponse> {
-    const { device } = request
+    let { device } = request
 
-    if (!device)
-      return unauthorizedResponse('An existing device is required in order to perform this action')
+    if (!device) return unauthorizedResponse('Unregistered device')
+
+    const { id } = device
+    const { state } = request.parameters
 
     const error = this.validator.validate({
-      id: device.id,
-      state: request.body.state
+      id,
+      state
     })
 
     if (error) return errorResponse(error)
 
-    return okResponse(
-      await this.setStateDeviceUseCase.setState({
-        id: device.id,
-        state: request.body.state
-      })
-    )
+    device = await this.setStateDeviceUseCase.setState({
+      id,
+      state
+    })
+
+    return device.state === state ? okResponse(device) : notModifiedResponse()
   }
 }

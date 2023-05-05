@@ -18,6 +18,17 @@ export class RegisterDeviceController implements IController {
 
     if (error) return errorResponse(error)
 
-    return createdResponse(await this.registerDeviceUseCase.register(request.body))
+    const { name, address } = request.body
+
+    const { id, state, registeredAt } = await this.registerDeviceUseCase.register({
+      name,
+      address
+    })
+
+    return createdResponse({
+      id,
+      state,
+      registeredAt
+    })
   }
 }

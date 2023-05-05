@@ -7,7 +7,8 @@ export class GetDevicesController implements IController {
   constructor(private readonly getDevicesUseCase: IGetDevicesUseCase) {}
 
   async handle(request: IRequest): Promise<IResponse> {
-    const { id, name, address, state, logs, orderBy, order, page, perPage } = request.parameters
+    const { id } = request.parameters
+    const { name, address, state, logs, orderBy, order, page, perPage } = request.query
 
     const devices = (await this.getDevicesUseCase.get({
       id,
