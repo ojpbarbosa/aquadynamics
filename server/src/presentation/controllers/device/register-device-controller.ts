@@ -14,29 +14,29 @@ export class RegisterDeviceController implements IController {
   ) {}
 
   async handle(request: IRequest): Promise<IResponse> {
-    let address = ''
+    try {
+      const { address } = request.headers
+      const { name } = request.body
 
-    if (request.headers.address || request.headers.address.split(' ').length === 2)
-      address = request.headers.address.split(' ')[1]
+      const error = this.validation.validate({
+        name,
+        address
+      })
 
-    const { name } = request.body
+      if (error) return errorResponse(error)
 
-    const error = this.validation.validate({
-      name,
-      address
-    })
+      const { id, state, registeredAt } = await this.registerDeviceUseCase.register({
+        name,
+        address
+      })
 
-    if (error) return errorResponse(error)
-
-    const { id, state, registeredAt } = await this.registerDeviceUseCase.register({
-      name,
-      address
-    })
-
-    return createdResponse({
-      id,
-      state,
-      registeredAt
-    })
+      return createdResponse({
+        id,
+        state,
+        registeredAt
+      })
+    } catch (error) {
+      return errorResponse(error)
+    }
   }
 }

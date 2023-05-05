@@ -24,45 +24,47 @@ export class DeviceSqliteRepositories implements IDeviceRepositories {
   }
 
   async find(parameters: TFindDevicesRepositoryParameters): Promise<Device[] | Device> {
-    const { id, name, state, logs, orderBy, order, page, perPage } = parameters
+    if (parameters) {
+      const { id, name, state, logs, orderBy, order, page, perPage } = parameters
 
-    const relationOptions = {
-      include: logs
-        ? {
+      let orderOptions = {}
+      if (orderBy && order) {
+        orderOptions = {
+          orderBy: [
+            {
+              [orderBy as string]: order
+            }
+          ]
+        }
+      }
+
+      let pageOptions = {}
+      if (page && perPage) {
+        pageOptions = {
+          skip: (Number(page) - 1) * Number(perPage),
+          take: Number(perPage)
+        }
+      }
+
+      const options = {
+        ...orderOptions,
+        ...pageOptions
+      }
+
+      if (logs)
+        Object.assign(options, {
+          include: {
             logs: true
           }
-        : {}
+        })
+
+      return (await this.prisma.device.findMany({
+        where: { id, name, state },
+        ...options
+      })) as Device[]
     }
 
-    let orderOptions = {}
-    if (orderBy && order) {
-      orderOptions = {
-        orderBy: [
-          {
-            [orderBy as string]: order
-          }
-        ]
-      }
-    }
-
-    let pageOptions = {}
-    if (page && perPage) {
-      pageOptions = {
-        skip: (page - 1) * perPage,
-        take: perPage
-      }
-    }
-
-    const options = {
-      ...relationOptions,
-      ...orderOptions,
-      ...pageOptions
-    }
-
-    return (await this.prisma.device.findMany({
-      where: { id, name, state },
-      ...options
-    })) as Device[]
+    return (await this.prisma.device.findMany()) as Device[]
   }
 
   async update(data: TUpdateDeviceRepositoryDTO): Promise<Device> {

@@ -12,9 +12,9 @@ export class RequireRegisteredDeviceMiddleware implements IMiddleware {
   ) {}
 
   async handle(request: IRequest): Promise<IResponse> {
-    if (!request.headers.address) return unauthorizedResponse('Missing address header')
+    const { address } = request.headers
 
-    const [, address] = request.headers.split(' ')
+    if (!address) return unauthorizedResponse('Missing address header')
 
     const device = ((await this.findDevicesRepository.find()) as Device[]).find(
       (device) =>

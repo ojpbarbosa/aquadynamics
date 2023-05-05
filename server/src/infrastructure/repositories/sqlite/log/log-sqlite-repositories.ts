@@ -16,44 +16,46 @@ export class LogSqliteRepositories implements ILogRepositories {
   }
 
   async find(parameters: TFindLogsRepositoryParameters): Promise<Log[] | Log> {
-    const { id, deviceId, data, device, orderBy, order, page, perPage } = parameters
+    if (parameters) {
+      const { id, deviceId, data, devices, orderBy, order, page, perPage } = parameters
 
-    const relationOptions = {
-      include: device
-        ? {
+      let orderOptions = {}
+      if (orderBy && order) {
+        orderOptions = {
+          orderBy: [
+            {
+              [orderBy as string]: order
+            }
+          ]
+        }
+      }
+
+      let pageOptions = {}
+      if (page && perPage) {
+        pageOptions = {
+          skip: (Number(page) - 1) * Number(perPage),
+          take: Number(perPage)
+        }
+      }
+
+      const options = {
+        ...orderOptions,
+        ...pageOptions
+      }
+
+      if (devices)
+        Object.assign(options, {
+          include: {
             device: true
           }
-        : {}
+        })
+
+      return (await this.prisma.log.findMany({
+        where: { id, deviceId, data },
+        ...options
+      })) as Log[]
     }
 
-    let orderOptions = {}
-    if (orderBy && order) {
-      orderOptions = {
-        orderBy: [
-          {
-            [orderBy as string]: order
-          }
-        ]
-      }
-    }
-
-    let pageOptions = {}
-    if (page && perPage) {
-      pageOptions = {
-        skip: (page - 1) * perPage,
-        take: perPage
-      }
-    }
-
-    const options = {
-      ...relationOptions,
-      ...orderOptions,
-      ...pageOptions
-    }
-
-    return (await this.prisma.log.findMany({
-      where: { id, deviceId, data },
-      ...options
-    })) as Log[]
+    return (await this.prisma.log.findMany()) as Log[]
   }
 }

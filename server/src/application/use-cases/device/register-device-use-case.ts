@@ -5,7 +5,7 @@ import {
 } from '@application/ports/repositories'
 import { type ICryptographyProvider, type IUniqueIdProvider } from '@application/ports/providers'
 import { type Device } from '@core/entities'
-import { NotFoundError } from '@application/errors'
+import { ConflictError } from '@application/errors'
 import { ADDRESS_ENCRYPTION_SECRET_KEY } from '@main/configuration'
 
 export class RegisterDeviceUseCase implements IRegisterDeviceUseCase {
@@ -17,20 +17,25 @@ export class RegisterDeviceUseCase implements IRegisterDeviceUseCase {
   ) {}
 
   async register(data: TRegisterDeviceDTO): Promise<Device> {
+    const { address } = data
+
     if (
-      !((await this.findDevicesRepository.find()) as Device[]).find(
+      ((await this.findDevicesRepository.find()) as Device[]).find(
         (device) =>
           this.cryptographyProvider.decrypt(
             device.address,
             ADDRESS_ENCRYPTION_SECRET_KEY as string
-          ) === data.address
+          ) === address
       )
     )
-      throw new NotFoundError('Device does not exist')
+      throw new ConflictError('Device already exists')
+
+    const { name } = data
 
     return await this.createDeviceRepository.create({
       id: this.uniqueIdProvider.generate(),
-      ...data
+      address: this.cryptographyProvider.encrypt(address, ADDRESS_ENCRYPTION_SECRET_KEY as string),
+      name
     })
   }
 }

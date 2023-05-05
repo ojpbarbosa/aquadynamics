@@ -19,25 +19,37 @@ export class SetDeviceStateController implements IController {
   ) {}
 
   async handle(request: IRequest): Promise<IResponse> {
-    let { device } = request
+    try {
+      let { device } = request
 
-    if (!device) return unauthorizedResponse('Unregistered device')
+      if (!device) return unauthorizedResponse('Unregistered device')
 
-    const { id } = device
-    const { state } = request.parameters
+      const { id } = device
+      const { state } = request.query
 
-    const error = this.validator.validate({
-      id,
-      state
-    })
+      const error = this.validator.validate({
+        id,
+        state
+      })
 
-    if (error) return errorResponse(error)
+      if (error) return errorResponse(error)
 
-    device = await this.setStateDeviceUseCase.setState({
-      id,
-      state
-    })
+      if (device.state === state) return notModifiedResponse()
 
-    return device.state === state ? okResponse(device) : notModifiedResponse()
+      device = await this.setStateDeviceUseCase.setState({
+        id,
+        state
+      })
+
+      return device.state === state
+        ? okResponse({
+            id,
+            state: device.state,
+            updatedAt: device.updatedAt
+          })
+        : notModifiedResponse()
+    } catch (error) {
+      return errorResponse(error)
+    }
   }
 }

@@ -5,7 +5,10 @@ import { updateDeviceSqliteRepository } from '@infrastructure/repositories'
 
 export const setDeviceStateControllerFactory = (): SetDeviceStateController => {
   return new SetDeviceStateController(
-    new RequiredFieldValidation('state'),
+    new RequiredFieldValidation('state', {
+      type: 'string',
+      values: ['connected', 'disconnected']
+    }),
     new SetDeviceStateUseCase(updateDeviceSqliteRepository)
   )
 }

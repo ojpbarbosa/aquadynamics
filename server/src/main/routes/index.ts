@@ -1,1 +1,2 @@
-export * from './article-routes'
+export * from './device-routes'
+export * from './log-routes'
