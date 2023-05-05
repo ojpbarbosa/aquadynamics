@@ -3,7 +3,7 @@ import {
   type ICreateLogRepository,
   type IFindLogsRepository
 } from '@application/ports/repositories'
-import { IUniqueIdProvider } from '@application/ports/providers'
+import { type IUniqueIdProvider } from '@application/ports/providers'
 import { type Log } from '@core/entities'
 import { ConflictError } from '@application/errors'
 

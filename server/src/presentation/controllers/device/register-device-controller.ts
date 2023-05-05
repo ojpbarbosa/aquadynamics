@@ -1,6 +1,11 @@
-import { IController, IRequest, IResponse, IValidator } from '@application/ports/presentation'
+import {
+  type IController,
+  type IRequest,
+  type IResponse,
+  type IValidator
+} from '@application/ports/presentation'
 import { createdResponse, errorResponse } from '@presentation/responses'
-import { IRegisterDeviceUseCase } from '@core/use-cases'
+import { type IRegisterDeviceUseCase } from '@core/use-cases'
 
 export class RegisterDeviceController implements IController {
   constructor(

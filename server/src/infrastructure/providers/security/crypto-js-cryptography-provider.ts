@@ -1,5 +1,5 @@
+import { type ICryptographyProvider } from '@application/ports/providers'
 import { AES, enc as encoder } from 'crypto-js'
-import { ICryptographyProvider } from '@application/ports/providers'
 
 export class CryptoJsCryptographyProvider implements ICryptographyProvider {
   encrypt(plaintext: string, secret: string): string {

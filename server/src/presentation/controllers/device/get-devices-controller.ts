@@ -1,6 +1,6 @@
-import { IController, IRequest, IResponse } from '@application/ports/presentation'
-import { IGetDevicesUseCase } from '@core/use-cases'
-import { Device } from '@core/entities'
+import { type IController, type IRequest, type IResponse } from '@application/ports/presentation'
+import { type IGetDevicesUseCase } from '@core/use-cases'
+import { type Device } from '@core/entities'
 import { noContentResponse, okResponse } from '@presentation/responses'
 
 export class GetDevicesController implements IController {
@@ -24,20 +24,20 @@ export class GetDevicesController implements IController {
     return devices.length > 0
       ? okResponse(
           devices.map((device) => {
-            let data = {
+            const data = {
               id: device.id,
               name: device.name,
               state: device.state,
               registeredAt: device.registeredAt,
-              updatedAt: device.updatedAt
+              updatedAt: device.updatedAt,
+              logs: device.logs?.map((log) => ({
+                id: log.id,
+                data: log.data,
+                timestamp: log.timestamp
+              }))
             }
 
-            if (logs) {
-              data = {
-                ...data,
-                logs: device.logs?.map()
-              }
-            }
+            if (!logs) delete data.logs
 
             return data
           })

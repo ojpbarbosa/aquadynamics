@@ -40,8 +40,8 @@ export class LogSQLiteRepositories implements ILogRepositories {
     let pageOptions = {}
     if (page && perPage) {
       pageOptions = {
-        skip: ((page - 1) * perPage) as number,
-        take: perPage as number
+        skip: (page - 1) * perPage,
+        take: perPage
       }
     }
 

@@ -1,6 +1,6 @@
 import { type IGetDevicesUseCase, type TGetDevicesDTO } from '@core/use-cases'
 import { type IFindDevicesRepository } from '@application/ports/repositories'
-import { ICryptographyProvider } from '@application/ports/providers'
+import { type ICryptographyProvider } from '@application/ports/providers'
 import { type Device } from '@core/entities'
 import { ADDRESS_ENCRYPTION_SECRET_KEY } from '@main/configuration'
 import { NotFoundError } from '@application/errors'

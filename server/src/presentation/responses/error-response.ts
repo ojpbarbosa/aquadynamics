@@ -1,5 +1,5 @@
-import { DefaultError } from '@application/errors'
-import { IResponse } from '@application/ports/presentation'
+import { type DefaultError } from '@application/errors'
+import { type IResponse } from '@application/ports/presentation'
 
 export const errorResponse = (error: DefaultError): IResponse => {
   return {

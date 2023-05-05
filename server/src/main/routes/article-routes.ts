@@ -7,7 +7,7 @@ import {
   updateArticleControllerFactory
 } from '@main/factories/controllers'
 import { requireAuthenticationMiddlewareFactory } from '@main/factories/middlewares'
-import { Router } from 'express'
+import { type Router } from 'express'
 
 export const setUpArticleRoutes = (router: Router): void => {
   router.get('/articles', adaptController(findArticlesControllerFactory()))

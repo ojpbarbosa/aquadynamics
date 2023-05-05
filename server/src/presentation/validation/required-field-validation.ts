@@ -1,5 +1,5 @@
-import { DefaultError } from '@application/errors'
-import { IValidator } from '@application/ports/presentation'
+import { type DefaultError } from '@application/errors'
+import { type IValidator } from '@application/ports/presentation'
 import { missingParameterError } from '@presentation/errors'
 
 export class RequiredFieldValidation implements IValidator {

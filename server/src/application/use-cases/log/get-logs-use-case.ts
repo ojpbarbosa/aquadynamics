@@ -9,4 +9,3 @@ export class GetLogsUseCase implements IGetLogsUseCase {
     return await this.findLogsRepository.find(data)
   }
 }
-

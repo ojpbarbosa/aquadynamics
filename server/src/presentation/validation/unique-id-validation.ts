@@ -1,6 +1,6 @@
-import { DefaultError } from '@application/errors'
+import { type DefaultError } from '@application/errors'
 import { isUniqueId } from '@application/validators'
-import { IValidator } from '@application/ports/presentation'
+import { type IValidator } from '@application/ports/presentation'
 import { malformattedParameterError, missingParameterError } from '@presentation/errors'
 
 export class UniqueIdValidation implements IValidator {

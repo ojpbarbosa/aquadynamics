@@ -3,7 +3,7 @@ import {
   type IFindDevicesRepository,
   type ICreateDeviceRepository
 } from '@application/ports/repositories'
-import { ICryptographyProvider, IUniqueIdProvider } from '@application/ports/providers'
+import { type ICryptographyProvider, type IUniqueIdProvider } from '@application/ports/providers'
 import { type Device } from '@core/entities'
 import { NotFoundError } from '@application/errors'
 import { ADDRESS_ENCRYPTION_SECRET_KEY } from '@main/configuration'

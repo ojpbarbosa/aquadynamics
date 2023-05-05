@@ -1,5 +1,5 @@
-import { DefaultError } from '@application/errors'
-import { IValidator } from '@application/ports/presentation'
+import { type DefaultError } from '@application/errors'
+import { type IValidator } from '@application/ports/presentation'
 
 export class CompositeValidation implements IValidator {
   constructor(private readonly validations: IValidator[]) {}

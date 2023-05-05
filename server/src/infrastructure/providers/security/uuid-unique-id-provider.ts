@@ -1,4 +1,4 @@
-import { IUniqueIdProvider } from '@application/ports/providers'
+import { type IUniqueIdProvider } from '@application/ports/providers'
 import { v4 as uuid } from 'uuid'
 
 export class UuidUniqueIdProvider implements IUniqueIdProvider {

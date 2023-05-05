@@ -1,4 +1,4 @@
-import { IResponse } from '@application/ports/presentation'
+import { type IResponse } from '@application/ports/presentation'
 
 export const forbiddenResponse = (message?: string): IResponse => {
   return {
