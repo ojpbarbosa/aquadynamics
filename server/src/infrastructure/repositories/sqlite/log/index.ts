@@ -1,12 +1,10 @@
-import { LogSQLiteRepositories } from './Log-sqlite-repositories'
+import { LogSqliteRepositories } from './Log-sqlite-repositories'
 import {
   type ICreateLogRepository,
   type IFindLogsRepository
 } from '@application/ports/repositories'
 
-const logSQLiteRepositories = new LogSQLiteRepositories()
+const logSqliteRepositories = new LogSqliteRepositories()
 
-const createLogSQLiteRepository: ICreateLogRepository = logSQLiteRepositories
-const findLogsSQLiteRepository: IFindLogsRepository = logSQLiteRepositories
-
-export { createLogSQLiteRepository, findLogsSQLiteRepository }
+export const createLogSqliteRepository: ICreateLogRepository = logSqliteRepositories
+export const findLogsSqliteRepository: IFindLogsRepository = logSqliteRepositories

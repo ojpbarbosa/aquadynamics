@@ -1,14 +1,12 @@
-import { DeviceSQLiteRepositories } from './device-sqlite-repositories'
+import { DeviceSqliteRepositories } from './device-sqlite-repositories'
 import {
   type ICreateDeviceRepository,
   type IFindDevicesRepository,
   type IUpdateDeviceRepository
 } from '@application/ports/repositories'
 
-const deviceSQLiteRepositories = new DeviceSQLiteRepositories()
+const deviceSqliteRepositories = new DeviceSqliteRepositories()
 
-const createDeviceSQLiteRepository: ICreateDeviceRepository = deviceSQLiteRepositories
-const findDevicesSQLiteRepository: IFindDevicesRepository = deviceSQLiteRepositories
-const updateDeviceRepository: IUpdateDeviceRepository = deviceSQLiteRepositories
-
-export { createDeviceSQLiteRepository, findDevicesSQLiteRepository, updateDeviceRepository }
+export const createDeviceSqliteRepository: ICreateDeviceRepository = deviceSqliteRepositories
+export const findDevicesSqliteRepository: IFindDevicesRepository = deviceSqliteRepositories
+export const updateDeviceSqliteRepository: IUpdateDeviceRepository = deviceSqliteRepositories

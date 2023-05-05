@@ -6,7 +6,7 @@ import {
 import { PrismaClient } from '@prisma/client'
 import { type Log } from '@core/entities'
 
-export class LogSQLiteRepositories implements ILogRepositories {
+export class LogSqliteRepositories implements ILogRepositories {
   private readonly prisma = new PrismaClient()
 
   async create(data: TCreateLogRepositoryDTO): Promise<Log> {

@@ -7,7 +7,7 @@ import {
 import { PrismaClient } from '@prisma/client'
 import { type Device } from '@core/entities'
 
-export class DeviceSQLiteRepositories implements IDeviceRepositories {
+export class DeviceSqliteRepositories implements IDeviceRepositories {
   private readonly prisma = new PrismaClient()
 
   async create(data: TCreateDeviceRepositoryDTO): Promise<Device> {

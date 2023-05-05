@@ -30,15 +30,19 @@ export class GetDevicesController implements IController {
               name: device.name,
               state: device.state,
               registeredAt: device.registeredAt,
-              updatedAt: device.updatedAt,
-              logs: device.logs?.map((log) => ({
-                id: log.id,
-                data: log.data,
-                timestamp: log.timestamp
-              }))
+              updatedAt: device.updatedAt
             }
 
-            if (!logs) delete data.logs
+            if (logs)
+              Object.assign(data, {
+                logs: device.logs
+                  ? device.logs.map((log) => ({
+                      id: log.id,
+                      data: log.data,
+                      timestamp: log.timestamp
+                    }))
+                  : null
+              })
 
             return data
           })

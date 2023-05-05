@@ -27,16 +27,20 @@ export class GetLogsController implements IController {
               id: log.id,
               deviceId: log.deviceId,
               data: log.data,
-              timestamp: log.timestamp,
-              device: {
-                name: log.device?.name,
-                state: log.device?.state,
-                registeredAt: log.device?.registeredAt,
-                updatedAt: log.device?.updatedAt
-              } as any
+              timestamp: log.timestamp
             }
 
-            if (!devices) delete data.device
+            if (devices)
+              Object.assign(data, {
+                device: log.device
+                  ? {
+                      name: log.device.name,
+                      state: log.device.state,
+                      registeredAt: log.device.registeredAt,
+                      updatedAt: log.device.updatedAt
+                    }
+                  : null
+              })
 
             return data
           })
