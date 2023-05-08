@@ -2,11 +2,9 @@
   "name": "@aquabotics/server",
   "version": "1.0.0",
   "private": true,
-   "engines": {
-
+  "engines": {
     "node": ">=14.18"
-
-},
+  },
   "scripts": {
     "build": "npx tsup",
     "start": "node ./dist/main/server.js",
