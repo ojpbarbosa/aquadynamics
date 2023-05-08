@@ -49,6 +49,7 @@ export class SetDeviceStatusController implements IController {
           })
         : notModifiedResponse()
     } catch (error) {
+      console.error(error)
       return errorResponse(error)
     }
   }

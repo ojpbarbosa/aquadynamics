@@ -36,6 +36,7 @@ export class RegisterDeviceController implements IController {
         registeredAt
       })
     } catch (error) {
+      console.error(error)
       return errorResponse(error)
     }
   }

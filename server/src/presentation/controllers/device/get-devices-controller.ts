@@ -48,6 +48,7 @@ export class GetDevicesController implements IController {
           )
         : noContentResponse()
     } catch (error) {
+      console.error(error)
       return errorResponse(error)
     }
   }
