@@ -1,5 +1,5 @@
 # aquadynamics/embedded/aquarium
-from machine import Pin
+from machine import Pin, ADC
 from ds18x20 import DS18X20
 from onewire import OneWire
 from time import sleep
@@ -9,10 +9,14 @@ from json import dumps
 import ubinascii
 
 
+# constants
 API_URL = 'https://aquabotics-core-api.onrender.com/api'
 
 NETWORK_SSID = 'AquaDynamics'
 NETWORK_PASSWORD = 'AquaDynamics'
+
+TEMPERATURE_SENSORS_PIN = 26
+LDR_PIN = 27
 
 sta_if = network.WLAN(network.STA_IF)
 if not sta_if.isconnected():
@@ -41,15 +45,21 @@ def make_request(endpoint, method='get', data=None):
 
 
 try:
+    # register the controller to the server
     make_request('/controllers', 'post', data={'aquarium': '1'})
+    # set the controller status in the server as booting
     make_request('/controllers?state=booting', 'patch')
 
-    temperature_sensors_pin = Pin(26)
+    # set the temperature sensors pin
+    temperature_sensors_pin = Pin(TEMPERATURE_SENSORS_PIN)
+    # initialiaze the temperature sensor through one wire
     temperature_sensors = DS18X20(OneWire(temperature_sensors_pin))
 
+    # scan the available temperature sensors (since we are able to work with two combined, averaging the readings)
     roms = temperature_sensors.scan()
     print('[LOG] Found DS devices: ', roms)
 
+    # after the booting procedure is complete, the controller status is set to logging
     make_request('/controllers?state=logging', 'patch')
 
     while True:
