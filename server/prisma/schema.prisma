@@ -27,7 +27,8 @@ model Log {
   data      String
   timestamp DateTime @default(now())
 
-  device Device @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  device Device @relation(fields: [deviceId], references: [id])
 
+  @@index([deviceId])
   @@map("logs")
 }
