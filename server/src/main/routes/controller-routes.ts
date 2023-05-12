@@ -7,7 +7,7 @@ import {
 } from '@main/factories/controllers'
 import { requireRegisteredControllerMiddlewareFactory } from '@main/factories/middlewares'
 
-export const setUpControllerRoutes = (router: Router) => {
+export const setUpControllerRoutes = (router: Router): void => {
   router.get('/controllers', adaptController(getControllersControllerFactory()))
   router.get('/controllers/:id', adaptController(getControllersControllerFactory()))
 

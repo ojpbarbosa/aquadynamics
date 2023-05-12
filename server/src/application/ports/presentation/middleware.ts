@@ -1,6 +1,5 @@
 import { type IRequest, type IResponse } from '.'
 
 export interface IMiddleware {
-  handle: (request: IRequest) => Promise<IResponse>
+  handle: (request: IRequest, response?: IResponse) => Promise<IResponse>
 }
-

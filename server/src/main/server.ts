@@ -1,9 +1,13 @@
-import { PORT, setUpServer, setUpWebSocket } from './configuration'
+import { PORT, setUpApiServer, setUpWebSocketServer } from './configuration'
+import { setUpLogPostRoute } from './routes'
 
-const server = setUpWebSocket(setUpServer())
+const apiServer = setUpApiServer()
+const { webSocketServer } = setUpWebSocketServer(apiServer)
 
-const port = PORT || 3030
+setUpLogPostRoute(apiServer, webSocketServer)
 
-server.listen(port, () => {
-  console.log(`Server started running on port ${port}!`)
+const { httpServer: server } = setUpWebSocketServer(apiServer)
+
+server.listen(Number(PORT) || 3030, () => {
+  console.log(`Server started running on port ${PORT || 3030}!`)
 })

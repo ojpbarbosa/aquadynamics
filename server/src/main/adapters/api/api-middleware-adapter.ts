@@ -8,9 +8,9 @@ import {
 
 export const adaptMiddleware = (middleware: IMiddleware) => {
   return async (httpRequest: HttpRequest, httpResponse: HttpResponse, next: Next) => {
-    const response = await middleware.handle(httpRequest)
+    const response = await middleware.handle(httpRequest, httpResponse)
 
-    if (response.statusCode === 200) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
       Object.assign(httpRequest, { controller: response.body })
 
       next()
