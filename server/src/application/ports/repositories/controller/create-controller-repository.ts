@@ -2,9 +2,8 @@ import { type Controller } from '@core/entities'
 
 export type TCreateControllerRepositoryDTO = {
   id: Controller['id']
-  type: Controller['type']
   address: Controller['address']
-  status?: Controller['status']
+  aquarium: Controller['aquarium']
 }
 
 export interface ICreateControllerRepository {

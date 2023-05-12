@@ -2,7 +2,9 @@ import { type Log } from '@core/entities'
 
 export type TLogDTO = {
   controllerId: Log['controllerId']
-  data: Log['data']
+  type: Log['type']
+  data?: Log['data']
+  reading?: Log['reading']
 }
 
 export interface ILogUseCase {

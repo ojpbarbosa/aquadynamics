@@ -49,7 +49,7 @@ export class SetControllerStatusController implements IController {
           })
         : notModifiedResponse()
     } catch (error) {
-      console.error('ControllerError: ' + error)
+      console.error('ControllerError: ', error)
       return errorResponse(error)
     }
   }

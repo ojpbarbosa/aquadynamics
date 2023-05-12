@@ -1,7 +1,7 @@
 import { type Log } from '@core/entities'
 
 export type TGetLogsDTO = {
-  orderBy?: 'id' | 'data' | 'timestamp' | 'registeredAt' | 'updatedAt'
+  orderBy?: 'id' | 'data' | 'type' | 'timestamp' | 'registeredAt' | 'updatedAt'
   order?: 'asc' | 'desc'
   page?: number
   perPage?: number
@@ -10,6 +10,7 @@ export type TGetLogsDTO = {
 
   id?: Log['id']
   controllerId?: Log['controllerId']
+  type?: Log['type']
 }
 
 export interface IGetLogsUseCase {

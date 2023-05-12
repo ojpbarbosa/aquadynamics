@@ -12,14 +12,10 @@ export class GetControllersUseCase implements IGetControllersUseCase {
   ) {}
 
   async get(data: TGetControllersDTO): Promise<Controller[] | Controller> {
-    const { address, logs } = data
+    const { address } = data
 
     if (address) {
-      const controller = (
-        (await this.findControllersRepository.find({
-          logs
-        })) as Controller[]
-      ).find(
+      const controller = ((await this.findControllersRepository.find(data)) as Controller[]).find(
         (controller) =>
           this.cryptographyProvider.decrypt(
             controller.address,

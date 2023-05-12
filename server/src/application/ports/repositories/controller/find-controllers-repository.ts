@@ -2,12 +2,13 @@ import { type Controller } from '@core/entities'
 
 export type TFindControllersRepositoryParameters = {
   id?: Controller['id']
-  type?: Controller['type']
+  address?: Controller['address']
+  aquarium?: Controller['aquarium']
   status?: Controller['status']
 
   logs?: boolean
 
-  orderBy?: 'id' | 'type' | 'status' | 'registeredAt' | 'updatedAt'
+  orderBy?: 'id' | 'address' | 'aquarium' | 'status' | 'registeredAt' | 'updatedAt'
   order?: 'asc' | 'desc'
   page?: number
   perPage?: number

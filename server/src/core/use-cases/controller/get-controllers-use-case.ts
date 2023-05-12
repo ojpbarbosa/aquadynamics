@@ -1,7 +1,7 @@
 import { type Controller } from '@core/entities'
 
 export type TGetControllersDTO = {
-  orderBy?: 'id' | 'type' | 'status' | 'registeredAt' | 'updatedAt'
+  orderBy?: 'id' | 'aquarium' | 'status' | 'registeredAt' | 'updatedAt'
   order?: 'asc' | 'desc'
   page?: number
   perPage?: number
@@ -9,8 +9,8 @@ export type TGetControllersDTO = {
   logs?: boolean
 
   id?: Controller['id']
-  type?: Controller['type']
   address?: Controller['address']
+  aquarium?: Controller['aquarium']
   status?: Controller['status']
 }
 

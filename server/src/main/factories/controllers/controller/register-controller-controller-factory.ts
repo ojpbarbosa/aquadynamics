@@ -11,7 +11,7 @@ export const registerControllerControllerFactory = (): RegisterControllerControl
   return new RegisterControllerController(
     new CompositeValidation([
       new RequiredFieldValidation('address'),
-      new RequiredFieldValidation('type')
+      new RequiredFieldValidation('aquarium')
     ]),
     new RegisterControllerUseCase(
       findControllersMysqlRepository,

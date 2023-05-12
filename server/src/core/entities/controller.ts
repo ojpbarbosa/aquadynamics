@@ -16,8 +16,8 @@ export enum ControllerStatus {
 
 export interface Controller {
   id: string
-  type: string
   address: string
+  aquarium: string
   status: ControllerStatus
   registeredAt: Date
   updatedAt: Date

@@ -1,9 +1,11 @@
 import { type Controller } from '@core/entities'
-import { type TCreateControllerRepositoryDTO } from '.'
 
-export type TUpdateControllerRepositoryDTO = { id: Controller['id'] } & Partial<
-  Omit<TCreateControllerRepositoryDTO, 'id'>
->
+export type TUpdateControllerRepositoryDTO = {
+  id: Controller['id']
+  address?: Controller['address']
+  aquarium?: Controller['aquarium']
+  status?: Controller['status']
+}
 
 export interface IUpdateControllerRepository {
   update: (data: TUpdateControllerRepositoryDTO) => Promise<Controller>

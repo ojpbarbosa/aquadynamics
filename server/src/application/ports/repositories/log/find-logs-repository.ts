@@ -3,11 +3,13 @@ import { type Controller, type Log } from '@core/entities'
 export type TFindLogsRepositoryParameters = {
   id?: Log['id']
   controllerId?: Controller['id']
+  type?: Log['type']
   data?: Log['data']
+  reading?: Log['reading']
 
   controllers?: boolean
 
-  orderBy?: 'id' | 'data' | 'timestamp' | 'registeredAt' | 'updatedAt'
+  orderBy?: 'id' | 'type' | 'data' | 'reading' | 'timestamp' | 'registeredAt' | 'updatedAt'
   order?: 'asc' | 'desc'
   page?: number
   perPage?: number

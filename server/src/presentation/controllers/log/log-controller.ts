@@ -21,11 +21,13 @@ export class LogController implements IController {
       if (error) return errorResponse(error)
 
       const { id: controllerId } = controller
-      const { data } = request.body
+      const { type, data, reading } = request.body
 
       const { id, timestamp } = await this.logUseCase.log({
+        controllerId,
+        type,
         data,
-        controllerId
+        reading
       })
 
       return createdResponse({
@@ -33,7 +35,7 @@ export class LogController implements IController {
         timestamp
       })
     } catch (error) {
-      console.error('ControllerError: ' + error)
+      console.error('ControllerError: ', error)
       return errorResponse(error)
     }
   }
