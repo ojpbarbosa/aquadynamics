@@ -9,8 +9,10 @@ from json import dumps
 import ubinascii
 
 
+API_URL = 'https://aquabotics-core-api.onrender.com/api'
+
 NETWORK_SSID = 'AquaDynamics'
-NETWORK_PASSWORD = 'peixes23'
+NETWORK_PASSWORD = 'AquaDynamics'
 
 sta_if = network.WLAN(network.STA_IF)
 if not sta_if.isconnected():
@@ -25,32 +27,52 @@ if not sta_if.isconnected():
 
 print(f'\nConnected to {NETWORK_SSID} successfully!')
 
-headers = {"address": ubinascii.hexlify(sta_if.config(
-    'mac')).decode().lower(), "content-type": "application/json"}
-data = (dumps({"name": "temperature1"})).encode()
 
-print(headers, data)
+def make_request(endpoint, method='get', data=None):
+    headers = {'address': ubinascii.hexlify(sta_if.config(
+        'mac')).decode().lower(), 'content-type': 'application/json'}
 
-res = urequests.post(
-    "https://aquabotics-core-api.onrender.com/devices", headers=headers, data=data)
-print(res.text)
+    data = (dumps(data)).encode()
 
-ds_pin = Pin(4)
-ds_sensor = DS18X20(OneWire(ds_pin))
+    response = urequests.request(
+        method, API_URL + endpoint, headers=headers, data=data)
 
-roms = ds_sensor.scan()
-print('Found DS devices: ', roms)
+    print(response.text)
 
-while True:
-    ds_sensor.convert_temp()
-    sleep(0.75)
-    for rom in roms:
-        data = {"sensor": {"model": "ds18b20", "details": "temperature"},
-                "reading": ds_sensor.read_temp(rom)}
-        data = (dumps(data)).encode()
-        headers = {"address": ubinascii.hexlify(sta_if.config(
-            'mac')).decode().lower(), "content-type": "application/json"}
-        res = urequests.post(
-            "https://aquabotics-core-api.onrender.com/logs", headers=headers, data=data)
-        print(res)
-    sleep(10)
+
+try:
+    make_request('/controllers', 'post', data={'aquarium': '1'})
+    make_request('/controllers?state=booting', 'patch')
+
+    temperature_sensors_pin = Pin(26)
+    temperature_sensors = DS18X20(OneWire(temperature_sensors_pin))
+
+    roms = temperature_sensors.scan()
+    print('[LOG] Found DS devices: ', roms)
+
+    make_request('/controllers?state=logging', 'patch')
+
+    while True:
+        temperature_sensors.convert_temp()
+        sleep(1)
+
+        data = {
+            'type': 'temperature-sensor-reading',
+        }
+        temperature_avarage = 0
+
+        for rom in roms:
+            data = {
+                **data, 'reading': {**{ubinascii.hexlify(rom).decode().lower(): temperature_sensors.read_temp(rom)}}}
+
+            temperature_avarage += temperature_sensors.read_temp(rom)
+
+        # TODO: properly set data/data and data/reading according to temperature sensor data
+
+        make_request('/logs', 'post', data=data)
+
+        sleep(1 * 5 * 60 - 1)  # sleep for 5 minutes
+
+except Exception as error:
+    print(error)
+    make_request('/controllers?state=crashed', 'patch')

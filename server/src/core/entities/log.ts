@@ -2,9 +2,9 @@ import { type Controller } from './controller'
 
 export enum LogType {
   Camera = 'camera',
-  Oximeter = 'oximeter',
-  PhSensor = 'ph-sensor',
-  TemperatureSensor = 'temperature-sensor'
+  Oxygen = 'dissolved-oxygen-analyzer-reading',
+  Ph = 'ph-sensor-reading',
+  Temperature = 'temperature-sensor-reading'
 }
 
 export interface Log {
