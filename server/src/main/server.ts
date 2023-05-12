@@ -1,9 +1,9 @@
-import { PORT, setUpApp } from './configuration'
+import { PORT, setUpServer, setUpWebSocket } from './configuration'
 
-const app = setUpApp()
+const server = setUpWebSocket(setUpServer())
 
 const port = PORT || 3030
 
-app.listen(port, () => {
-  console.log(`RESTful API started running on port ${port}!`)
+server.listen(port, () => {
+  console.log(`Server started running on port ${port}!`)
 })
