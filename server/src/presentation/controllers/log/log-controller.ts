@@ -33,7 +33,7 @@ export class LogController implements IController {
         timestamp
       })
     } catch (error) {
-      console.error(error)
+      console.error('ControllerError: ' + error)
       return errorResponse(error)
     }
   }

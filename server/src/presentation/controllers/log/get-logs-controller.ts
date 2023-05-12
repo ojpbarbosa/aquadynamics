@@ -48,7 +48,7 @@ export class GetLogsController implements IController {
         })
       )
     } catch (error) {
-      console.error(error)
+      console.error('ControllerError: ' + error)
       return errorResponse(error)
     }
   }
