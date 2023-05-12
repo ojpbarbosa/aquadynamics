@@ -17,7 +17,7 @@ export class LogMysqlRepositories implements ILogRepositories {
 
   async find(parameters: TFindLogsRepositoryParameters): Promise<Log[] | Log> {
     if (parameters) {
-      const { id, deviceId, data, devices, orderBy, order, page, perPage } = parameters
+      const { id, controllerId, data, controllers, orderBy, order, page, perPage } = parameters
 
       let orderOptions = {}
       if (orderBy && order) {
@@ -43,15 +43,15 @@ export class LogMysqlRepositories implements ILogRepositories {
         ...pageOptions
       }
 
-      if (devices)
+      if (controllers)
         Object.assign(options, {
           include: {
-            device: true
+            controller: true
           }
         })
 
       return (await this.prisma.log.findMany({
-        where: { id, deviceId, data },
+        where: { id, controllerId, data },
         ...options
       })) as Log[]
     }

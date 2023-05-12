@@ -1,1 +1,1 @@
-export * from './require-registered-device-middleware-factory'
+export * from './require-registered-controller-middleware-factory'

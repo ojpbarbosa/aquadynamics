@@ -8,9 +8,9 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Device {
+model Controller {
   id           String   @id
-  name         String
+  type         String
   address      String   @unique
   status       String   @default("disconnected")
   registeredAt DateTime @default(now())
@@ -18,17 +18,17 @@ model Device {
 
   logs Log[]
 
-  @@map("devices")
+  @@map("controllers")
 }
 
 model Log {
-  id        String   @id
-  deviceId  String
-  data      String
-  timestamp DateTime @default(now())
+  id           String   @id
+  controllerId String
+  data         String
+  timestamp    DateTime @default(now())
 
-  device Device @relation(fields: [deviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  controller Controller @relation(fields: [controllerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  @@index([deviceId])
+  @@index([controllerId])
   @@map("logs")
 }

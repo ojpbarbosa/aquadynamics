@@ -6,10 +6,10 @@ export type TGetLogsDTO = {
   page?: number
   perPage?: number
 
-  devices?: boolean
+  controllers?: boolean
 
   id?: Log['id']
-  deviceId?: Log['deviceId']
+  controllerId?: Log['controllerId']
 }
 
 export interface IGetLogsUseCase {

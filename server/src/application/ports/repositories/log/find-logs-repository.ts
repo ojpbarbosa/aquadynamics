@@ -1,11 +1,11 @@
-import { type Device, type Log } from '@core/entities'
+import { type Controller, type Log } from '@core/entities'
 
 export type TFindLogsRepositoryParameters = {
   id?: Log['id']
-  deviceId?: Device['id']
+  controllerId?: Controller['id']
   data?: Log['data']
 
-  devices?: boolean
+  controllers?: boolean
 
   orderBy?: 'id' | 'data' | 'timestamp' | 'registeredAt' | 'updatedAt'
   order?: 'asc' | 'desc'

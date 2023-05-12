@@ -1,8 +1,8 @@
-import { type Device, type Log } from '@core/entities'
+import { type Controller, type Log } from '@core/entities'
 
 export type TCreateLogRepositoryDTO = {
   id: Log['id']
-  deviceId: Device['id']
+  controllerId: Controller['id']
   data: Log['data']
   timestamp: Log['timestamp']
 }

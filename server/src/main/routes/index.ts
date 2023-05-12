@@ -1,2 +1,2 @@
-export * from './device-routes'
+export * from './controller-routes'
 export * from './log-routes'

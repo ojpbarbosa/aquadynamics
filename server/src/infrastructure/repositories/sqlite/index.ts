@@ -1,2 +1,2 @@
-export * from './device'
+export * from './controller'
 export * from './log'

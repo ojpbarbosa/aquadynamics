@@ -1,10 +1,10 @@
-import { type Device } from './device'
+import { type Controller } from './controller'
 
 export interface Log {
   id: string
-  deviceId: Device['id']
+  controllerId: Controller['id']
   data: string
   timestamp: Date
 
-  device?: Device
+  controller?: Controller
 }

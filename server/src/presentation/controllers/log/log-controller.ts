@@ -12,20 +12,20 @@ export class LogController implements IController {
 
   async handle(request: IRequest): Promise<IResponse> {
     try {
-      const { device } = request
+      const { controller } = request
 
-      if (!device) return unauthorizedResponse('Unregistered device')
+      if (!controller) return unauthorizedResponse('Unregistered controller')
 
       const error = this.validation.validate(request.body)
 
       if (error) return errorResponse(error)
 
-      const { id: deviceId } = device
+      const { id: controllerId } = controller
       const { data } = request.body
 
       const { id, timestamp } = await this.logUseCase.log({
         data,
-        deviceId
+        controllerId
       })
 
       return createdResponse({

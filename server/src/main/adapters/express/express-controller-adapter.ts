@@ -9,7 +9,7 @@ export const adaptController = (controller: IController) => {
         query: httpRequest.query,
         headers: httpRequest.headers,
         body: httpRequest.body,
-        device: (httpRequest as IRequest).device || undefined
+        controller: (httpRequest as IRequest).controller || undefined
       })
 
       return httpResponse.status(response.statusCode).json(response.body)

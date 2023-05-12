@@ -1,7 +1,7 @@
 import { type Log } from '@core/entities'
 
 export type TLogDTO = {
-  deviceId: Log['deviceId']
+  controllerId: Log['controllerId']
   data: Log['data']
 }
 
