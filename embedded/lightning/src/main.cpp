@@ -17,11 +17,15 @@
 
 #define LDR_PIN A0 // LDR pin definition
 
-// LCD object
+// LCD object initialization
 LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_COLUMNS, LCD_ROWS);
 
-// RTC object
+// RTC object initialization
 RTC_DS1307 rtc;
+
+const int LDR_THRESHOLD = 384;      // LDR threshold value
+const int LIGHTNING_START_HOUR = 8; // start hour for lightning
+const int LIGHTNING_END_HOUR = 16;  // end hour for lightning
 
 bool buttonOverride = false; // button override flag
 String mode = "AUTO";        // mode flag
@@ -30,18 +34,17 @@ void setup()
 {
   // set relay pin as output
   pinMode(RELAY_PIN, OUTPUT);
-  // turn off relay by turning the pin high
+  // turn off relay
   digitalWrite(RELAY_PIN, HIGH);
 
   // initialize RTC
   rtc.begin();
 
-  // if RTC is not running
   if (!rtc.isrunning())
-    // set the time to the compile time
+    // set the time to the compile time, if the RTC is not running
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
 
-  // initialize LCD
+  // initialize LCD and turn on backlight
   lcd.init();
   lcd.backlight();
 
@@ -50,12 +53,12 @@ void setup()
 
   // set green LED pin as output
   pinMode(GREEN_LED_PIN, OUTPUT);
-  // turn on green LED by turning the pin high
+  // turn on green LED by default
   digitalWrite(GREEN_LED_PIN, HIGH);
 
   // set red LED pin as output
   pinMode(RED_LED_PIN, OUTPUT);
-  // turn off red LED by turning the pin high
+  // turn off red LED by default
   digitalWrite(RED_LED_PIN, LOW);
 
   // initialize serial communication
@@ -64,10 +67,9 @@ void setup()
 
 void loop()
 {
-  // get the relay state
   String relayState = digitalRead(RELAY_PIN) ? "OFF" : "ON";
 
-  // get the current time
+  // get the current timestamp
   DateTime timestamp = rtc.now();
 
   // format the current date
@@ -109,50 +111,25 @@ void loop()
   lcd.setCursor(LCD_COLUMNS - mode.length(), 1);
   lcd.print(mode);
 
-  // if the current time is between 6h and 18h and the button is not pressed
-  if (timestamp.hour() >= 6 && timestamp.hour() < 18 && !buttonOverride)
+  // if the current time is between the start and end hours for lightning
+  if (timestamp.hour() >= LIGHTNING_START_HOUR && timestamp.hour() < LIGHTNING_END_HOUR && !buttonOverride)
   {
     // turn on relay by turning the pin low
     digitalWrite(RELAY_PIN, LOW);
 
-    // while the LDR is not detecting light
-    while (analogRead(LDR_PIN) >= 384)
-    {
-      Serial.print("[WARNING]");
-      Serial.print(" Date: ");
-      Serial.print(date);
-      Serial.print(" | Time: ");
-      Serial.print(time);
-      Serial.println(" | Event: Hard reset of the relay");
-
-      // hard reset the relay
-      digitalWrite(RELAY_PIN, HIGH);
-      delay(1000);
-      digitalWrite(RELAY_PIN, LOW);
-      delay(1000);
-    }
+    // while the LDR is detecting light - the light should be on, but it is not
+    while (analogRead(LDR_PIN) >= LDR_THRESHOLD)
+      hard_reset_relay()
   }
+
   else if (!buttonOverride)
   {
     // turn off relay by turning the pin high
     digitalWrite(RELAY_PIN, HIGH);
 
-    // while the LDR is detecting light
-    while (analogRead(LDR_PIN) < 384)
-    {
-      Serial.print("[WARNING]");
-      Serial.print(" Date: ");
-      Serial.print(date);
-      Serial.print(" | Time: ");
-      Serial.print(time);
-      Serial.println(" | Event: Hard reset of the relay");
-
-      // hard reset the relay
-      digitalWrite(RELAY_PIN, LOW);
-      delay(1000);
-      digitalWrite(RELAY_PIN, HIGH);
-      delay(1000);
-    }
+    // while the LDR is detecting light - the light should be off, but it is not
+    while (analogRead(LDR_PIN) < LDR_THRESHOLD)
+      hard_reset_relay()
   }
 
   // if the button is pressed
@@ -183,5 +160,23 @@ void loop()
   }
 
   // wait for 1 second
+  delay(1000);
+}
+
+// method to hard reset the relay in order to fix mechanical issues
+void hard_reset_relay()
+{
+  // print the event to the serial monitor
+  Serial.print("[WARNING]");
+  Serial.print(" Date: ");
+  Serial.print(date);
+  Serial.print(" | Time: ");
+  Serial.print(time);
+  Serial.println(" | Event: Hard reset of the relay");
+
+  // hard reset the relay - turn it off and then on
+  digitalWrite(RELAY_PIN, LOW);
+  delay(1000);
+  digitalWrite(RELAY_PIN, HIGH);
   delay(1000);
 }
