@@ -2,8 +2,8 @@ import { RegisterDeviceController } from '@presentation/controllers'
 import { CompositeValidation, RequiredFieldValidation } from '@presentation/validation'
 import { RegisterDeviceUseCase } from '@application/use-cases'
 import {
-  createDeviceSqliteRepository,
-  findDevicesSqliteRepository
+  createDeviceMysqlRepository,
+  findDevicesMysqlRepository
 } from '@infrastructure/repositories'
 import { cryptoJsCryptographyProvider, uuidUniqueIdProvider } from '@infrastructure/providers'
 
@@ -14,9 +14,9 @@ export const registerDeviceControllerFactory = (): RegisterDeviceController => {
       new RequiredFieldValidation('name')
     ]),
     new RegisterDeviceUseCase(
-      findDevicesSqliteRepository,
+      findDevicesMysqlRepository,
       cryptoJsCryptographyProvider,
-      createDeviceSqliteRepository,
+      createDeviceMysqlRepository,
       uuidUniqueIdProvider
     )
   )

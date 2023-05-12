@@ -1,7 +1,7 @@
 import { SetDeviceStatusController } from '@presentation/controllers'
 import { RequiredFieldValidation } from '@presentation/validation'
 import { SetDeviceStatusUseCase } from '@application/use-cases'
-import { updateDeviceSqliteRepository } from '@infrastructure/repositories'
+import { updateDeviceMysqlRepository } from '@infrastructure/repositories'
 
 export const setDeviceStatusControllerFactory = (): SetDeviceStatusController => {
   return new SetDeviceStatusController(
@@ -9,6 +9,6 @@ export const setDeviceStatusControllerFactory = (): SetDeviceStatusController =>
       type: 'string',
       values: ['connected', 'disconnected']
     }),
-    new SetDeviceStatusUseCase(updateDeviceSqliteRepository)
+    new SetDeviceStatusUseCase(updateDeviceMysqlRepository)
   )
 }
