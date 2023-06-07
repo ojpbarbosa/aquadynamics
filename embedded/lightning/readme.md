@@ -6,6 +6,7 @@
   <h2>To-do</h2>
   <ul>
     <li>Implement RTC NVRAM data logging and redundancy</li>
+    <li>Move functions to other files and use headers</li>
   </ul>
 
   <h2>References</h2>
