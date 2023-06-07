@@ -100,6 +100,21 @@ void verify_mechanical_relay_issues(bool (*is_lightning_wrong)())
   }
 }
 
+bool is_lightning_time()
+{
+  // get the current timestamp
+  DateTime timestamp = rtc.now();
+
+  int hour = timestamp.hour();
+  int minute = timestamp.minute();
+
+  int current_time = hour * 60 + minute;
+  int lightning_start_time = LIGHTNING_START_HOUR * 60 + LIGHTNING_START_MINUTE;
+  int lightning_end_time = LIGHTNING_END_HOUR * 60 + LIGHTNING_END_MINUTE;
+
+  return current_time >= lightning_start_time && current_time <= lightning_end_time;
+}
+
 void setup()
 {
   // set relay pin as output
@@ -129,21 +144,6 @@ void setup()
 
   // initialize serial communication
   Serial.begin(9600);
-}
-
-bool is_lightning_time()
-{
-  // get the current timestamp
-  DateTime timestamp = rtc.now();
-
-  int hour = timestamp.hour();
-  int minute = timestamp.minute();
-
-  int current_time = hour * 60 + minute;
-  int lightning_start_time = LIGHTNING_START_HOUR * 60 + LIGHTNING_START_MINUTE;
-  int lightning_end_time = LIGHTNING_END_HOUR * 60 + LIGHTNING_END_MINUTE;
-
-  return current_time >= lightning_start_time && current_time <= lightning_end_time;
 }
 
 void loop()

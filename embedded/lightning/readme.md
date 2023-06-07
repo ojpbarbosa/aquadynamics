@@ -7,6 +7,7 @@
   <ul>
     <li>Implement RTC NVRAM data logging and redundancy</li>
     <li>Move functions to other files and use headers</li>
+    <li>Add missing comments and improve existing ones</li>
   </ul>
 
   <h2>References</h2>
