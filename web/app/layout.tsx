@@ -1,3 +1,4 @@
+import { Footer } from '@/components/layout/footer'
 import './globals.css'
 import { Inter } from 'next/font/google'
 
@@ -10,7 +11,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <main className="h-[95vh]">{children}</main>
+        <Footer />
+      </body>
     </html>
   )
 }
