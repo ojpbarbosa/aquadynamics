@@ -11,7 +11,10 @@ export class LogMysqlRepositories implements ILogRepositories {
 
   async create(data: TCreateLogRepositoryDTO): Promise<Log> {
     return (await this.prisma.log.create({
-      data
+      data,
+      include: {
+        controller: true
+      }
     })) as Log
   }
 

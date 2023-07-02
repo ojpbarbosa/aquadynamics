@@ -24,7 +24,6 @@ export const setUpLogPostRoute = (router: Router, webSocketServer: IWebSocketSer
   router.post(
     '/api/logs',
     adaptMiddleware(requireRegisteredControllerMiddlewareFactory()),
-    adaptController(logControllerFactory()),
-    adaptMiddleware(emitLogViaWebSocketMiddleware(webSocketServer))
+    adaptController(logControllerFactory(), emitLogViaWebSocketMiddleware(webSocketServer))
   )
 }

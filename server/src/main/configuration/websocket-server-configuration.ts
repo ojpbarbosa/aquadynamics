@@ -16,13 +16,6 @@ export const setUpWebSocketServer = (server: Express): WebSocketServerSetup => {
     }
   })
 
-  webSocketServer.on('connection', (socket) => {
-    console.log('WebSocket: Client connected')
-    socket.on('disconnect', () => {
-      console.log('WebSocket: Client disconnected')
-    })
-  })
-
   return {
     httpServer,
     webSocketServer
