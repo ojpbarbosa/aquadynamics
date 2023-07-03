@@ -3,7 +3,7 @@ import { type Request as HttpRequest, type Response as HttpResponse } from 'expr
 
 export const adaptController = (
   controller: IController,
-  postControllerMiddleware?: IMiddleware
+  afterControllerMiddleware?: IMiddleware
 ) => {
   return async (httpRequest: HttpRequest, httpResponse: HttpResponse) => {
     try {
@@ -17,10 +17,10 @@ export const adaptController = (
 
       const response = await controller.handle(request)
 
-      await postControllerMiddleware?.handle(request, response)
+      await afterControllerMiddleware?.handle(request, response)
 
       return httpResponse.status(response.statusCode).json(response.body)
-    } catch (e) {
+    } catch {
       return httpResponse.status(500).json({ error: 'Internal server error' })
     }
   }
