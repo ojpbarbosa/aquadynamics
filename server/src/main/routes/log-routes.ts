@@ -12,12 +12,6 @@ export const setUpLogRoutes = (router: Router): void => {
   router.get('/logs/:id', adaptController(getLogsControllerFactory()))
   router.get('/controllers/:controllerId/logs', adaptController(getLogsControllerFactory()))
   router.get('/controllers/:controllerId/logs/:id', adaptController(getLogsControllerFactory()))
-
-  // router.post(
-  //   '/logs',
-  //   adaptMiddleware(requireRegisteredControllerMiddlewareFactory()),
-  //   adaptController(logControllerFactory())
-  // )
 }
 
 export const setUpLogPostRoute = (router: Router, webSocketServer: IWebSocketServer): void => {

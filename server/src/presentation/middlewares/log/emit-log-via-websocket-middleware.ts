@@ -17,6 +17,6 @@ export class EmitLogViaWebSocketMiddleware implements IMiddleware {
 
     this.webSocketServer.emit('log', log)
 
-    return okResponse(response.body)
+    return okResponse(log)
   }
 }

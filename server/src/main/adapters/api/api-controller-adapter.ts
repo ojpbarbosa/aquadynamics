@@ -1,4 +1,4 @@
-import { IMiddleware, type IController, type IRequest } from '@application/ports/presentation'
+import { type IMiddleware, type IController, type IRequest } from '@application/ports/presentation'
 import { type Request as HttpRequest, type Response as HttpResponse } from 'express'
 
 export const adaptController = (
@@ -20,7 +20,7 @@ export const adaptController = (
       await postControllerMiddleware?.handle(request, response)
 
       return httpResponse.status(response.statusCode).json(response.body)
-    } catch {
+    } catch (e) {
       return httpResponse.status(500).json({ error: 'Internal server error' })
     }
   }
