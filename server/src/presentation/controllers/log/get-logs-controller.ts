@@ -8,8 +8,18 @@ export class GetLogsController implements IController {
 
   async handle(request: IRequest): Promise<IResponse> {
     try {
-      const { id, aquariumId, controllerId } = request.parameters
-      const { temperature, ph, lightning, orderBy, order, page, perPage } = request.query
+      const { id } = request.parameters
+      const {
+        aquariumId,
+        controllerId,
+        temperature,
+        ph,
+        lightning,
+        orderBy,
+        order,
+        page,
+        perPage
+      } = request.query
       let { aquariums, controllers } = request.query
 
       aquariums = aquariums === 'true' || aquariums === 'false' ? JSON.parse(aquariums) : undefined
