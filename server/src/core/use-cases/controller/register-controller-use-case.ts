@@ -1,8 +1,8 @@
-import { type Controller } from '@core/entities'
+import { type Aquarium, type Controller } from '@core/entities'
 
 export type TRegisterControllerDTO = {
   address: Controller['address']
-  aquarium: Controller['aquarium']
+  aquariumId: Aquarium['id']
 }
 
 export interface IRegisterControllerUseCase {

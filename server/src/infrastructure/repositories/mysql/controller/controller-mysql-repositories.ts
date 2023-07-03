@@ -18,7 +18,7 @@ export class ControllerMysqlRepositories implements IControllerRepositories {
 
   async find(parameters: TFindControllersRepositoryParameters): Promise<Controller[] | Controller> {
     if (parameters) {
-      const { id, aquarium, status, logs, orderBy, order, page, perPage } = parameters
+      const { id, aquariumId, status, aquariums, logs, orderBy, order, page, perPage } = parameters
 
       let orderOptions = {}
       if (orderBy && order) {
@@ -44,6 +44,14 @@ export class ControllerMysqlRepositories implements IControllerRepositories {
         ...pageOptions
       }
 
+      // todo: verify if assignment is correct
+      if (aquariums)
+        Object.assign(options, {
+          include: {
+            aquarium: true
+          }
+        })
+
       if (logs)
         Object.assign(options, {
           include: {
@@ -52,7 +60,7 @@ export class ControllerMysqlRepositories implements IControllerRepositories {
         })
 
       return (await this.prisma.controller.findMany({
-        where: { id, aquarium, status },
+        where: { id, aquariumId, status },
         ...options
       })) as Controller[]
     }
@@ -61,11 +69,11 @@ export class ControllerMysqlRepositories implements IControllerRepositories {
   }
 
   async update(data: TUpdateControllerRepositoryDTO): Promise<Controller> {
-    const { id, aquarium, address, status } = data
+    const { id, aquariumId, address, status } = data
 
     return (await this.prisma.controller.update({
       where: { id },
-      data: { aquarium, address, status }
+      data: { aquariumId, address, status }
     })) as Controller
   }
 }

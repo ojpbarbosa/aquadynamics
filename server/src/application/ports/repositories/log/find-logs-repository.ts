@@ -1,18 +1,20 @@
-import { type Controller, type Log } from '@core/entities'
+import { type Aquarium, type Log } from '@core/entities'
 
 export type TFindLogsRepositoryParameters = {
-  id?: Log['id']
-  controllerId?: Controller['id']
-  type?: Log['type']
-  data?: Log['data']
-  reading?: Log['reading']
-
-  controllers?: boolean
-
-  orderBy?: 'id' | 'type' | 'data' | 'reading' | 'timestamp' | 'registeredAt' | 'updatedAt'
+  orderBy?: 'temperature' | 'ph' | 'lightning' | 'timestamp'
   order?: 'asc' | 'desc'
   page?: number
   perPage?: number
+
+  aquariums?: boolean
+  controllers?: boolean
+
+  id?: Log['id']
+  aquariumId?: Aquarium['id']
+  controllerId?: Log['controllerId']
+  temperature?: Log['temperature']
+  ph?: Log['ph']
+  lightning?: Log['lightning']
 }
 
 export interface IFindLogsRepository {

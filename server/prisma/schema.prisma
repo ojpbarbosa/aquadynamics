@@ -23,8 +23,8 @@ model Controller {
   id           String   @id
   address      String
   aquariumId   String   @unique
-  status       String
-  registeredAt DateTime
+  status       String   @default("unknown")
+  registeredAt DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
   logs     Log[]
@@ -40,7 +40,7 @@ model Log {
   temperature  Float
   ph           Float
   lightning    Boolean
-  timestamp    DateTime @default(now())
+  timestamp    DateTime
 
   aquarium   Aquarium   @relation(fields: [aquariumId], references: [id])
   controller Controller @relation(fields: [controllerId], references: [id])

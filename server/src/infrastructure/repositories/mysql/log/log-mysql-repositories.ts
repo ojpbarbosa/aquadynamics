@@ -20,8 +20,20 @@ export class LogMysqlRepositories implements ILogRepositories {
 
   async find(parameters: TFindLogsRepositoryParameters): Promise<Log[] | Log> {
     if (parameters) {
-      const { id, controllerId, type, data, reading, controllers, orderBy, order, page, perPage } =
-        parameters
+      const {
+        id,
+        aquariumId,
+        controllerId,
+        temperature,
+        ph,
+        lightning,
+        aquariums,
+        controllers,
+        orderBy,
+        order,
+        page,
+        perPage
+      } = parameters
 
       let orderOptions = {}
       if (orderBy && order) {
@@ -47,6 +59,14 @@ export class LogMysqlRepositories implements ILogRepositories {
         ...pageOptions
       }
 
+      // todo: verify if assignment is correct
+      if (aquariums)
+        Object.assign(options, {
+          include: {
+            aquarium: true
+          }
+        })
+
       if (controllers)
         Object.assign(options, {
           include: {
@@ -55,7 +75,7 @@ export class LogMysqlRepositories implements ILogRepositories {
         })
 
       return (await this.prisma.log.findMany({
-        where: { id, controllerId, type, data, reading },
+        where: { id, aquariumId, controllerId, temperature, ph, lightning },
         ...options
       })) as Log[]
     }

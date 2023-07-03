@@ -10,14 +10,9 @@ export class LogUseCase implements ILogUseCase {
   ) {}
 
   async log(data: TLogDTO): Promise<Log> {
-    const { controllerId, type, data: logData, reading } = data
-
     return await this.createLogRepository.create({
       id: this.uniqueIdProvider.generate(),
-      controllerId,
-      type,
-      data: logData,
-      reading,
+      ...data,
       timestamp: new Date()
     })
   }

@@ -30,12 +30,12 @@ export class RegisterControllerUseCase implements IRegisterControllerUseCase {
     )
       throw new ConflictError('Controller already exists')
 
-    const { aquarium } = data
+    const { aquariumId } = data
 
     return await this.createControllerRepository.create({
       id: this.uniqueIdProvider.generate(),
       address: this.cryptographyProvider.encrypt(address, CONTROLLER_ENCRYPTION_KEY as string),
-      aquarium
+      aquariumId
     })
   }
 }

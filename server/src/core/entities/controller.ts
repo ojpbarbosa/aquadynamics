@@ -11,11 +11,11 @@ export type ControllerStatus =
 export interface Controller {
   id: string
   address: string
-  aquariumId: string
+  aquariumId: Aquarium['id']
   status: ControllerStatus
   registeredAt: Date
   updatedAt: Date
 
   logs?: Log[]
-  aquarium: Aquarium
+  aquarium?: Aquarium
 }

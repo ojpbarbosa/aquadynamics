@@ -1,16 +1,17 @@
-import { type Controller } from '@core/entities'
+import { type Aquarium, type Controller } from '@core/entities'
 
 export type TGetControllersDTO = {
-  orderBy?: 'id' | 'aquarium' | 'status' | 'registeredAt' | 'updatedAt'
+  orderBy?: 'registeredAt' | 'updatedAt'
   order?: 'asc' | 'desc'
   page?: number
   perPage?: number
 
+  aquariums?: Controller['aquarium']
   logs?: boolean
 
   id?: Controller['id']
   address?: Controller['address']
-  aquarium?: Controller['aquarium']
+  aquariumId?: Aquarium['id']
   status?: Controller['status']
 }
 

@@ -1,9 +1,9 @@
-import { type Controller } from '@core/entities'
+import { type Aquarium, type Controller } from '@core/entities'
 
 export type TUpdateControllerRepositoryDTO = {
   id: Controller['id']
   address?: Controller['address']
-  aquarium?: Controller['aquarium']
+  aquariumId?: Aquarium['id']
   status?: Controller['status']
 }
 

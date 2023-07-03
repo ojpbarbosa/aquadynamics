@@ -1,11 +1,12 @@
-import { type Controller, type Log } from '@core/entities'
+import { type Aquarium, type Controller, type Log } from '@core/entities'
 
 export type TCreateLogRepositoryDTO = {
   id: Log['id']
+  aquariumId: Aquarium['id']
   controllerId: Controller['id']
-  type: Log['type']
-  data?: Log['data']
-  reading?: Log['reading']
+  temperature: Log['temperature']
+  ph: Log['ph']
+  lightning: Log['lightning']
   timestamp: Log['timestamp']
 }
 
