@@ -6,5 +6,5 @@ export interface Aquarium {
   registeredAt: Date
 
   logs?: Log[]
-  controllers?: Controller[]
+  controller?: Controller
 }

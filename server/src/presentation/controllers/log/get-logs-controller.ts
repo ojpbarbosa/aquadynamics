@@ -1,38 +1,29 @@
-import {
-  type IValidator,
-  type IController,
-  type IRequest,
-  type IResponse
-} from '@application/ports/presentation'
+import { type IController, type IRequest, type IResponse } from '@application/ports/presentation'
 import { type IGetLogsUseCase } from '@core/use-cases'
-import { type Log } from '@core/entities'
+import { type Controller, type Log } from '@core/entities'
 import { errorResponse, okResponse } from '@presentation/responses'
 
 export class GetLogsController implements IController {
-  constructor(
-    private readonly validator: IValidator,
-    private readonly getLogsUseCase: IGetLogsUseCase
-  ) {}
+  constructor(private readonly getLogsUseCase: IGetLogsUseCase) {}
 
   async handle(request: IRequest): Promise<IResponse> {
     try {
-      const { id, controllerId } = request.parameters
-      const { type, orderBy, order, page, perPage } = request.query
-      let { controllers } = request.query
+      const { id, aquariumId, controllerId } = request.parameters
+      const { temperature, ph, lightning, orderBy, order, page, perPage } = request.query
+      let { aquariums, controllers } = request.query
 
-      if (type) {
-        const error = this.validator.validate({ type })
-
-        if (error) return errorResponse(error)
-      }
-
+      aquariums = aquariums === 'true' || aquariums === 'false' ? JSON.parse(aquariums) : undefined
       controllers =
         controllers === 'true' || controllers === 'false' ? JSON.parse(controllers) : undefined
 
       const logs = (await this.getLogsUseCase.get({
         id,
-        type,
+        aquariumId,
         controllerId,
+        temperature,
+        ph,
+        lightning,
+        aquariums,
         controllers,
         orderBy,
         order,
@@ -41,27 +32,25 @@ export class GetLogsController implements IController {
       })) as Log[]
 
       return okResponse(
-        logs.map((log) => {
-          const data = {
-            id: log.id,
-            controllerId: log.controllerId,
-            type: log.type,
-            data: log.data,
-            reading: log.reading,
-            timestamp: log.timestamp
+        logs.map((log: Partial<Log>) => {
+          const { controller }: { controller?: Partial<Controller> } = log
+          if (controllers && controller) {
+            delete controller.address
+            delete controller.aquarium
+            delete controller.logs
+
+            Object.assign(log, { controller })
           }
 
-          if (controllers && log.controller)
-            Object.assign(data, {
-              controller: {
-                aquarium: log.controller.aquarium,
-                status: log.controller.status,
-                registeredAt: log.controller.registeredAt,
-                updatedAt: log.controller.updatedAt
-              }
-            })
+          const { aquarium } = log
+          if (aquariums && aquarium) {
+            delete aquarium.controller
+            delete aquarium.logs
 
-          return data
+            Object.assign(log, { aquarium })
+          }
+
+          return log
         })
       )
     } catch (error) {

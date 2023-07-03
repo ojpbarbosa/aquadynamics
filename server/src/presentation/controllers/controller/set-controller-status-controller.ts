@@ -44,6 +44,7 @@ export class SetControllerStatusController implements IController {
       return controller.status === status
         ? okResponse({
             id,
+            aquariumId: controller.aquariumId,
             status: controller.status,
             updatedAt: controller.updatedAt
           })

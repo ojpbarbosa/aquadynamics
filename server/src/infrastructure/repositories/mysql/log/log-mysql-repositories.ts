@@ -59,20 +59,14 @@ export class LogMysqlRepositories implements ILogRepositories {
         ...pageOptions
       }
 
-      // todo: verify if assignment is correct
-      if (aquariums)
+      if (aquariums || controllers) {
         Object.assign(options, {
           include: {
-            aquarium: true
+            aquarium: aquariums || false,
+            controller: controllers || false
           }
         })
-
-      if (controllers)
-        Object.assign(options, {
-          include: {
-            controller: true
-          }
-        })
+      }
 
       return (await this.prisma.log.findMany({
         where: { id, aquariumId, controllerId, temperature, ph, lightning },

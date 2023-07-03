@@ -4,13 +4,17 @@ import { type IValidator } from '@application/ports/presentation'
 import { malformattedParameterError, missingParameterError } from '@presentation/errors'
 
 export class UniqueIdValidation implements IValidator {
+  constructor(private field?: string) {}
+
   validate(data: { id: string }): DefaultError | undefined {
-    if (!data.id) {
-      return missingParameterError('id')
+    if (!this.field) this.field = 'id'
+
+    if (!data[this.field]) {
+      return missingParameterError(this.field)
     }
 
-    if (!isUniqueId(data.id)) {
-      return malformattedParameterError('id')
+    if (!isUniqueId(data[this.field])) {
+      return malformattedParameterError(this.field)
     }
   }
 }

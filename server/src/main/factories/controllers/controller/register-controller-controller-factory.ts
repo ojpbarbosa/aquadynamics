@@ -1,5 +1,5 @@
 import { RegisterControllerController } from '@presentation/controllers'
-import { CompositeValidation, RequiredFieldValidation } from '@presentation/validation'
+import { UniqueIdValidation } from '@presentation/validation'
 import { RegisterControllerUseCase } from '@application/use-cases'
 import {
   createControllerMysqlRepository,
@@ -9,10 +9,7 @@ import { cryptoJsCryptographyProvider, uuidUniqueIdProvider } from '@infrastruct
 
 export const registerControllerControllerFactory = (): RegisterControllerController => {
   return new RegisterControllerController(
-    new CompositeValidation([
-      new RequiredFieldValidation('address'),
-      new RequiredFieldValidation('aquarium')
-    ]),
+    new UniqueIdValidation('aquariumId'),
     new RegisterControllerUseCase(
       findControllersMysqlRepository,
       cryptoJsCryptographyProvider,

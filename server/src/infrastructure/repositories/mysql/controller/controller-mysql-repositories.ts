@@ -44,20 +44,14 @@ export class ControllerMysqlRepositories implements IControllerRepositories {
         ...pageOptions
       }
 
-      // todo: verify if assignment is correct
-      if (aquariums)
+      if (aquariums || logs) {
         Object.assign(options, {
           include: {
-            aquarium: true
+            aquarium: aquariums || false,
+            logs: logs || false
           }
         })
-
-      if (logs)
-        Object.assign(options, {
-          include: {
-            logs: true
-          }
-        })
+      }
 
       return (await this.prisma.controller.findMany({
         where: { id, aquariumId, status },

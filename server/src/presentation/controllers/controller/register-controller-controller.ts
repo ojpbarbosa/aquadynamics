@@ -16,24 +16,29 @@ export class RegisterControllerController implements IController {
   async handle(request: IRequest): Promise<IResponse> {
     try {
       const { address } = request.headers
-      const { aquarium } = request.body
+      const { aquariumId } = request.body
 
       const error = this.validation.validate({
         address,
-        aquarium
+        aquariumId
       })
 
       if (error) return errorResponse(error)
 
-      const { id, status, registeredAt } = await this.registerControllerUseCase.register({
-        address,
-        aquarium
-      })
+      const { id, status, registeredAt, updatedAt, aquarium, logs } =
+        await this.registerControllerUseCase.register({
+          address,
+          aquariumId
+        })
 
       return createdResponse({
         id,
+        aquariumId,
         status,
-        registeredAt
+        registeredAt,
+        updatedAt,
+        aquarium,
+        logs
       })
     } catch (error) {
       console.error('ControllerError: ', error)

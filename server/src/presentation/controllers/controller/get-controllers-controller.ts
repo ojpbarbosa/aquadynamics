@@ -17,8 +17,8 @@ export class GetControllersController implements IController {
   async handle(request: IRequest): Promise<IResponse> {
     try {
       const { id } = request.parameters
-      const { aquarium, address, status, orderBy, order, page, perPage } = request.query
-      let { logs } = request.query
+      const { aquariumId, address, status, orderBy, order, page, perPage } = request.query
+      let { aquariums, logs } = request.query
 
       if (status) {
         const error = this.validator.validate({ status })
@@ -26,13 +26,15 @@ export class GetControllersController implements IController {
         if (error) return errorResponse(error)
       }
 
+      aquariums = aquariums === 'true' || aquariums === 'false' ? JSON.parse(aquariums) : undefined
       logs = logs === 'true' || logs === 'false' ? JSON.parse(logs) : undefined
 
       const controllers = (await this.getControllersUseCase.get({
         id,
-        aquarium,
+        aquariumId,
         address,
         status,
+        aquariums,
         logs,
         orderBy,
         order,
@@ -41,27 +43,28 @@ export class GetControllersController implements IController {
       })) as Controller[]
 
       return okResponse(
-        controllers.map((controller) => {
-          const data = {
-            id: controller.id,
-            aquarium: controller.aquarium,
-            status: controller.status,
-            registeredAt: controller.registeredAt,
-            updatedAt: controller.updatedAt
-          }
+        controllers.map((controller: Partial<Controller>) => {
+          delete controller.address
 
           if (logs && controller.logs)
-            Object.assign(data, {
-              logs: controller.logs.map((log) => ({
-                id: log.id,
-                type: log.type,
-                data: log.data,
-                reading: log.reading,
-                timestamp: log.timestamp
-              }))
+            Object.assign(controller, {
+              logs: controller.logs.map((log) => {
+                delete log.controller
+
+                return log
+              })
             })
 
-          return data
+          const { aquarium } = controller
+          if (aquariums && aquarium) {
+            delete aquarium.controller
+
+            Object.assign(controller, {
+              aquarium
+            })
+          }
+
+          return controller
         })
       )
     } catch (error) {

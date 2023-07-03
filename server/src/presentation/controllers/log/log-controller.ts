@@ -11,15 +11,20 @@ export class LogController implements IController {
 
       if (!controller) return unauthorizedResponse('Unregistered controller')
 
-      const { id: controllerId } = controller
-      const { type, data, reading } = request.body
+      const { id: controllerId, aquariumId } = controller
+      const { temperature, ph, lightning, timestamp } = request.body
 
       const log = await this.logUseCase.log({
+        aquariumId,
         controllerId,
-        type,
-        data,
-        reading
+        temperature,
+        ph,
+        lightning,
+        timestamp
       })
+
+      delete log.aquarium
+      delete log.controller
 
       return createdResponse(log)
     } catch (error) {

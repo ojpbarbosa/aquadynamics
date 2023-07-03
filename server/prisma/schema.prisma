@@ -14,7 +14,7 @@ model Aquarium {
   registeredAt DateTime @default(now())
 
   controller Controller?
-  Log        Log[]
+  logs       Log[]
 
   @@map("aquariums")
 }

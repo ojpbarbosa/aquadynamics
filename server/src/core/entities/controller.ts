@@ -1,12 +1,15 @@
 import { type Aquarium, type Log } from '.'
 
-export type ControllerStatus =
-  | 'unknown'
-  | 'booting'
-  | 'idling'
-  | 'logging'
-  | 'restarting'
-  | 'crashed'
+export const controllerStatuses = [
+  'unknown',
+  'booting',
+  'idling',
+  'logging',
+  'restarting',
+  'crashed'
+] as const
+
+export type ControllerStatus = (typeof controllerStatuses)[number]
 
 export interface Controller {
   id: string
