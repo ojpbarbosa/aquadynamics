@@ -1,26 +1,21 @@
-import { type Log } from './log'
+import { type Aquarium, type Log } from '.'
 
-export enum ControllerStatus {
-  Booting = 'booting',
-  Crashed = 'crashed',
-  Idling = 'idling',
-  Loading = 'loading',
-  Logging = 'logging',
-  Offline = 'offline',
-  Restarting = 'restarting',
-  Stopping = 'stopping',
-  Unreachable = 'unreachable',
-  Unknown = 'unknown',
-  Updating = 'updating'
-}
+export type ControllerStatus =
+  | 'unknown'
+  | 'booting'
+  | 'idling'
+  | 'logging'
+  | 'restarting'
+  | 'crashed'
 
 export interface Controller {
   id: string
   address: string
-  aquarium: string
+  aquariumId: string
   status: ControllerStatus
   registeredAt: Date
   updatedAt: Date
 
   logs?: Log[]
+  aquarium: Aquarium
 }

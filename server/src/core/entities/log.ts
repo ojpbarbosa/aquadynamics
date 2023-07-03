@@ -1,19 +1,14 @@
-import { type Controller } from './controller'
-
-export enum LogType {
-  Camera = 'camera',
-  Oxygen = 'dissolved-oxygen-analyzer-reading',
-  Ph = 'ph-sensor-reading',
-  Temperature = 'temperature-sensor-reading'
-}
+import { type Aquarium, type Controller } from '.'
 
 export interface Log {
   id: string
+  aquariumId: Aquarium['id']
   controllerId: Controller['id']
-  type: LogType
-  data?: object
-  reading?: object
+  temperature: number
+  ph: number
+  lightning: boolean
   timestamp: Date
 
+  aquarium?: Aquarium
   controller?: Controller
 }

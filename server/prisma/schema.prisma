@@ -8,29 +8,44 @@ datasource db {
   relationMode = "prisma"
 }
 
+model Aquarium {
+  id           String   @id
+  name         String   @unique
+  registeredAt DateTime @default(now())
+
+  controller Controller?
+  Log        Log[]
+
+  @@map("aquariums")
+}
+
 model Controller {
   id           String   @id
-  address      String   @unique
-  aquarium     String
-  status       String   @default("unknown")
-  registeredAt DateTime @default(now())
+  address      String
+  aquariumId   String   @unique
+  status       String
+  registeredAt DateTime
   updatedAt    DateTime @updatedAt
 
-  logs Log[]
+  logs     Log[]
+  aquarium Aquarium @relation(fields: [aquariumId], references: [id])
 
   @@map("controllers")
 }
 
 model Log {
   id           String   @id
+  aquariumId   String
   controllerId String
-  type         String
-  data         Json?
-  reading      Json?
+  temperature  Float
+  ph           Float
+  lightning    Boolean
   timestamp    DateTime @default(now())
 
-  controller Controller @relation(fields: [controllerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  aquarium   Aquarium   @relation(fields: [aquariumId], references: [id])
+  controller Controller @relation(fields: [controllerId], references: [id])
 
+  @@index([aquariumId])
   @@index([controllerId])
   @@map("logs")
 }
