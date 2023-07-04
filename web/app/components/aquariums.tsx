@@ -5,7 +5,7 @@ import { getAquariums } from '@/library/api'
 import { use } from 'react'
 
 export default function Aquariums() {
-  const aquariums = use(getAquariums())
+  const aquariums = use(getAquariums({ include: { logs: true } }))
 
   return (
     <>

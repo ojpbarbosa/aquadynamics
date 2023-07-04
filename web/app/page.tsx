@@ -1,13 +1,13 @@
 'use client'
 
 import Aquariums from './components/aquariums'
-import AquariumsSkeleton from './components/aquarium-card-skeleton'
+import AquariumsSkeleton from './components/aquariums-skeleton'
 import { Suspense } from 'react'
 
 export default function Home() {
   return (
     <div className="flex w-screen h-full items-start justify-center sm:justify-around">
-      <div className="w-5/6 grid grid-cols-1 md:grid-cols-2 justify-center items-center align-middle gap-2 gap-y-10 lg:grid-cols-3 pt-20">
+      <div className="w-5/6 grid grid-cols-1 md:grid-cols-2 justify-center items-center align-middle gap-2 gap-y-20 lg:grid-cols-3 pt-20 pb-20">
         <Suspense fallback={<AquariumsSkeleton />}>
           <Aquariums />
         </Suspense>

@@ -2,7 +2,7 @@
 
 import { Suspense, useCallback, useContext, useEffect, useState } from 'react'
 import { WebSocketContext } from '@/app/context/websocket-context'
-import { Controller, ControllerStatus } from '@/library/types'
+import { Controller, ControllerStatus, Log } from '@/library/types'
 
 type AquariumParams = {
   params: {
@@ -11,33 +11,43 @@ type AquariumParams = {
 }
 
 export default function Aquarium({ params: { aquariumId } }: AquariumParams) {
-  const [controllerStatus, setControllerStatus] = useState('unknown' as ControllerStatus)
+  const [aquariumLog, setAquariumLog] = useState({} as Log)
+  const [aquariumControllerStatus, setAquariumControllerStatus] = useState(
+    'unknown' as ControllerStatus
+  )
   const { socket } = useContext(WebSocketContext)
 
   const onControllerStatusUpdate = useCallback(
     (data: Partial<Controller>) => {
-      if (data.aquariumId === aquariumId) {
-        setControllerStatus(data.status!)
-      }
+      if (data.aquariumId === aquariumId) setAquariumControllerStatus(data.status!)
+    },
+    [aquariumId]
+  )
+
+  const onLog = useCallback(
+    (data: Log) => {
+      if (data.aquariumId === aquariumId) setAquariumLog(data)
     },
     [aquariumId]
   )
 
   useEffect(() => {
-    socket && socket.on('controller_status_update', onControllerStatusUpdate)
+    socket.on('controller_status_update', onControllerStatusUpdate)
+    socket.on('log', onLog)
 
     return () => {
-      socket && socket.off('controller_status_update', onControllerStatusUpdate)
+      socket.off('controller_status_update', onControllerStatusUpdate)
+      socket.off('log', onLog)
     }
-  }, [socket, onControllerStatusUpdate])
+  }, [socket, onControllerStatusUpdate, onLog])
 
   return (
     <div className="flex w-screen h-full items-start justify-around">
-      <div className="w-5/6 grid grid-cols-2 gap-2 gap-y-10 md:grid-cols-3 pt-20">
-        <Suspense>
-          <div>{aquariumId}</div>
-          <div>Controller status: {controllerStatus}</div>
-        </Suspense>
+      <div className="w-5/6 flex flex-col sm:flex-row gap-4 pt-20">
+        <div>{aquariumId}</div>
+        <div>Controller status: {aquariumControllerStatus}</div>
+        <h1 className="text-6xl font-semibold">{aquariumLog?.temperature ?? '-'} °C</h1>
+        <h1 className="text-6xl font-semibold">pH {aquariumLog?.ph ?? '-'}</h1>
       </div>
     </div>
   )

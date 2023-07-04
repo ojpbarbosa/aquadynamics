@@ -2,23 +2,69 @@ import { Aquarium } from './types'
 
 const apiUrl = 'https://aquadynamics-core.onrender.com/api'
 
-export async function getAquariums(): Promise<Aquarium[]> {
-  const response = await fetch(`${apiUrl}/aquariums?logs=true`, { cache: 'no-cache' })
+type GetEntityParameters = {
+  orderBy?: string
+  order?: string
+  page?: number
+  perPage?: number
 
-  if (!response.ok) {
-    throw new Error('Algo de errado aconteceu :/')
+  include?: { [field: string]: boolean }
+  where?: { [field: string]: string | number }
+}
+
+function convertParametersToQueryString(parameters: GetEntityParameters): string {
+  let queryString = '?'
+
+  if (parameters.orderBy) queryString += `orderBy=${encodeURIComponent(parameters.orderBy)}&`
+
+  if (parameters.order) queryString += `order=${encodeURIComponent(parameters.order)}&`
+
+  if (parameters.page) queryString += `page=${encodeURIComponent(parameters.page.toString())}&`
+
+  if (parameters.perPage)
+    queryString += `perPage=${encodeURIComponent(parameters.perPage.toString())}&`
+
+  if (parameters.include) {
+    const includeFields = Object.keys(parameters.include)
+    for (const field of includeFields) {
+      const value = parameters.include[field]
+      queryString += `${field}=${value}&`
+    }
   }
+
+  if (parameters.where) {
+    const whereFields = Object.keys(parameters.where)
+    for (const field of whereFields) {
+      const value = parameters.where[field]
+      queryString += `${field}=${encodeURIComponent(value.toString())}&`
+    }
+  }
+
+  // remove trailing '&' character if queryString is not empty
+  return queryString !== '?' ? queryString.slice(0, -1) : ''
+}
+
+export async function getAquariums(parameters: GetEntityParameters = {}): Promise<Aquarium[]> {
+  const queryString = convertParametersToQueryString(parameters)
+  const url = `${apiUrl}/aquariums${queryString}`
+  console.log(url)
+
+  const response = await fetch(url, {
+    cache: 'no-cache'
+  })
+
+  if (!response.ok) return []
 
   const data = await response.json()
   return data
 }
 
 export async function getAquarium(id: string): Promise<Aquarium> {
-  const response = await fetch(`${apiUrl}/aquariums/${id}`)
+  const url = `${apiUrl}/aquariums/${id}`
 
-  if (!response.ok) {
-    throw new Error('Algo de errado aconteceu :/')
-  }
+  const response = await fetch(url)
+
+  if (!response.ok) return {} as Aquarium
 
   const data = await response.json()
   return data

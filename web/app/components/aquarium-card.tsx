@@ -17,18 +17,16 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
 
   const onLog = useCallback(
     (data: Log) => {
-      if (data.aquariumId === id) {
-        setAquariumLog(data)
-      }
+      if (data.aquariumId === id) setAquariumLog(data)
     },
     [id]
   )
 
   useEffect(() => {
-    socket && socket.on('log', onLog)
+    socket.on('log', onLog)
 
     return () => {
-      socket && socket.off('log', onLog)
+      socket.off('log', onLog)
     }
   }, [aquariumLog, logs, socket, onLog])
 
@@ -46,10 +44,8 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
         <div className="text-md font-normal flex items-center justify-end gap-x-2">
           <div
             className={
-              'border rounded p-2 flex items-center justify-center text-center ' +
-              (!aquariumLog
-                ? 'border-neutral-300 dark:border-neutral-800'
-                : aquariumLog?.lightning
+              'border rounded p-2 align-center text-center ' +
+              (aquariumLog?.lightning
                 ? 'text-yellow-400 border-yellow-400 dark:bg-yellow-300/20 bg-yellow-400/30'
                 : 'dark:text-neutral-500 dark:border-neutral-800 dark:bg-neutral-800/30 text-neutral-500 border-neutral-300 bg-neutral-300/20')
             }
@@ -59,9 +55,9 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
 
           <div
             className={
-              'border rounded px-2 py-1 flex items-center justify-center text-center ' +
-              (!aquariumLog
-                ? 'border-neutral-300 dark:border-neutral-800 '
+              'border rounded px-2 py-1 align-middle text-center ' +
+              (!aquariumLog?.id
+                ? 'dark:text-neutral-500 dark:border-neutral-800 dark:bg-neutral-800/30 text-neutral-500 border-neutral-300 bg-neutral-300/20 '
                 : aquariumLog?.ph >= 6.5 && aquariumLog?.ph <= 7.5
                 ? 'border-green-500 bg-green-400/20 dark:border-green-500/80 dark:bg-green-400/10'
                 : aquariumLog?.ph < 6.5
@@ -75,9 +71,9 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
 
           <div
             className={
-              'border rounded px-2 py-1 flex items-center justify-center text-center ' +
-              (!aquariumLog
-                ? 'border-neutral-300 dark:border-neutral-800'
+              'border rounded px-2 py-1 align-middle text-center ' +
+              (!aquariumLog?.id
+                ? 'dark:text-neutral-500 dark:border-neutral-800 dark:bg-neutral-800/30 text-neutral-500 border-neutral-300 bg-neutral-300/20'
                 : aquariumLog?.temperature >= 26 && aquariumLog?.temperature <= 29
                 ? 'border-green-500 bg-green-400/20 dark:border-green-500/80 dark:bg-green-400/10'
                 : aquariumLog?.temperature < 26
