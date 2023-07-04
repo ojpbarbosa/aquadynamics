@@ -3,7 +3,7 @@ import { Aquarium } from './types'
 const apiUrl = 'https://aquadynamics-core.onrender.com/api'
 
 export async function getAquariums(): Promise<Aquarium[]> {
-  const response = await fetch(`${apiUrl}/aquariums?logs=true`)
+  const response = await fetch(`${apiUrl}/aquariums?logs=true`, { cache: 'no-cache' })
 
   if (!response.ok) {
     throw new Error('Algo de errado aconteceu :/')

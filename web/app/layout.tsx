@@ -19,12 +19,14 @@ type RootLayoutProps = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-br">
-      <body className={'overflow-hidden ' + inter.className}>
+      <body
+        className={
+          'overflow-hidden h-screen flex flex-col items-center justify-between ' + inter.className
+        }
+      >
         <Header />
         <WebSocketProvider>
-          <main className="overflow-y-auto overflow-x-hidden h-[80vh] max-h-[85vh]">
-            {children}
-          </main>
+          <main className="overflow-y-auto overflow-x-hidden h-[80vh]">{children}</main>
         </WebSocketProvider>
         <Footer />
       </body>
