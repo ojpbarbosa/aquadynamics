@@ -1,9 +1,8 @@
 import { ReactNode } from 'react'
 import { Inter } from 'next/font/google'
 
-import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
-import WebSocketProvider from './context/websocket-context'
+import WebSocketProvider from '@/contexts/websocket-context'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,10 +23,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           'overflow-hidden h-screen flex flex-col items-center justify-between ' + inter.className
         }
       >
-        <Header />
-        <WebSocketProvider>
-          <main className="overflow-y-auto overflow-x-hidden h-[80vh]">{children}</main>
-        </WebSocketProvider>
+        <WebSocketProvider>{children}</WebSocketProvider>
         <Footer />
       </body>
     </html>

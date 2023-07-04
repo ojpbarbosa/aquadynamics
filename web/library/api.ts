@@ -47,7 +47,6 @@ function convertParametersToQueryString(parameters: GetEntityParameters): string
 export async function getAquariums(parameters: GetEntityParameters = {}): Promise<Aquarium[]> {
   const queryString = convertParametersToQueryString(parameters)
   const url = `${apiUrl}/aquariums${queryString}`
-  console.log(url)
 
   const response = await fetch(url, {
     cache: 'no-cache'
@@ -62,7 +61,7 @@ export async function getAquariums(parameters: GetEntityParameters = {}): Promis
 export async function getAquarium(id: string): Promise<Aquarium> {
   const url = `${apiUrl}/aquariums/${id}`
 
-  const response = await fetch(url)
+  const response = await fetch(url, { cache: 'no-cache' })
 
   if (!response.ok) return {} as Aquarium
 

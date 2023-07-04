@@ -4,8 +4,7 @@ import { Aquarium, Log } from '@/library/types'
 import Link from 'next/link'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { FaVideoSlash, FaLightbulb, FaRegLightbulb } from 'react-icons/fa'
-import { WebSocketContext } from '../context/websocket-context'
-import AquariumCardSkeleton from './aquarium-card-skeleton'
+import { WebSocketContext } from '../../contexts/websocket-context'
 
 type AquariumCardProps = {
   aquarium: Aquarium
@@ -33,7 +32,7 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
   return (
     <Link
       href={`/aquariums/${id}`}
-      className="md:w-80 w-72 h-56 sm:h-60 rounded dark:text-neutral-100/75 hover:dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 bg-transparent hover:bg-neutral-100 dark:bg-transparent transition-all duration-200 hover:dark:bg-neutral-800/30 flex flex-col items-start"
+      className="h-56 sm:h-60 rounded dark:text-neutral-100/75 hover:dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 bg-transparent hover:bg-neutral-100 dark:bg-transparent transition-all duration-200 hover:dark:bg-neutral-800/30 flex flex-col items-start"
     >
       <div className="w-full h-40 flex items-center justify-center bg-gray-200 text-neutral-500 dark:text-neutral-500 dark:bg-neutral-800/30 flex-col gap-y-2">
         <FaVideoSlash className="text-4xl" />
