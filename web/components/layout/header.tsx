@@ -10,7 +10,7 @@ export function Header() {
       <div className="flex w-5/6 justify-start items-center">
         <p className="text-lg sm:text-xl font-semibold z-10">
           <Link href="/" className={sora.className}>
-            Aqua Dynamics
+            AquaDynamics
           </Link>
         </p>
       </div>

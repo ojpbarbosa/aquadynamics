@@ -9,7 +9,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Aquadynamics'
+  title: 'AquaDynamics'
 }
 
 type RootLayoutProps = {
@@ -18,7 +18,7 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="pt-br">
       <body className={'overflow-hidden ' + inter.className}>
         <Header />
         <WebSocketProvider>
