@@ -1,11 +1,17 @@
+'use client'
+
+import Aquariums from './components/aquariums'
+import AquariumsSkeleton from './components/aquarium-card-skeleton'
+import { Suspense } from 'react'
+
 export default function Home() {
   return (
-    <main className="flex h-screen flex-col items-center justify-center p-24">
-      <div className="w-full max-w-5xl items-center justify-center text-sm lg:flex">
-        <div className="flex justify-center items-center before:absolute before:h-10 before:w-48 sm:before:h-16 sm:before:w-64 before:rounded-full before:bg-gradient-conic before:blur-2xl before:from-green-500 before:to-blue-700 dark:before:from-green-400 dark:before:to-blue-600 dark:before:opacity-80">
-          <p className="text-4xl sm:text-5xl font-bold z-10">Aquadynamics</p>
-        </div>
+    <div className="flex w-screen h-full items-start justify-around">
+      <div className="w-5/6 grid grid-cols-2 gap-2 gap-y-10 md:grid-cols-3 pt-20">
+        <Suspense fallback={<AquariumsSkeleton />}>
+          <Aquariums />
+        </Suspense>
       </div>
-    </main>
+    </div>
   )
 }
