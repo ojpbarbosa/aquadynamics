@@ -40,23 +40,22 @@ export class AquariumMysqlRepositories implements IAquariumRepositories {
         Object.assign(options, {
           include: {
             controller: controllers || false,
-            logs: logs || false
+            logs: logs
+              ? {
+                  orderBy: [
+                    {
+                      timestamp: 'desc'
+                    }
+                  ]
+                }
+              : false
           }
         })
       }
 
       return (await this.prisma.aquarium.findMany({
         where: { id, name },
-        ...options,
-        include: {
-          logs: {
-            orderBy: [
-              {
-                timestamp: 'desc'
-              }
-            ]
-          }
-        }
+        ...options
       })) as Aquarium[]
     }
 
