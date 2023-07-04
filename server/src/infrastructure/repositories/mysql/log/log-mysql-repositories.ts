@@ -25,7 +25,7 @@ export class LogMysqlRepositories implements ILogRepositories {
         aquariumId,
         controllerId,
         temperature,
-        ph,
+        pH,
         lightning,
         aquariums,
         controllers,
@@ -69,7 +69,7 @@ export class LogMysqlRepositories implements ILogRepositories {
       }
 
       return (await this.prisma.log.findMany({
-        where: { id, aquariumId, controllerId, temperature, ph, lightning },
+        where: { id, aquariumId, controllerId, temperature, pH, lightning },
         ...options
       })) as Log[]
     }

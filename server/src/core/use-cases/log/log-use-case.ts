@@ -4,7 +4,7 @@ export type TLogDTO = {
   aquariumId: Aquarium['id']
   controllerId: Controller['id']
   temperature: Log['temperature']
-  ph: Log['ph']
+  pH: Log['pH']
   lightning: Log['lightning']
   timestamp: Log['timestamp']
 }

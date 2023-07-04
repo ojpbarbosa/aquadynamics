@@ -1,7 +1,7 @@
 import { type Aquarium, type Log } from '@core/entities'
 
 export type TFindLogsRepositoryParameters = {
-  orderBy?: 'temperature' | 'ph' | 'lightning' | 'timestamp'
+  orderBy?: 'temperature' | 'pH' | 'lightning' | 'timestamp'
   order?: 'asc' | 'desc'
   page?: number
   perPage?: number
@@ -13,7 +13,7 @@ export type TFindLogsRepositoryParameters = {
   aquariumId?: Aquarium['id']
   controllerId?: Log['controllerId']
   temperature?: Log['temperature']
-  ph?: Log['ph']
+  pH?: Log['pH']
   lightning?: Log['lightning']
 }
 

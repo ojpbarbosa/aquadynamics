@@ -38,7 +38,7 @@ model Log {
   aquariumId   String
   controllerId String
   temperature  Float
-  ph           Float
+  pH           Float
   lightning    Boolean
   timestamp    DateTime
 
