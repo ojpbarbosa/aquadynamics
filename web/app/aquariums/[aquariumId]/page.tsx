@@ -47,7 +47,7 @@ export default function Aquarium({ params: { aquariumId } }: AquariumParams) {
         <div>{aquariumId}</div>
         <div>Controller status: {aquariumControllerStatus}</div>
         <h1 className="text-6xl font-semibold">{aquariumLog?.temperature ?? '-'} °C</h1>
-        <h1 className="text-6xl font-semibold">pH {aquariumLog?.ph ?? '-'}</h1>
+        <h1 className="text-6xl font-semibold">pH {aquariumLog?.pH ?? '-'}</h1>
       </div>
     </div>
   )

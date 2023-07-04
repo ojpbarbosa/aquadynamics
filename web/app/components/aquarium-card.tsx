@@ -58,15 +58,15 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
               'border rounded px-2 py-1 align-middle text-center ' +
               (!aquariumLog?.id
                 ? 'dark:text-neutral-500 dark:border-neutral-800 dark:bg-neutral-800/30 text-neutral-500 border-neutral-300 bg-neutral-300/20 '
-                : aquariumLog?.ph >= 6.5 && aquariumLog?.ph <= 7.5
+                : aquariumLog?.pH >= 6.5 && aquariumLog?.pH <= 7.5
                 ? 'border-green-500 bg-green-400/20 dark:border-green-500/80 dark:bg-green-400/10'
-                : aquariumLog?.ph < 6.5
+                : aquariumLog?.pH < 6.5
                 ? 'border-yellow-500 bg-yellow-400/20 dark:border-yellow-500/80 dark:bg-yellow-400/10'
-                : aquariumLog?.ph > 7.5 &&
+                : aquariumLog?.pH > 7.5 &&
                   'border-blue-500 bg-blue-400/20 dark:border-blue-500/80 dark:bg-blue-400/10')
             }
           >
-            pH {aquariumLog?.ph ?? '-'}
+            pH {aquariumLog?.pH ?? '-'}
           </div>
 
           <div
