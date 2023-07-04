@@ -47,7 +47,16 @@ export class AquariumMysqlRepositories implements IAquariumRepositories {
 
       return (await this.prisma.aquarium.findMany({
         where: { id, name },
-        ...options
+        ...options,
+        include: {
+          logs: {
+            orderBy: [
+              {
+                timestamp: 'desc'
+              }
+            ]
+          }
+        }
       })) as Aquarium[]
     }
 
