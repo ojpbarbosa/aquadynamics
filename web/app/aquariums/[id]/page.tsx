@@ -13,9 +13,5 @@ type AquariumProps = {
 }
 
 export default function Aquarium({ params: { id } }: AquariumProps) {
-  return (
-    <Suspense fallback={<Loading />}>
-      <AquariumData id={id} />
-    </Suspense>
-  )
+  return <AquariumData id={id} />
 }

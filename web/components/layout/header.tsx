@@ -18,7 +18,7 @@ export function Header({ subtreeName, subtreeUrl }: HeaderProps) {
           </Link>
           {subtreeName && subtreeUrl && (
             <>
-              <span>/</span>
+              <span className="px-3 text-gray-300 dark:text-neutral-600">/</span>
               <Link href={subtreeUrl} className={sora.className}>
                 {subtreeName}
               </Link>
