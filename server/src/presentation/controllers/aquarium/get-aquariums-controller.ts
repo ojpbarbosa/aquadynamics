@@ -52,7 +52,7 @@ export class GetAquariumsController implements IController {
         return aquarium
       })
 
-      return okResponse(aquariums.length === 1 ? aquariums[0] : aquariums)
+      return okResponse(aquariums.length === 1 && id ? aquariums[0] : aquariums)
     } catch (error) {
       console.error('ControllerError: ', error)
       return errorResponse(error)

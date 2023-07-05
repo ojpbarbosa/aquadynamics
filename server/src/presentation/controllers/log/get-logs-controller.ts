@@ -62,7 +62,7 @@ export class GetLogsController implements IController {
         return log
       }) as Log[]
 
-      return okResponse(logs.length === 1 ? logs[0] : logs)
+      return okResponse(logs.length === 1 && id ? logs[0] : logs)
     } catch (error) {
       console.error('ControllerError: ', error)
       return errorResponse(error)

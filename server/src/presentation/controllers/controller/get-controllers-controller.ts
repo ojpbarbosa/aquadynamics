@@ -66,7 +66,7 @@ export class GetControllersController implements IController {
         return controller
       }) as Controller[]
 
-      return okResponse(controllers.length === 1 ? controllers[0] : controllers)
+      return okResponse(controllers.length === 1 && id ? controllers[0] : controllers)
     } catch (error) {
       console.error('ControllerError: ', error)
       return errorResponse(error)
