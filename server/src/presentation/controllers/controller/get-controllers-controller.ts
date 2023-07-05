@@ -29,7 +29,7 @@ export class GetControllersController implements IController {
       aquariums = aquariums === 'true' || aquariums === 'false' ? JSON.parse(aquariums) : undefined
       logs = logs === 'true' || logs === 'false' ? JSON.parse(logs) : undefined
 
-      const controllers = (await this.getControllersUseCase.get({
+      let controllers = (await this.getControllersUseCase.get({
         id,
         aquariumId,
         address,
@@ -42,31 +42,31 @@ export class GetControllersController implements IController {
         perPage
       })) as Controller[]
 
-      return okResponse(
-        controllers.map((controller: Partial<Controller>) => {
-          delete controller.address
+      controllers = controllers.map((controller: Partial<Controller>) => {
+        delete controller.address
 
-          if (logs && controller.logs)
-            Object.assign(controller, {
-              logs: controller.logs.map((log) => {
-                delete log.controller
+        if (logs && controller.logs)
+          Object.assign(controller, {
+            logs: controller.logs.map((log) => {
+              delete log.controller
 
-                return log
-              })
+              return log
             })
+          })
 
-          const { aquarium } = controller
-          if (aquariums && aquarium) {
-            delete aquarium.controller
+        const { aquarium } = controller
+        if (aquariums && aquarium) {
+          delete aquarium.controller
 
-            Object.assign(controller, {
-              aquarium
-            })
-          }
+          Object.assign(controller, {
+            aquarium
+          })
+        }
 
-          return controller
-        })
-      )
+        return controller
+      }) as Controller[]
+
+      return okResponse(controllers.length === 1 ? controllers[0] : controllers)
     } catch (error) {
       console.error('ControllerError: ', error)
       return errorResponse(error)

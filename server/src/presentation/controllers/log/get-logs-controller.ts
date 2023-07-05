@@ -26,7 +26,7 @@ export class GetLogsController implements IController {
       controllers =
         controllers === 'true' || controllers === 'false' ? JSON.parse(controllers) : undefined
 
-      const logs = (await this.getLogsUseCase.get({
+      let logs = (await this.getLogsUseCase.get({
         id,
         aquariumId,
         controllerId,
@@ -41,28 +41,28 @@ export class GetLogsController implements IController {
         perPage
       })) as Log[]
 
-      return okResponse(
-        logs.map((log: Partial<Log>) => {
-          const { controller }: { controller?: Partial<Controller> } = log
-          if (controllers && controller) {
-            delete controller.address
-            delete controller.aquarium
-            delete controller.logs
+      logs = logs.map((log: Partial<Log>) => {
+        const { controller }: { controller?: Partial<Controller> } = log
+        if (controllers && controller) {
+          delete controller.address
+          delete controller.aquarium
+          delete controller.logs
 
-            Object.assign(log, { controller })
-          }
+          Object.assign(log, { controller })
+        }
 
-          const { aquarium } = log
-          if (aquariums && aquarium) {
-            delete aquarium.controller
-            delete aquarium.logs
+        const { aquarium } = log
+        if (aquariums && aquarium) {
+          delete aquarium.controller
+          delete aquarium.logs
 
-            Object.assign(log, { aquarium })
-          }
+          Object.assign(log, { aquarium })
+        }
 
-          return log
-        })
-      )
+        return log
+      }) as Log[]
+
+      return okResponse(logs.length === 1 ? logs[0] : logs)
     } catch (error) {
       console.error('ControllerError: ', error)
       return errorResponse(error)

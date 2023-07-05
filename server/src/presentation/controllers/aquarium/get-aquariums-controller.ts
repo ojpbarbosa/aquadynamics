@@ -1,6 +1,6 @@
 import { type IController, type IRequest, type IResponse } from '@application/ports/presentation'
 import { type IGetAquariumsUseCase } from '@core/use-cases'
-import { type Aquarium } from '@core/entities'
+import { Controller, type Aquarium } from '@core/entities'
 import { errorResponse, okResponse } from '@presentation/responses'
 
 export class GetAquariumsController implements IController {
@@ -16,7 +16,7 @@ export class GetAquariumsController implements IController {
         controllers === 'true' || controllers === 'false' ? JSON.parse(controllers) : undefined
       logs = logs === 'true' || logs === 'false' ? JSON.parse(logs) : undefined
 
-      const aquariums = (await this.getAquariumsUseCase.get({
+      let aquariums = (await this.getAquariumsUseCase.get({
         id,
         name,
         controllers,
@@ -27,31 +27,32 @@ export class GetAquariumsController implements IController {
         perPage
       })) as Aquarium[]
 
-      return okResponse(
-        aquariums.map((aquarium) => {
-          if (logs && aquarium.logs)
-            Object.assign(aquarium, {
-              logs: aquarium.logs.map((log) => {
-                delete log.controller
-                delete log.aquarium
+      aquariums = aquariums.map((aquarium) => {
+        if (logs && aquarium.logs)
+          Object.assign(aquarium, {
+            logs: aquarium.logs.map((log) => {
+              delete log.controller
+              delete log.aquarium
 
-                return log
-              })
+              return log
             })
+          })
 
-          const { controller } = aquarium
-          if (controllers && controller) {
-            delete controller.aquarium
-            delete controller.logs
+        const { controller }: { controller?: Partial<Controller> } = aquarium
+        if (controllers && controller) {
+          delete controller.address
+          delete controller.aquarium
+          delete controller.logs
 
-            Object.assign(aquarium, {
-              controller
-            })
-          }
+          Object.assign(aquarium, {
+            controller
+          })
+        }
 
-          return aquarium
-        })
-      )
+        return aquarium
+      })
+
+      return okResponse(aquariums.length === 1 ? aquariums[0] : aquariums)
     } catch (error) {
       console.error('ControllerError: ', error)
       return errorResponse(error)
