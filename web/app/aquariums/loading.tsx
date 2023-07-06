@@ -1,9 +1,11 @@
-import { PiSpinnerGapLight } from 'react-icons/pi'
+import { Header } from '@/components/layout/header'
+import AquariumDataSkeleton from './[id]/components/aquarium-data-skeleton'
 
 export default function Loading() {
   return (
-    <div className="flex w-screen h-[95vh] overflow-hidden items-center justify-center">
-      <PiSpinnerGapLight className="animate-spin text-4xl" />
-    </div>
+    <>
+      <Header showSubtreeSkeleton />
+      <AquariumDataSkeleton />
+    </>
   )
 }
