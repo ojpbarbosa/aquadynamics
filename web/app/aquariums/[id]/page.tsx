@@ -11,7 +11,8 @@ type AquariumProps = {
   params: { id: string }
 }
 
-export async function generateMetadata(
+// todo: fix page title
+/* export async function generateMetadata(
   { params: { id } }: AquariumProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
@@ -20,7 +21,7 @@ export async function generateMetadata(
   return {
     title: 'AquaDynamics | ' + aquarium.name
   }
-}
+} */
 
 export default function Aquarium({ params: { id } }: AquariumProps) {
   const aquarium = use(getAquarium(id, { include: { logs: true, controllers: true } }))
