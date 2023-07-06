@@ -5,6 +5,7 @@ import { Metadata, ResolvingMetadata } from 'next'
 
 import { getAquarium } from '@/library/api'
 import AquariumData from './components/aquarium-data'
+import Loading from './loading'
 
 type AquariumProps = {
   params: { id: string }
@@ -25,8 +26,8 @@ export default function Aquarium({ params: { id } }: AquariumProps) {
   const aquarium = use(getAquarium(id, { include: { logs: true, controllers: true } }))
 
   return (
-    <Suspense>
-      <AquariumData aquarium={aquarium} />
+    <Suspense fallback={<Loading />}>
+      <AquariumData data={aquarium} />
     </Suspense>
   )
 }

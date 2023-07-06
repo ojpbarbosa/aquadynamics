@@ -1,60 +1,36 @@
 'use client'
 
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { PiSpinnerGapLight } from 'react-icons/pi'
 
-import { WebSocketContext } from '@/contexts/websocket-context'
 import { Header } from '@/components/layout/header'
-import { Aquarium, Controller, ControllerStatus, Log } from '@/library/types'
+import { Aquarium } from '@/library/types'
+import AquariumControllerStatus from './aquarium-controller-status'
+import AquariumLog from './aquarium-log'
 
 type AquariumDataProps = {
-  aquarium: Aquarium
+  data: Aquarium
 }
 
-export default function AquariumData({ aquarium }: AquariumDataProps) {
+export default function AquariumData({ data }: AquariumDataProps) {
+  const [aquarium, setAquarium] = useState(data)
+
   const pathname = usePathname()
-
-  const [aquariumLog, setAquariumLog] = useState(aquarium.logs![0])
-  const [aquariumControllerStatus, setAquariumControllerStatus] = useState(
-    aquarium.controller!.status as ControllerStatus
-  )
-
-  const { socket } = useContext(WebSocketContext)
-
-  const onControllerStatusUpdate = useCallback(
-    (data: Partial<Controller>) => {
-      if (data.aquariumId === aquarium.id) setAquariumControllerStatus(data.status!)
-    },
-    [aquarium]
-  )
-
-  const onLog = useCallback(
-    (data: Log) => {
-      if (data.aquariumId === aquarium.id) setAquariumLog(data)
-    },
-    [aquarium]
-  )
-
-  useEffect(() => {
-    socket.on('controller_status_update', onControllerStatusUpdate)
-    socket.on('log', onLog)
-
-    return () => {
-      socket.off('controller_status_update', onControllerStatusUpdate)
-      socket.off('log', onLog)
-    }
-  }, [socket, onControllerStatusUpdate, onLog])
 
   return (
     <>
       <Header subtreeName={aquarium.name} subtreeUrl={pathname} />
       <main className="overflow-y-auto overflow-x-hidden h-[80vh] w-screen">
         <div className="flex w-screen h-full items-start justify-around">
-          <div className="w-5/6 flex flex-col sm:flex-row gap-4 pt-20">
-            <div>{aquarium.id}</div>
-            <div>Controller status: {aquariumControllerStatus}</div>
-            <h1 className="text-6xl font-semibold">{aquariumLog?.temperature} °C</h1>
-            <h1 className="text-6xl font-semibold">pH {aquariumLog?.pH}</h1>
+          <div className="w-5/6 flex flex-col sm:flex-row justify-between gap-4 py-10 sm:py-20">
+            <div className="aspect-video w-full sm:w-2/3 flex items-center justify-center bg-neutral-300/20 text-neutral-500 dark:text-neutral-500 dark:bg-neutral-800/30">
+              <PiSpinnerGapLight className="text-4xl animate-spin" />
+            </div>
+            <div className="flex flex-row sm:flex-col md:w-1/6 lg:w-1/3">
+              <AquariumControllerStatus aquarium={aquarium} setAquarium={setAquarium} />
+              <AquariumLog aquarium={aquarium} setAquarium={setAquarium} />
+            </div>
           </div>
         </div>
       </main>

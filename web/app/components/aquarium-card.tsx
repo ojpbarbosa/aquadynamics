@@ -6,6 +6,7 @@ import { FaVideoSlash, FaLightbulb, FaRegLightbulb } from 'react-icons/fa'
 
 import { Aquarium, Log } from '@/library/types'
 import { WebSocketContext } from '@/contexts/websocket-context'
+import AquariumCardSkeleton from './aquarium-card-skeleton'
 
 type AquariumCardProps = {
   aquarium: Aquarium
@@ -39,9 +40,9 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
         <FaVideoSlash className="text-4xl" />
         {/* <PiSpinnerGapLight className="text-4xl animate-spin" /> */}
       </div>
-      <div className="border-t border-gray-300 dark:border-neutral-800 w-full flex flex-col justify-between p-5 sm:p-4 h-24">
-        <h3 className="font-semibold text-lg sm:mt-0 -mt-2">{name}</h3>
-        <div className="text-md font-normal flex items-center justify-end gap-x-2 sm:mt-0 mt-2">
+      <div className="border-t border-gray-300 dark:border-neutral-800 w-full flex flex-col justify-between p-4 h-24">
+        <h3 className="font-semibold text-lg">{name}</h3>
+        <div className="text-md font-normal flex items-center justify-end gap-x-2">
           <div
             className={
               'border rounded p-2 align-middle text-center ' +
