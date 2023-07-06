@@ -27,7 +27,7 @@ export default function AquariumData({ data }: AquariumDataProps) {
             <div className="aspect-video w-full sm:w-2/3 flex items-center justify-center bg-neutral-300/20 text-neutral-500 dark:text-neutral-500 dark:bg-neutral-800/30">
               <PiSpinnerGapLight className="text-4xl animate-spin" />
             </div>
-            <div className="flex flex-row sm:flex-col md:w-1/6 lg:w-1/3">
+            <div className="flex flex-row sm:flex-col md:w-1/6 lg:w-1/3 gap-y-2 justify-between items-center">
               <AquariumControllerStatus aquarium={aquarium} setAquarium={setAquarium} />
               <AquariumLog aquarium={aquarium} setAquarium={setAquarium} />
             </div>

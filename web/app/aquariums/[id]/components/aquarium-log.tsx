@@ -33,8 +33,8 @@ export default function AquariumLog({ aquarium, setAquarium }: AquariumLogProps)
 
   return (
     <>
-      <h1 className="text-6xl font-semibold">{aquariumLog.temperature} °C</h1>
-      <h1 className="text-6xl font-semibold">pH {aquariumLog.pH}</h1>
+      <h1 className="text-3xl md:text-6xl font-semibold">{aquariumLog.temperature} °C</h1>
+      <h1 className="text-3xl md:text-6xl font-semibold">pH {aquariumLog.pH}</h1>
     </>
   )
 }

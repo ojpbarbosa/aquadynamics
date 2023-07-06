@@ -77,7 +77,7 @@ export default function AquariumControllerStatus({
   const status = controllerStatusMap[aquariumControllerStatus!]
 
   return (
-    <div>
+    <div className="flex items-center gap-2">
       <span className={'border rounded p-2 align-middle text-center ' + status.style}>
         {status.name}
       </span>
