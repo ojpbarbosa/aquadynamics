@@ -1,32 +1,63 @@
 'use client'
 
-import { Suspense, use } from 'react'
-import { Metadata, ResolvingMetadata } from 'next'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
-import { getAquarium } from '@/library/api'
-import Aquarium from './aquarium'
+import { WebSocketContext } from '@/contexts/websocket-context'
+import { Header } from '@/components/layout/header'
+import { Aquarium, Controller, ControllerStatus, Log } from '@/library/types'
 
 type AquariumDataProps = {
-  id: string
+  aquarium: Aquarium
 }
 
-export async function generateMetadata(
-  { params: { id } }: { params: AquariumDataProps },
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  const aquarium = await getAquarium(id)
+export default function AquariumData({ aquarium }: AquariumDataProps) {
+  const pathname = usePathname()
 
-  return {
-    title: 'AquaDynamics | ' + aquarium.name
-  }
-}
+  const [aquariumLog, setAquariumLog] = useState(aquarium.logs![0])
+  const [aquariumControllerStatus, setAquariumControllerStatus] = useState(
+    aquarium.controller!.status as ControllerStatus
+  )
 
-export default function AquariumData({ id }: AquariumDataProps) {
-  const aquarium = use(getAquarium(id, { include: { logs: true, controllers: true } }))
+  const { socket } = useContext(WebSocketContext)
+
+  const onControllerStatusUpdate = useCallback(
+    (data: Partial<Controller>) => {
+      if (data.aquariumId === aquarium.id) setAquariumControllerStatus(data.status!)
+    },
+    [aquarium]
+  )
+
+  const onLog = useCallback(
+    (data: Log) => {
+      if (data.aquariumId === aquarium.id) setAquariumLog(data)
+    },
+    [aquarium]
+  )
+
+  useEffect(() => {
+    socket.on('controller_status_update', onControllerStatusUpdate)
+    socket.on('log', onLog)
+
+    return () => {
+      socket.off('controller_status_update', onControllerStatusUpdate)
+      socket.off('log', onLog)
+    }
+  }, [socket, onControllerStatusUpdate, onLog])
 
   return (
-    <Suspense>
-      <Aquarium aquarium={aquarium} />
-    </Suspense>
+    <>
+      <Header subtreeName={aquarium.name} subtreeUrl={pathname} />
+      <main className="overflow-y-auto overflow-x-hidden h-[80vh] w-screen">
+        <div className="flex w-screen h-full items-start justify-around">
+          <div className="w-5/6 flex flex-col sm:flex-row gap-4 pt-20">
+            <div>{aquarium.id}</div>
+            <div>Controller status: {aquariumControllerStatus}</div>
+            <h1 className="text-6xl font-semibold">{aquariumLog?.temperature} °C</h1>
+            <h1 className="text-6xl font-semibold">pH {aquariumLog?.pH}</h1>
+          </div>
+        </div>
+      </main>
+    </>
   )
 }

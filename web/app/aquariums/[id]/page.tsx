@@ -1,17 +1,32 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, use } from 'react'
+import { Metadata, ResolvingMetadata } from 'next'
 
-import { Aquarium } from '@/library/types'
+import { getAquarium } from '@/library/api'
 import AquariumData from './components/aquarium-data'
-import Loading from './loading'
 
 type AquariumProps = {
-  params: {
-    id: string
+  params: { id: string }
+}
+
+export async function generateMetadata(
+  { params: { id } }: AquariumProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const aquarium = await getAquarium(id)
+
+  return {
+    title: 'AquaDynamics | ' + aquarium.name
   }
 }
 
 export default function Aquarium({ params: { id } }: AquariumProps) {
-  return <AquariumData id={id} />
+  const aquarium = use(getAquarium(id, { include: { logs: true, controllers: true } }))
+
+  return (
+    <Suspense>
+      <AquariumData aquarium={aquarium} />
+    </Suspense>
+  )
 }
