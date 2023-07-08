@@ -34,11 +34,10 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
   return (
     <Link
       href={`/aquariums/${id}`}
-      className="h-60 sm:h-64 rounded dark:text-neutral-100/75 hover:dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 bg-transparent hover:bg-neutral-100 dark:bg-transparent transition-all duration-200 hover:dark:bg-neutral-800/30 flex flex-col items-start"
+      className="rounded dark:text-neutral-100/75 hover:dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 bg-transparent hover:bg-neutral-100 dark:bg-transparent transition-all duration-200 hover:dark:bg-neutral-800/30 flex flex-col items-start"
     >
-      <div className="w-full h-40 flex items-center justify-center bg-neutral-300/20 text-neutral-500 dark:text-neutral-500 dark:bg-neutral-800/30">
+      <div className="w-full flex items-center aspect-video justify-center bg-neutral-300/20 text-neutral-500 dark:text-neutral-500 dark:bg-neutral-800/30">
         <FaVideoSlash className="text-4xl" />
-        {/* <PiSpinnerGapLight className="text-4xl animate-spin" /> */}
       </div>
       <div className="border-t border-gray-300 dark:border-neutral-800 w-full flex flex-col justify-between p-4 h-24">
         <h3 className="font-semibold text-lg">{name}</h3>
