@@ -34,12 +34,12 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
   return (
     <Link
       href={`/aquariums/${id}`}
-      className="rounded dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 bg-transparent hover:bg-neutral-100 dark:bg-transparent transition-colors duration-200 hover:dark:bg-neutral-800/30 flex flex-col items-start"
+      className="rounded dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 bg-transparent hover:bg-neutral-100 transition-colors duration-200 hover:dark:bg-neutral-800/30 flex flex-col items-start"
     >
       <AquariumCardCamera />
       <div className="border-t border-gray-300 dark:border-neutral-800 w-full flex flex-col justify-between p-4 gap-x-1 gap-y-2 h-44 2xl:h-32">
         <h3 className="font-semibold text-lg">{name}</h3>
-        <dl className="text-md font-normal grid grid-cols-2 2xl:grid-cols-3 gap-y-1 sm:gap-y-2 gap-x-4">
+        <dl className="font-normal grid grid-cols-2 2xl:grid-cols-3 gap-y-1 sm:gap-y-2 gap-x-4">
           <AquariumCardDetail
             term="Iluminação"
             value={aquariumLog.lightning ? 'Ligada' : 'Desligada'}
