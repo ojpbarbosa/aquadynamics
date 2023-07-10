@@ -8,7 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts'
-import ChartTooltip from './chart-tooltip'
+import AquariumTemperatureChartTooltip from './aquarium-temperature-chart-tooltip'
 
 type AquariumTemperatureChartProps = {
   temperatures: {
@@ -37,15 +37,7 @@ export default function AquariumTemperatureChart({ temperatures }: AquariumTempe
         <YAxis dataKey="temperature">
           <Label value="°C" position="left" angle={-90} dy="-10" />
         </YAxis>
-        <Tooltip
-          content={
-            <ChartTooltip
-              term="Temperatura"
-              value={`${temperatures[0].temperature.toFixed(1).replace('.', ',')} °C`}
-              timestamp={new Date(temperatures[0].timestamp).toUTCString()}
-            />
-          }
-        />
+        <Tooltip content={<AquariumTemperatureChartTooltip payload={temperatures[0]} />} />
         <Area type="monotone" dataKey="temperature" stroke="#8884d8" fill="#8884d8" />
       </AreaChart>
     </ResponsiveContainer>
