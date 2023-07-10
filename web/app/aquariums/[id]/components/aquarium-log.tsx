@@ -19,7 +19,7 @@ export default function AquariumLog({ aquarium, setAquarium }: AquariumLogProps)
     (data: Log) => {
       if (data.aquariumId === aquarium.id) {
         setAquariumLog(data)
-        setAquarium((previous) => ({ ...previous, logs: [...previous.logs, data] }))
+        setAquarium((previous) => ({ ...previous, logs: [...previous.logs!, data] }))
       }
     },
     [aquarium, setAquarium]
