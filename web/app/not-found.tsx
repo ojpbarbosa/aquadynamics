@@ -14,7 +14,8 @@ export default function NotFound() {
         <div className="flex flex-col h-full items-center justify-center gap-y-2">
           <h1
             className={
-              'text-2xl sm:text-4xl font-serif font-semibold text-center ' + newsreader.className
+              '-mt-6 text-3xl sm:text-4xl font-serif font-semibold text-center ' +
+              newsreader.className
             }
           >
             <span className="mr-2 dark:text-neutral-500 text-neutral-400">&ldquo;</span>
@@ -24,7 +25,7 @@ export default function NotFound() {
           <p className="sm:ml-72 ml-48 text-sm sm:text-base font-semibold dark:text-neutral-500 text-neutral-400">
             — Clarice Lispector
           </p>
-          <pre className={'mt-4 text-lg sm:text-2xl ' + spaceMono.className}>404</pre>
+          <pre className={'mt-4 text-xl sm:text-2xl ' + spaceMono.className}>404</pre>
           <Link
             href="/"
             className="mt-2 py-2 px-4 bg-neutral-300/20 hover:bg-transparent dark:bg-neutral-800/30 rounded dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 hover:bg-neutral-100 transition-colors duration-200 hover:dark:bg-neutral-800/30"
