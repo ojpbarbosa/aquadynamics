@@ -40,15 +40,7 @@ export class AquariumMysqlRepositories implements IAquariumRepositories {
         Object.assign(options, {
           include: {
             controller: controllers || false,
-            logs: logs
-              ? {
-                  orderBy: [
-                    {
-                      timestamp: 'desc'
-                    }
-                  ]
-                }
-              : false
+            logs: logs || false
           }
         })
       }
