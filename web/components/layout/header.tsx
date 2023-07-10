@@ -9,7 +9,7 @@ type HeaderProps = {
   showSubtreeSkeleton?: boolean
 }
 
-export function Header({ subtreeName, subtreeUrl, showSubtreeSkeleton }: HeaderProps) {
+export default function Header({ subtreeName, subtreeUrl, showSubtreeSkeleton }: HeaderProps) {
   return (
     <header className="h-[15vh] sticky top-0 z-10 backdrop-filter text-sm w-screen backdrop-blur dark:text-neutral-100 text-neutral-900 border-b border-gray-300 dark:border-neutral-800 bg-transparent p-2 flex items-center justify-center">
       <div className="flex w-5/6 justify-start items-center text-lg sm:text-xl font-semibold z-10">
@@ -18,7 +18,7 @@ export function Header({ subtreeName, subtreeUrl, showSubtreeSkeleton }: HeaderP
         </Link>
         {subtreeName && subtreeUrl && (
           <>
-            <span className="px-3 text-gray-300 dark:text-neutral-600">/</span>
+            <span className="px-3 text-neutral-300 dark:text-neutral-600">/</span>
             <Link href={subtreeUrl} className={sora.className}>
               {subtreeName}
             </Link>
@@ -26,8 +26,8 @@ export function Header({ subtreeName, subtreeUrl, showSubtreeSkeleton }: HeaderP
         )}
         {showSubtreeSkeleton && (
           <>
-            <span className="px-3 text-gray-300 dark:text-neutral-600">/</span>
-            <div className="h-6 bg-gray-200 block dark:bg-neutral-800 rounded-sm w-28 animate-pulse" />
+            <span className="px-3 text-neutral-300 dark:text-neutral-600">/</span>
+            <div className="h-8 bg-neutral-200 block dark:bg-neutral-800 rounded-sm w-40 animate-pulse" />
           </>
         )}
       </div>

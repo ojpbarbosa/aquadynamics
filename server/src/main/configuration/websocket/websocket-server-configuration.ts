@@ -13,8 +13,7 @@ export const setUpWebSocketServer = (server: Express): WebSocketServerSetup => {
     cors: {
       origin: '*',
       methods: ['GET', 'POST', 'PATCH']
-    },
-    path: '/ws'
+    }
   })
 
   return {
