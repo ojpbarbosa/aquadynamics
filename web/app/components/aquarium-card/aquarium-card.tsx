@@ -18,7 +18,6 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
 
   const onLog = useCallback(
     (data: Log) => {
-      console.log(data)
       if (data.aquariumId === id) setAquariumLog(data)
     },
     [id]
@@ -38,15 +37,14 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
       className="rounded dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 bg-transparent hover:bg-neutral-100 dark:bg-transparent transition-colors duration-200 hover:dark:bg-neutral-800/30 flex flex-col items-start"
     >
       <AquariumCardCamera />
-      <div className="border-t border-gray-300 dark:border-neutral-800 w-full flex flex-col justify-between p-4 gap-x-1 sm:gap-y-2 sm:h-48 2xl:h-32 h-56">
+      <div className="border-t border-gray-300 dark:border-neutral-800 w-full flex flex-col justify-between p-4 gap-x-1 gap-y-2 h-44 2xl:h-32">
         <h3 className="font-semibold text-lg">{name}</h3>
-        <dl className="text-md font-normal grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-y-1 sm:gap-y-2 gap-x-4">
+        <dl className="text-md font-normal grid grid-cols-2 2xl:grid-cols-3 gap-y-1 sm:gap-y-2 gap-x-4">
           <AquariumCardDetail
             term="Iluminação"
             value={aquariumLog.lightning ? 'Ligada' : 'Desligada'}
-            className="w-[5.75rem]"
             iconStyle={
-              aquariumLog.lightning ? 'bg-yellow-500' : 'dark:bg-neutral-500 bg-neutral-400'
+              aquariumLog.lightning ? 'bg-green-500' : 'dark:bg-neutral-500 bg-neutral-400'
             }
           />
           <AquariumCardDetail
