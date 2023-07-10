@@ -37,7 +37,7 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
       className="rounded dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 bg-transparent hover:bg-neutral-100 transition-colors duration-200 hover:dark:bg-neutral-800/30 flex flex-col items-start"
     >
       <AquariumCardCamera />
-      <div className="border-t border-gray-300 dark:border-neutral-800 w-full flex flex-col justify-between p-4 gap-x-1 gap-y-2 h-44 2xl:h-32">
+      <div className="border-t border-gray-300 dark:border-neutral-800 w-full flex flex-col justify-between p-4 gap-y-2 h-44 sm:h-48 2xl:h-32">
         <h3 className="font-semibold text-lg">{name}</h3>
         <dl className="font-normal grid grid-cols-2 2xl:grid-cols-3 gap-y-1 sm:gap-y-2 gap-x-4">
           <AquariumCardDetail
@@ -49,7 +49,9 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
           />
           <AquariumCardDetail
             term="Temperatura"
-            value={`${aquariumLog.temperature ? aquariumLog.temperature.toFixed(1) : '-'} °C`}
+            value={`${
+              aquariumLog.temperature ? aquariumLog.temperature.toFixed(1).replace('.', ',') : '-'
+            } °C`}
             iconStyle={
               aquariumLog.temperature >= 26 && aquariumLog.temperature <= 29
                 ? 'bg-green-500'
@@ -62,7 +64,7 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
           />
           <AquariumCardDetail
             term="pH"
-            value={aquariumLog.pH ? aquariumLog.pH.toFixed(1) : '-'}
+            value={aquariumLog.pH ? aquariumLog.pH.toFixed(1).replace('.', ',') : '-'}
             iconStyle={
               aquariumLog.pH >= 6.5 && aquariumLog.pH <= 7.5
                 ? 'bg-green-500'

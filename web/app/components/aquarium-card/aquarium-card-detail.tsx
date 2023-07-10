@@ -1,6 +1,6 @@
 type AquariumCardDetailProps = {
   term: string
-  value: string | number
+  value: string
   className?: string
   iconStyle: string
 }
