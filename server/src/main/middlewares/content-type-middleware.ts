@@ -4,7 +4,11 @@ import {
   type Response as HttpResponse
 } from 'express'
 
-export const contentType = (request: HttpRequest, response: HttpResponse, next: Next): void => {
+export const contentTypeMiddleware = (
+  request: HttpRequest,
+  response: HttpResponse,
+  next: Next
+): void => {
   response.type('json')
 
   next()

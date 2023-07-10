@@ -1,6 +1,6 @@
-import c from 'cors'
+import cors from 'cors'
 
-export const cors = c({
+export const corsMiddleware = cors({
   origin: '*',
   methods: 'GET,PATCH,POST,DELETE'
 })

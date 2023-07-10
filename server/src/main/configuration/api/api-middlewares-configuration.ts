@@ -1,8 +1,14 @@
 import { type Express } from 'express'
-import { contentType, cors, json } from '../../middlewares'
+import {
+  bodyParserMiddleware,
+  contentTypeMiddleware,
+  corsMiddleware,
+  securityMiddleware
+} from '../../middlewares'
 
 export const setUpApiMiddlewares = (server: Express): void => {
-  server.use(contentType)
-  server.use(cors)
-  server.use(json)
+  server.use(bodyParserMiddleware)
+  server.use(contentTypeMiddleware)
+  server.use(corsMiddleware)
+  server.use(securityMiddleware)
 }
