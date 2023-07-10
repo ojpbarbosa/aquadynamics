@@ -13,7 +13,7 @@ type AquariumCardProps = {
 }
 
 export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumCardProps) {
-  const [aquariumLog, setAquariumLog] = useState(logs ? logs[0] : ({} as Log))
+  const [aquariumLog, setAquariumLog] = useState(logs ? logs[logs.length - 1] : ({} as Log))
   const { socket } = useContext(WebSocketContext)
 
   const onLog = useCallback(

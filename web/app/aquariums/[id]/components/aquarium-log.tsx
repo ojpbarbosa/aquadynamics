@@ -9,7 +9,9 @@ type AquariumLogProps = {
 }
 
 export default function AquariumLog({ aquarium, setAquarium }: AquariumLogProps) {
-  const [aquariumLog, setAquariumLog] = useState(aquarium?.logs![0])
+  const [aquariumLog, setAquariumLog] = useState(
+    aquarium.logs ? aquarium.logs[aquarium.logs.length - 1] : ({} as Log)
+  )
 
   const { socket } = useContext(WebSocketContext)
 
@@ -33,8 +35,12 @@ export default function AquariumLog({ aquarium, setAquarium }: AquariumLogProps)
 
   return (
     <>
-      <h1 className="text-3xl md:text-6xl font-semibold">{aquariumLog.temperature} °C</h1>
-      <h1 className="text-3xl md:text-6xl font-semibold">pH {aquariumLog.pH}</h1>
+      <h1 className="text-3xl md:text-6xl font-semibold">
+        {aquariumLog ? aquariumLog.temperature.toFixed(1) : '-'} °C
+      </h1>
+      <h1 className="text-3xl md:text-6xl font-semibold">
+        pH {aquariumLog ? aquariumLog.pH.toFixed(1) : '-'}
+      </h1>
     </>
   )
 }

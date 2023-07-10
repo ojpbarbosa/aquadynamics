@@ -19,7 +19,7 @@ type AquariumTemperatureChartProps = {
 
 export default function AquariumTemperatureChart({ temperatures }: AquariumTemperatureChartProps) {
   return (
-    <ResponsiveContainer width={'100%'} height={300} min-width={300}>
+    <ResponsiveContainer width={'100%'} height={200} min-width={300}>
       <AreaChart
         data={temperatures}
         margin={{
@@ -28,12 +28,13 @@ export default function AquariumTemperatureChart({ temperatures }: AquariumTempe
           left: 20,
           bottom: 30
         }}
+        syncId="temperature"
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="timestamp">
           <Label value="Registro" position="bottom" />
         </XAxis>
-        <YAxis dataKey="temperature">
+        <YAxis dataKey="temperature" min={14} max={36}>
           <Label value="°C" position="left" angle={-90} dy="-10" />
         </YAxis>
         <Tooltip
