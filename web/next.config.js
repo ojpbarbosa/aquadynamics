@@ -10,6 +10,15 @@ const nextConfig = {
     }
 
     return config
+  },
+  async redirects() {
+    return [
+      {
+        source: '/aquariums',
+        destination: '/',
+        permanent: true
+      }
+    ]
   }
 }
 

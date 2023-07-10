@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { Inter } from 'next/font/google'
 
-import { Footer } from '@/components/layout/footer'
+import Footer from '@/components/layout/footer'
 import WebSocketProvider from '@/contexts/websocket-context'
 import './globals.css'
 
