@@ -7,7 +7,7 @@ import { PiSpinnerGapLight } from 'react-icons/pi'
 import Header from '@/components/layout/header'
 import { Aquarium } from '@/library/types'
 import AquariumControllerStatus from './aquarium-controller-status'
-import AquariumLog from './aquarium-log'
+import AquariumLog from './aquarium-log/aquarium-log'
 import AquariumTemperatureChart from './aquarium-temperature-chart'
 
 type AquariumDataProps = {

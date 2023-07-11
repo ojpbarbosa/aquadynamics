@@ -1,3 +1,5 @@
+'use client'
+
 import {
   AreaChart,
   Area,
@@ -9,6 +11,7 @@ import {
   ResponsiveContainer
 } from 'recharts'
 import AquariumTemperatureChartTooltip from './aquarium-temperature-chart-tooltip'
+import { useTheme } from 'next-themes'
 
 type AquariumTemperatureChartProps = {
   temperatures: {
@@ -18,6 +21,8 @@ type AquariumTemperatureChartProps = {
 }
 
 export default function AquariumTemperatureChart({ temperatures }: AquariumTemperatureChartProps) {
+  const { theme } = useTheme()
+
   return (
     <ResponsiveContainer width="100%" height={200} min-width={300}>
       <AreaChart
@@ -34,11 +39,11 @@ export default function AquariumTemperatureChart({ temperatures }: AquariumTempe
         <XAxis dataKey="timestamp">
           <Label value="Registro" position="bottom" />
         </XAxis>
-        <YAxis dataKey="temperature">
+        <YAxis dataKey="temperature" domain={[20, 30]}>
           <Label value="°C" position="left" angle={-90} dy="-10" />
         </YAxis>
         <Tooltip content={<AquariumTemperatureChartTooltip payload={temperatures[0]} />} />
-        <Area type="monotone" dataKey="temperature" stroke="#8884d8" fill="#8884d8" />
+        <Area type="monotone" dataKey="temperature" stroke={'#bac5db'} fill={'#bac5dbdd'} />
       </AreaChart>
     </ResponsiveContainer>
   )
