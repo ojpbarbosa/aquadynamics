@@ -12,7 +12,9 @@ export default function Providers({ children }: ProvidersProps) {
   return (
     <>
       <WebSocketProvider>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider attribute="class" storageKey="theme" enableSystem>
+          {children}
+        </ThemeProvider>
       </WebSocketProvider>
     </>
   )

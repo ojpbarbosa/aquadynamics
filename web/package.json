@@ -28,5 +28,7 @@
     "typescript": "5.1.5",
     "use-gauge": "^0.6.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/luxon": "^3.3.0"
+  }
 }

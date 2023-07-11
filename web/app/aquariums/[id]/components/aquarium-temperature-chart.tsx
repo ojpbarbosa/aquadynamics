@@ -10,23 +10,29 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts'
-import AquariumTemperatureChartTooltip from './aquarium-temperature-chart-tooltip'
 import { useTheme } from 'next-themes'
 
+import AquariumTemperatureChartTooltip from './aquarium-temperature-chart-tooltip'
+import { Log } from '@/library/types'
+
 type AquariumTemperatureChartProps = {
-  temperatures: {
-    temperature: number
-    timestamp: Date
-  }[]
+  logs: Log[]
 }
 
-export default function AquariumTemperatureChart({ temperatures }: AquariumTemperatureChartProps) {
+export default function AquariumTemperatureChart({ logs }: AquariumTemperatureChartProps) {
   const { theme } = useTheme()
+
+  console.log(theme)
 
   return (
     <ResponsiveContainer width="100%" height={200} min-width={300}>
       <AreaChart
-        data={temperatures}
+        data={logs.map((log) => {
+          return {
+            temperature: log.temperature,
+            timestamp: log.timestamp
+          }
+        })}
         margin={{
           top: 10,
           right: 30,
@@ -42,7 +48,7 @@ export default function AquariumTemperatureChart({ temperatures }: AquariumTempe
         <YAxis dataKey="temperature" domain={[20, 30]}>
           <Label value="°C" position="left" angle={-90} dy="-10" />
         </YAxis>
-        <Tooltip content={<AquariumTemperatureChartTooltip payload={temperatures[0]} />} />
+        <Tooltip content={<AquariumTemperatureChartTooltip payload={logs[0]} />} />
         <Area type="monotone" dataKey="temperature" stroke={'#bac5db'} fill={'#bac5dbdd'} />
       </AreaChart>
     </ResponsiveContainer>

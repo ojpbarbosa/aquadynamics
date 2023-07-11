@@ -9,6 +9,7 @@ import { Aquarium } from '@/library/types'
 import AquariumControllerStatus from './aquarium-controller-status'
 import AquariumLog from './aquarium-log/aquarium-log'
 import AquariumTemperatureChart from './aquarium-temperature-chart'
+import { DateTime } from 'luxon'
 
 type AquariumDataProps = {
   data: Aquarium
@@ -36,11 +37,7 @@ export default function AquariumData({ data }: AquariumDataProps) {
             </div>
             <div>
               <h1 className="text-2xl font-bold">Temperatura</h1>
-              <AquariumTemperatureChart
-                temperatures={aquarium.logs!.map((log) => {
-                  return { temperature: log.temperature, timestamp: log.timestamp }
-                })}
-              />
+              <AquariumTemperatureChart logs={aquarium.logs!} />
             </div>
           </div>
         </div>
