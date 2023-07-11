@@ -1,6 +1,9 @@
 // aquadynamics/embedded/lightning
+
 #include <Arduino.h>
+
 #include <SPI.h>
+
 #include "RTClib.h"
 
 #define RELAY_PIN 2 // relay pin definition
