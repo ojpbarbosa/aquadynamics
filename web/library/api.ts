@@ -1,10 +1,10 @@
-import { Aquarium } from './types'
+import { Aquarium, Log } from './types'
 
 const apiUrl = 'https://aquadynamics-core.onrender.com/api'
 
 type GetEntityParameters = {
   orderBy?: string
-  order?: string
+  order?: 'asc' | 'desc'
   page?: number
   perPage?: number
 
@@ -68,6 +68,20 @@ export async function getAquarium(
   const response = await fetch(url, { cache: 'no-cache' })
 
   if (!response.ok) return {} as Aquarium
+
+  const data = await response.json()
+  return data
+}
+
+export async function getLogs(parameters: GetEntityParameters = {}): Promise<Log[]> {
+  const queryString = convertParametersToQueryString(parameters)
+  const url = `${apiUrl}/logs${queryString}`
+
+  const response = await fetch(url, {
+    cache: 'no-cache'
+  })
+
+  if (!response.ok) return []
 
   const data = await response.json()
   return data

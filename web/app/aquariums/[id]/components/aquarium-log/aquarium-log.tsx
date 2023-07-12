@@ -1,28 +1,24 @@
 import { Dispatch, SetStateAction, useCallback, useContext, useEffect, useState } from 'react'
 
 import { WebSocketContext } from '@/contexts/websocket-context'
-import { Aquarium, Log } from '@/library/types'
+import { Log } from '@/library/types'
 
 type AquariumLogProps = {
-  aquarium: Aquarium
-  setAquarium: Dispatch<SetStateAction<Aquarium>>
+  aquariumId: string
+  logs: Log[]
+  setLogs: Dispatch<SetStateAction<Log[]>>
 }
 
-export default function AquariumLog({ aquarium, setAquarium }: AquariumLogProps) {
-  const [aquariumLog, setAquariumLog] = useState(
-    aquarium.logs ? aquarium.logs[aquarium.logs.length - 1] : ({} as Log)
-  )
-
+export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogProps) {
   const { socket } = useContext(WebSocketContext)
 
   const onLog = useCallback(
     (data: Log) => {
-      if (data.aquariumId === aquarium.id) {
-        setAquariumLog(data)
-        setAquarium((previous) => ({ ...previous, logs: [...previous.logs!, data] }))
+      if (data.aquariumId === aquariumId) {
+        setLogs((previous) => [...previous, data])
       }
     },
-    [aquarium, setAquarium]
+    [aquariumId, setLogs]
   )
 
   useEffect(() => {
@@ -36,10 +32,10 @@ export default function AquariumLog({ aquarium, setAquarium }: AquariumLogProps)
   return (
     <>
       <h1 className="text-3xl md:text-6xl font-semibold">
-        {aquariumLog ? aquariumLog.temperature.toFixed(1) : '-'} °C
+        {logs ? logs[logs.length - 1].temperature.toFixed(1) : '-'} °C
       </h1>
       <h1 className="text-3xl md:text-6xl font-semibold">
-        pH {aquariumLog ? aquariumLog.pH.toFixed(1) : '-'}
+        pH {logs ? logs[logs.length - 1].pH.toFixed(1) : '-'}
       </h1>
     </>
   )

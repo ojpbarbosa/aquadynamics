@@ -5,18 +5,21 @@ import { usePathname } from 'next/navigation'
 import { PiSpinnerGapLight } from 'react-icons/pi'
 
 import Header from '@/components/layout/header'
-import { Aquarium } from '@/library/types'
+import { Aquarium, Log } from '@/library/types'
 import AquariumControllerStatus from './aquarium-controller-status'
 import AquariumLog from './aquarium-log/aquarium-log'
 import AquariumTemperatureChart from './aquarium-temperature-chart'
-import { DateTime } from 'luxon'
 
 type AquariumDataProps = {
-  data: Aquarium
+  data: {
+    aquarium: Aquarium
+    logs: Log[]
+  }
 }
 
 export default function AquariumData({ data }: AquariumDataProps) {
-  const [aquarium, setAquarium] = useState(data)
+  const [aquarium, setAquarium] = useState(data.aquarium)
+  const [logs, setLogs] = useState(data.logs)
 
   const pathname = usePathname()
 
@@ -32,12 +35,12 @@ export default function AquariumData({ data }: AquariumDataProps) {
               </div>
               <div className="flex flex-row sm:flex-col md:w-1/6 lg:w-1/3 gap-y-2 justify-between items-center">
                 <AquariumControllerStatus aquarium={aquarium} setAquarium={setAquarium} />
-                <AquariumLog aquarium={aquarium} setAquarium={setAquarium} />
+                <AquariumLog aquariumId={aquarium.id} logs={logs} setLogs={setLogs} />
               </div>
             </div>
             <div>
               <h1 className="text-2xl font-bold">Temperatura</h1>
-              <AquariumTemperatureChart logs={aquarium.logs!} />
+              <AquariumTemperatureChart logs={logs} />
             </div>
           </div>
         </div>

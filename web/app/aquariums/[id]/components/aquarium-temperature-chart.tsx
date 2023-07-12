@@ -22,8 +22,6 @@ type AquariumTemperatureChartProps = {
 export default function AquariumTemperatureChart({ logs }: AquariumTemperatureChartProps) {
   const { theme } = useTheme()
 
-  console.log(theme)
-
   return (
     <ResponsiveContainer width="100%" height={200} min-width={300}>
       <AreaChart
@@ -42,7 +40,7 @@ export default function AquariumTemperatureChart({ logs }: AquariumTemperatureCh
         syncId="temperature"
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="timestamp">
+        <XAxis>
           <Label value="Registro" position="bottom" />
         </XAxis>
         <YAxis dataKey="temperature" domain={[20, 30]}>
