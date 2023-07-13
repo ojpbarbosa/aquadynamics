@@ -39,15 +39,18 @@ export default function AquariumTemperatureChart({ logs }: AquariumTemperatureCh
         }}
         syncId="temperature"
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis>
-          <Label value="Registro" position="bottom" />
-        </XAxis>
+        <CartesianGrid strokeDasharray="3 3" color="#262626" />
+
         <YAxis dataKey="temperature" domain={[20, 30]}>
           <Label value="°C" position="left" angle={-90} dy="-10" />
         </YAxis>
         <Tooltip content={<AquariumTemperatureChartTooltip payload={logs[0]} />} />
-        <Area type="monotone" dataKey="temperature" stroke={'#bac5db'} fill={'#bac5dbdd'} />
+        <Area
+          type="monotone"
+          dataKey="temperature"
+          stroke={theme === 'light' ? '#bac5db' : '#262626'}
+          fill={theme === 'light' ? '#bac5dbdd' : '#262626bb'}
+        />
       </AreaChart>
     </ResponsiveContainer>
   )
