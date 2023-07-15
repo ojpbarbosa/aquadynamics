@@ -6,11 +6,12 @@ from time import sleep
 import network
 import urequests
 from json import dumps
-import ubinascii
+from address import get_mac_address
+
 
 
 # constants
-API_URL = 'https://aquabotics-core-api.onrender.com/api'
+API_URL = 'https://aquadynamics-core.onrender.com/api'
 
 NETWORK_SSID = 'AquaDynamics'
 NETWORK_PASSWORD = 'AquaDynamics'
@@ -33,8 +34,7 @@ print(f'\nConnected to {NETWORK_SSID} successfully!')
 
 
 def make_request(endpoint, method='get', data=None):
-    headers = {'address': ubinascii.hexlify(sta_if.config(
-        'mac')).decode().lower(), 'content-type': 'application/json'}
+    headers = {'address': get_mac_address(sta_if), 'content-type': 'application/json'}
 
     data = (dumps(data)).encode()
 
@@ -44,11 +44,18 @@ def make_request(endpoint, method='get', data=None):
     print(response.text)
 
 
+def update_controller_status(status):
+    make_request('/controllers?status=' + status, 'patch')
+
+
+def log(data):
+    make_request('/logs', 'post', data=data)
+
 try:
     # register the controller to the server
     make_request('/controllers', 'post', data={'aquarium': '1'})
     # set the controller status in the server as booting
-    make_request('/controllers?state=booting', 'patch')
+    update_controller_status('booting')
 
     # set the temperature sensors pin
     temperature_sensors_pin = Pin(TEMPERATURE_SENSORS_PIN)
@@ -59,30 +66,36 @@ try:
     roms = temperature_sensors.scan()
     print('[LOG] Found DS devices: ', roms)
 
-    # after the booting procedure is complete, the controller status is set to logging
-    make_request('/controllers?state=logging', 'patch')
+    # after the booting procedure is complete, the controller status is set to idling
+    update_controller_status('idling')
 
     while True:
+        update_controller_status('logging')
+
         temperature_sensors.convert_temp()
         sleep(1)
 
-        data = {
-            'type': 'temperature-sensor-reading',
-        }
+        data = {}
         temperature_avarage = 0
 
         for rom in roms:
-            data = {
-                **data, 'reading': {**{ubinascii.hexlify(rom).decode().lower(): temperature_sensors.read_temp(rom)}}}
-
             temperature_avarage += temperature_sensors.read_temp(rom)
 
         # TODO: properly set data/data and data/reading according to temperature sensor data
 
-        make_request('/logs', 'post', data=data)
+        data = {
+          'temperature': temperature_avarage / len(roms),
+          'pH': 0, # pH sensor reading
+          'ligthning': False, # ldr reading
+          'timestamp': '' # current timestamp from rtc
+        }
+
+        log(data)
+        update_controller_status('idling')
 
         sleep(1 * 5 * 60 - 1)  # sleep for 5 minutes
 
 except Exception as error:
     print(error)
-    make_request('/controllers?state=crashed', 'patch')
+    update_controller_status('crashed')
+
