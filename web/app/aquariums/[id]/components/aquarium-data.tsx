@@ -35,13 +35,17 @@ export default function AquariumData({ data }: AquariumDataProps) {
               </div>
               <div className="flex flex-row sm:flex-col md:w-1/6 lg:w-1/3 gap-y-2 justify-between items-center">
                 <AquariumControllerStatus aquarium={aquarium} setAquarium={setAquarium} />
-                <AquariumLog aquariumId={aquarium.id} logs={logs} setLogs={setLogs} />
+                {logs.length > 0 && (
+                  <AquariumLog aquariumId={aquarium.id} logs={logs} setLogs={setLogs} />
+                )}
               </div>
             </div>
-            <div>
-              <h1 className="text-2xl font-bold">Temperatura</h1>
-              <AquariumTemperatureChart logs={logs} />
-            </div>
+            {logs.length > 0 && (
+              <div>
+                <h1 className="text-2xl font-bold">Temperatura</h1>
+                <AquariumTemperatureChart logs={logs} />
+              </div>
+            )}
           </div>
         </div>
       </main>

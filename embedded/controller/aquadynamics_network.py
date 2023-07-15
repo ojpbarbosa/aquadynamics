@@ -4,14 +4,10 @@ from time import sleep
 
 
 NETWORK_SSID = 'AquaDynamics'
-NETWORK_PASSWORD = 'AquaDynamics'
+NETWORK_PASSWORD = 'DynamicsAqua'
 
 
-def get_mac_address(sta_if):
-    return ubinascii.hexlify(sta_if.config('mac')).decode().lower()
-
-
-if __name__ == '__main__':
+def connect():
     sta_if = network.WLAN(network.STA_IF)
     if not sta_if.isconnected():
         print(f'Connecting to {NETWORK_SSID}...', end='')
@@ -23,4 +19,14 @@ if __name__ == '__main__':
             print('.', end='')
             sleep(0.25)
 
-        get_mac_address(sta_if)
+        print(f'\nConnected to {NETWORK_SSID} successfully!')
+
+    return sta_if
+
+def get_mac_address(interface):
+    return ubinascii.hexlify(interface.config('mac'),':').decode()
+
+if __name__ == '__main__':
+    sta_if = connect()
+
+    print(get_mac_address(sta_if))
