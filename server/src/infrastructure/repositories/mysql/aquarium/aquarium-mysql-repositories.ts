@@ -45,7 +45,7 @@ export class AquariumMysqlRepositories implements IAquariumRepositories {
               ? {
                   orderBy: [
                     {
-                      timestamp: 'desc'
+                      timestamp: 'asc'
                     }
                   ]
                 }
