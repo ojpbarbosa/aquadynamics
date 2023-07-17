@@ -65,7 +65,7 @@ def get_timestamp():
     return f"{formatted_date}T{formatted_time}"
 
 
-def make_request(endpoint: str, method = 'get', data: dict = None):
+def make_request(endpoint: str, method = 'GET', data: dict = None):
     headers = {'address': get_mac_address(sta_if), 'content-type': 'application/json'}
 
     data = (dumps(data)).encode()
@@ -78,8 +78,11 @@ def make_request(endpoint: str, method = 'get', data: dict = None):
 
 def update_controller_status(status: str):
     try:
-        make_request('/controllers?status=' + status, 'patch')
+        # make_request('/controllers?status=' + status, 'PATCH')
+        print(get_mac_address(sta_if))
+        requests.patch(API_URL + '/controllers?status=' + status, headers={'address': get_mac_address(sta_if)})
     except Exception as error:
+        print('update_controller_status error')
         print(error)
 
 
@@ -89,13 +92,13 @@ def lightning():
 
 def log(data):
     try:
-        make_request('/logs', 'post', data)
+        make_request('/logs', 'POST', data)
     except Exception as error:
         print(error)
 
 try:
     # set the controller status in the server as booting
-    # update_controller_status('booting')
+    update_controller_status('booting')
 
     # set the temperature sensors pin
     temperature_sensors_pin = Pin(TEMPERATURE_SENSORS_PIN)
@@ -107,7 +110,7 @@ try:
     print('[LOG] Found DS devices: ', roms)
 
     # after the booting procedure is complete, the controller status is set to idling
-    # update_controller_status('idling')
+    update_controller_status('idling')
 
     while True:
         # update_controller_status('logging')
@@ -124,7 +127,7 @@ try:
         # todo: properly set data/data and data/reading according to temperature sensor data
 
         data = {
-          'temperature': temperature_avarage / len(roms),
+          'temperature': temperature_sum / len(roms),
           'pH': 0, # pH sensor reading
           'ligthning': lightning(), # lighning sensor reading
           'timestamp': get_timestamp()
@@ -132,7 +135,7 @@ try:
 
         print(data)
         log(data)
-        # update_controller_status('idling')
+        update_controller_status('idling')
 
         sleep(1 * 5 * 60 - 1)  # sleep for 5 minutes
 
