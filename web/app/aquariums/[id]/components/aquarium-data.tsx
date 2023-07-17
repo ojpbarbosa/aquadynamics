@@ -31,7 +31,7 @@ export default function AquariumData({ data }: AquariumDataProps) {
       <Header subtreeName={aquarium.name} subtreeUrl={pathname} />
       <main className="overflow-y-auto overflow-x-hidden h-[80vh] w-screen">
         <div className="flex w-screen h-full items-start justify-around">
-          <div className="w-5/6 flex flex-col sm:justify-between gap-4 py-11 gap-y-4">
+          <div className="w-5/6 flex flex-col sm:justify-between gap-4 py-14 gap-y-4">
             <div className="flex flex-col sm:justify-between sm:flex-row w-full">
               <AquariumCamera aquariumId={aquarium.id} />
               {aquarium.controller && (

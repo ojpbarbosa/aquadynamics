@@ -46,10 +46,10 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
     pHData && (
       <>
         <div className="flex flex-col gap-y-2 text-neutral-500">
-          <h1 className="text-3xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
+          <h1 className="text-2xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
             {logs ? logs[logs.length - 1].temperature.toFixed(1).replace('.', ',') : '-'} °C
           </h1>
-          <div>
+          <div className="sm:text-base text-sm">
             A temperatura da água está{' '}
             <p className={`text-${temperatureData.color} transition-colors duration-[2s]`}>
               {temperatureData.term?.toLowerCase()}
@@ -72,11 +72,11 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
         </div>
 
         <div className="flex flex-col gap-y-2 text-neutral-500">
-          <h1 className="text-3xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
+          <h1 className="text-2xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
             pH {logs ? logs[logs.length - 1].pH.toFixed(1).replace('.', ',') : '-'}
           </h1>
 
-          <div>
+          <div className="sm:text-base text-sm">
             O pH da água está{' '}
             <p className={`text-${pHData.color} transition-colors duration-[2s] `}>
               {pHData.term?.toLowerCase()}
