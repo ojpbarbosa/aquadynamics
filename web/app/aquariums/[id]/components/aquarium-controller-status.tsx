@@ -73,11 +73,12 @@ export default function AquariumControllerStatus({
 
   return (
     <dl className="flex flex-col gap-y-1">
-      <dt className="text-neutral-500">Status do controlador</dt>
-      <div className="flex items-center gap-x-2 ">
+      <dt className="text-neutral-500 text-sm sm:text-base">Status do controlador</dt>
+      <div className="flex items-center gap-x-2 text-sm sm:text-base ">
         <div
           className={
-            'h-[10px] w-[10px] rounded-full transition-colors duration-[2s] ' + status.bulletColor
+            'h-[10px] w-[10px] rounded-full transition-colors duration-[2s] text-sm sm:text-base ' +
+            status.bulletColor
           }
         />
         {status.name}

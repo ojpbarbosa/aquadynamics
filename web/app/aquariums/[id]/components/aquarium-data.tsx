@@ -41,8 +41,8 @@ export default function AquariumData({ data }: AquariumDataProps) {
                   )}
                   <AquariumControllerStatus aquarium={aquarium} setAquarium={setAquarium} />
                   <dl className="flex flex-col gap-y-1">
-                    <dt className="text-neutral-500">Última atualização</dt>
-                    <dd>
+                    <dt className="text-neutral-500 text-sm sm:text-base">Última atualização</dt>
+                    <dd className="text-sm sm:text-base">
                       {DateTime.fromISO(logs[logs.length - 1].timestamp.toString(), {
                         zone: 'America/Sao_Paulo'
                       })
