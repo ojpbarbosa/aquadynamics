@@ -25,7 +25,7 @@ export const setUpWebSocketServer = (server: Express): WebSocketServerSetup => {
     })
 
     socket.on(
-      'aquarium_camera_stream_frame',
+      'aquarium_camera_frame',
       ({ aquariumId, frame }: { aquariumId: string; frame: ArrayBuffer }) => {
         webSocketServer.of('/streaming').emit(aquariumId, frame)
       }
