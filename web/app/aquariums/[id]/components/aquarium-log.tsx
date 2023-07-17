@@ -60,15 +60,15 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           <ul>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-blue-500" />
-              <p className="text-sm sm:text-md">Água fria: Menos que 20 °C</p>
+              <p className="text-sm sm:text-base">Água fria: Menos que 20 °C</p>
             </li>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-green-500" />
-              <p className="text-sm sm:text-md">Água ideal: Entre 20 e 30 °C</p>
+              <p className="text-sm sm:text-base">Água ideal: Entre 20 e 30 °C</p>
             </li>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-red-500" />
-              <p className="text-sm sm:text-md">Água quente: Mais que 30 °C</p>
+              <p className="text-sm sm:text-base">Água quente: Mais que 30 °C</p>
             </li>
           </ul>
         </div>
@@ -89,15 +89,15 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           <ul>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-orange-500" />
-              <p className='text-sm sm:text-md'>pH ácido: Menor que 6,5</p>
+              <p className='text-sm sm:text-base'>pH ácido: Menor que 6,5</p>
             </li>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-green-500" />
-              <p className='text-sm sm:text-md'>pH ideal: Entre 6,5 e 7,5</p>
+              <p className='text-sm sm:text-base'>pH ideal: Entre 6,5 e 7,5</p>
             </li>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-purple-500" />
-              <p className='text-sm sm:text-md'>pH alcalino: Maior que 7,5</p>
+              <p className='text-sm sm:text-base'>pH alcalino: Maior que 7,5</p>
             </li>
           </ul>
         </div>
