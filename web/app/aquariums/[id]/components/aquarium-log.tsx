@@ -7,7 +7,6 @@ import {
   useRef,
   useState
 } from 'react'
-import clsx from 'clsx'
 
 import { WebSocketContext } from '@/contexts/websocket-context'
 import { Log } from '@/library/types'
@@ -21,10 +20,9 @@ type AquariumLogProps = {
 
 export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogProps) {
   const { socket } = useContext(WebSocketContext)
-  const latestLog = useRef<Log>(logs[logs.length - 1])
 
-  const temperatureData = getTemperatureData(latestLog.current.temperature)
-  const pHData = getPHData(latestLog.current.pH)
+  const temperatureData = getTemperatureData(logs ? logs[logs.length - 1].temperature : 0)
+  const pHData = getPHData(logs ? logs[logs.length - 1]!.pH : 0)
 
   const onLog = useCallback(
     (data: Log) => {
@@ -49,7 +47,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
       <>
         <div className="flex flex-col gap-y-2 text-neutral-500">
           <h1 className="text-3xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
-            {logs ? latestLog.current.temperature.toFixed(1).replace('.', ',') : '-'} °C
+            {logs ? logs[logs.length - 1].temperature.toFixed(1).replace('.', ',') : '-'} °C
           </h1>
           <div>
             A temperatura da água está{' '}
@@ -75,7 +73,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
 
         <div className="flex flex-col gap-y-2 text-neutral-500">
           <h1 className="text-3xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
-            pH {logs ? latestLog.current.pH.toFixed(1).replace('.', ',') : '-'}
+            pH {logs ? logs[logs.length - 1].pH.toFixed(1).replace('.', ',') : '-'}
           </h1>
 
           <div>
