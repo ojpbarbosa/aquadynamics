@@ -49,24 +49,26 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           <h1 className="text-2xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
             {logs ? logs[logs.length - 1].temperature.toFixed(1).replace('.', ',') : '-'} °C
           </h1>
-          <div className="sm:text-base text-sm">
+          <p className="sm:text-base text-sm">
             A temperatura da água está{' '}
-            <p className={`text-${temperatureData.color} transition-colors duration-[2s]`}>
+            <span
+              className={`text-${temperatureData.color} transition-colors duration-[2s] text-sm sm:text-base`}
+            >
               {temperatureData.term?.toLowerCase()}
-            </p>
-          </div>
+            </span>
+          </p>
           <ul>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-blue-500" />
-              <span>Água fria: Menos que 20 °C</span>
+              <p>Água fria: Menos que 20 °C</p>
             </li>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-green-500" />
-              <span>Água ideal: Entre 20 e 30 °C</span>
+              <p>Água ideal: Entre 20 e 30 °C</p>
             </li>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-red-500" />
-              <span>Água quente: Mais que 30 °C</span>
+              <p>Água quente: Mais que 30 °C</p>
             </li>
           </ul>
         </div>
@@ -76,24 +78,26 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
             pH {logs ? logs[logs.length - 1].pH.toFixed(1).replace('.', ',') : '-'}
           </h1>
 
-          <div className="sm:text-base text-sm">
+          <p className="sm:text-base text-sm">
             O pH da água está{' '}
-            <p className={`text-${pHData.color} transition-colors duration-[2s] `}>
+            <span
+              className={`text-${pHData.color} transition-colors duration-[2s] text-sm sm:text-base`}
+            >
               {pHData.term?.toLowerCase()}
-            </p>
-          </div>
+            </span>
+          </p>
           <ul>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-orange-500" />
-              <span>pH ácido: Menor que 6,5</span>
+              <p>pH ácido: Menor que 6,5</p>
             </li>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-green-500" />
-              <span>pH ideal: Entre 6,5 e 7,5</span>
+              <p>pH ideal: Entre 6,5 e 7,5</p>
             </li>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-purple-500" />
-              <span>pH alcalino: Maior que 7,5</span>
+              <p>pH alcalino: Maior que 7,5</p>
             </li>
           </ul>
         </div>
