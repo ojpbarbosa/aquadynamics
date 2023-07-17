@@ -16,6 +16,15 @@ export const setUpWebSocketServer = (server: Express): WebSocketServerSetup => {
     }
   })
 
+  // exclusively for debugging purposes
+  webSocketServer.on('connection', (socket) => {
+    console.log(`${socket.id} peer connected to WebSocket server!`)
+
+    socket.on('disconnect', () => {
+      console.log(`${socket.id} peer disconnected from WebSocket server!`)
+    })
+  })
+
   return {
     httpServer,
     webSocketServer
