@@ -7,6 +7,7 @@ import { Aquarium, Log } from '@/library/types'
 import { WebSocketContext } from '@/contexts/websocket-context'
 import AquariumCardCamera from './aquarium-card-camera'
 import AquariumCardDetail from './aquarium-card-detail'
+import { getPHData, getTemperatureData } from '@/library/aquarium-data'
 
 type AquariumCardProps = {
   aquarium: Aquarium
@@ -15,6 +16,8 @@ type AquariumCardProps = {
 export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumCardProps) {
   const [aquariumLog, setAquariumLog] = useState(logs ? logs[logs.length - 1] : ({} as Log))
   const { socket } = useContext(WebSocketContext)
+  const temperatureDate = getTemperatureData(aquariumLog.temperature)
+  const pHData = getPHData(aquariumLog.pH)
 
   const onLog = useCallback(
     (data: Log) => {
@@ -36,7 +39,7 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
       href={`/aquariums/${id}`}
       className="rounded dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 bg-transparent hover:bg-neutral-100 transition-colors duration-200 hover:dark:bg-neutral-800/30 flex flex-col items-start"
     >
-      <AquariumCardCamera />
+      <AquariumCardCamera aquariumId={id} />
       <div className="border-t border-gray-300 dark:border-neutral-800 w-full flex flex-col justify-between p-4 gap-y-2 h-44 sm:h-48 2xl:h-32">
         <h3 className="font-semibold text-lg">{name}</h3>
         {aquariumLog ? (
@@ -44,7 +47,7 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
             <AquariumCardDetail
               term="Iluminação"
               value={aquariumLog.lightning ? 'Ligada' : 'Desligada'}
-              iconStyle={
+              bulletColor={
                 aquariumLog.lightning ? 'bg-green-500' : 'dark:bg-neutral-500 bg-neutral-400'
               }
             />
@@ -53,28 +56,12 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
               value={`${
                 aquariumLog.temperature ? aquariumLog.temperature.toFixed(1).replace('.', ',') : '-'
               } °C`}
-              iconStyle={
-                aquariumLog.temperature >= 26 && aquariumLog.temperature <= 29
-                  ? 'bg-green-500'
-                  : aquariumLog.temperature < 26
-                  ? 'bg-blue-500'
-                  : aquariumLog.temperature > 29
-                  ? 'bg-red-500'
-                  : ''
-              }
+              bulletColor={`bg-${temperatureDate.color}`}
             />
             <AquariumCardDetail
               term="pH"
               value={aquariumLog.pH ? aquariumLog.pH.toFixed(1).replace('.', ',') : '-'}
-              iconStyle={
-                aquariumLog.pH >= 6.5 && aquariumLog.pH <= 7.5
-                  ? 'bg-green-500'
-                  : aquariumLog.pH < 6.5
-                  ? 'bg-orange-500'
-                  : aquariumLog.pH > 7.5
-                  ? 'bg-red-500'
-                  : ''
-              }
+              bulletColor={`bg-${pHData.color}`}
             />
           </dl>
         ) : (

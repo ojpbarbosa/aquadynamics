@@ -1,15 +1,15 @@
 'use client'
 
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { FaVideoSlash } from 'react-icons/fa'
+import { PiSpinnerGapLight } from 'react-icons/pi'
 
 import { WebSocketContext } from '@/contexts/websocket-context'
 
-type AquariumCardCameraProps = {
+type AquariumCameraProps = {
   aquariumId: string
 }
 
-export default function AquariumCardCamera({ aquariumId }: AquariumCardCameraProps) {
+export default function AquariumCamera({ aquariumId }: AquariumCameraProps) {
   const { streaming } = useContext(WebSocketContext)
   const [aquariumCameraFrame, setAquariumCameraFrame] = useState('')
 
@@ -28,12 +28,12 @@ export default function AquariumCardCamera({ aquariumId }: AquariumCardCameraPro
   }, [streaming, aquariumId, onAquariumCameraFrame])
 
   return (
-    <div className="w-full flex items-center aspect-[5/4] justify-center bg-neutral-300/20 text-neutral-500 dark:bg-neutral-800/30">
+    <div className="aspect-[5/4] w-full sm:w-1/2 rounded border border-gray-300 dark:border-neutral-800 flex items-center justify-center bg-neutral-300/20 text-neutral-500 dark:bg-neutral-800/30">
       {aquariumCameraFrame ? (
         // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
         <img className="w-full h-full object-cover" src={aquariumCameraFrame} />
       ) : (
-        <FaVideoSlash className="text-4xl" />
+        <PiSpinnerGapLight className="text-4xl animate-spin" />
       )}
     </div>
   )

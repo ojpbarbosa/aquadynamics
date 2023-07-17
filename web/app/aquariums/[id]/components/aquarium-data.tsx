@@ -9,6 +9,8 @@ import { Aquarium, Log } from '@/library/types'
 import AquariumControllerStatus from './aquarium-controller-status'
 import AquariumLog from './aquarium-log/aquarium-log'
 import AquariumTemperatureChart from './aquarium-temperature-chart'
+import AquariumCamera from './aquarium-camera'
+import { DateTime } from 'luxon'
 
 type AquariumDataProps = {
   data: {
@@ -28,17 +30,25 @@ export default function AquariumData({ data }: AquariumDataProps) {
       <Header subtreeName={aquarium.name} subtreeUrl={pathname} />
       <main className="overflow-y-auto overflow-x-hidden h-[80vh] w-screen">
         <div className="flex w-screen h-full items-start justify-around">
-          <div className="w-5/6 flex flex-col sm:justify-between gap-4 py-10 sm:py-20 gap-y-4">
-            <div className="flex flex-col sm:flex-row w-full">
-              <div className="aspect-video w-full sm:w-2/3 rounded border border-gray-300 dark:border-neutral-800 flex items-center justify-center bg-neutral-300/20 text-neutral-500 dark:text-neutral-500 dark:bg-neutral-800/30">
-                <PiSpinnerGapLight className="text-4xl animate-spin" />
-              </div>
+          <div className="w-5/6 flex flex-col sm:justify-between gap-4 py-11 gap-y-4">
+            <div className="flex flex-col sm:justify-between sm:flex-row w-full">
+              <AquariumCamera aquariumId={aquarium.id} />
               {aquarium.controller && (
-                <div className="flex flex-row sm:flex-col md:w-1/6 lg:w-1/3 gap-y-2 justify-between items-center">
-                  <AquariumControllerStatus aquarium={aquarium} setAquarium={setAquarium} />
+                <div className="grid grid-cols-2 w-full sm:pt-0 pt-6 sm:w-1/2 sm:pl-12 gap-6">
                   {logs.length > 0 && (
                     <AquariumLog aquariumId={aquarium.id} logs={logs} setLogs={setLogs} />
                   )}
+                  <AquariumControllerStatus aquarium={aquarium} setAquarium={setAquarium} />
+                  <dl className="flex flex-col gap-y-1">
+                    <dt className="text-neutral-500">Última atualização</dt>
+                    <dd>
+                      {DateTime.fromISO(logs[logs.length - 1].timestamp.toString(), {
+                        zone: 'America/Sao_Paulo'
+                      })
+                        .setLocale('pt-BR')
+                        .toLocaleString(DateTime.DATETIME_MED)}
+                    </dd>
+                  </dl>
                 </div>
               )}
             </div>

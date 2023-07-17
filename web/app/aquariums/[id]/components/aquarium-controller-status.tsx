@@ -6,32 +6,27 @@ import { Aquarium, Controller } from '@/library/types'
 const controllerStatusMap = {
   unknown: {
     name: 'Sem informações',
-    style:
-      'dark:border-neutral-800 dark:bg-neutral-800/30 text-neutral-500 border-neutral-300 bg-neutral-300/20'
+    bulletColor: 'dark:bg-neutral-500 bg-netural-400'
   },
   booting: {
     name: 'Inicializando',
-    style:
-      'text-yellow-500 border-yellow-500/30 bg-yellow-400/20 dark:border-yellow-500/40 dark:bg-yellow-400/10'
+    bulletColor: 'bg-yellow-500'
   },
   idling: {
     name: 'Ocioso',
-    style:
-      'text-blue-500 border-blue-500/30 bg-blue-400/20 dark:border-blue-500/40 dark:bg-blue-400/10'
+    bulletColor: 'bg-blue-500'
   },
   logging: {
     name: 'Registrando',
-    style:
-      'text-green-500 border-green-500/30 bg-green-400/20 dark:border-green-500/40 dark:bg-green-400/10'
+    bulletColor: 'bg-green-500'
   },
   restarting: {
     name: 'Reiniciando',
-    style:
-      'text-yellow-500 border-yellow-500/30 bg-yellow-400/20 dark:border-yellow-500/40 dark:bg-yellow-400/10'
+    bulletColor: 'bg-orange-500'
   },
   crashed: {
     name: 'Erro',
-    style: 'text-red-500 border-red-500/30 bg-red-400/20 dark:border-red-500/40 dark:bg-red-400/10'
+    bulletColor: 'bg-red-500'
   }
 }
 
@@ -77,10 +72,16 @@ export default function AquariumControllerStatus({
   const status = controllerStatusMap[aquariumControllerStatus!]
 
   return (
-    <div className="flex items-center gap-2">
-      <span className={'border rounded p-2 align-middle text-center ' + status.style}>
+    <dl className="flex flex-col gap-y-1">
+      <dt className="text-neutral-500">Status do controlador</dt>
+      <div className="flex items-center gap-x-2 ">
+        <div
+          className={
+            'h-[10px] w-[10px] rounded-full transition-colors duration-[2s] ' + status.bulletColor
+          }
+        />
         {status.name}
-      </span>
-    </div>
+      </div>
+    </dl>
   )
 }
