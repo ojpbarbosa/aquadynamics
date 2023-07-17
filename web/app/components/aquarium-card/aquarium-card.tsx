@@ -16,8 +16,11 @@ type AquariumCardProps = {
 export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumCardProps) {
   const [aquariumLog, setAquariumLog] = useState(logs ? logs[logs.length - 1] : ({} as Log))
   const { socket } = useContext(WebSocketContext)
-  const temperatureDate = getTemperatureData(aquariumLog.temperature)
-  const pHData = getPHData(aquariumLog.pH)
+  let temperatureData, pHData
+  if (aquariumLog) {
+    temperatureData = getTemperatureData(aquariumLog.temperature)
+    pHData = getPHData(aquariumLog.pH)
+  }
 
   const onLog = useCallback(
     (data: Log) => {
@@ -56,12 +59,12 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
               value={`${
                 aquariumLog.temperature ? aquariumLog.temperature.toFixed(1).replace('.', ',') : '-'
               } °C`}
-              bulletColor={`bg-${temperatureDate.color}`}
+              bulletColor={`bg-${temperatureData!.color}`}
             />
             <AquariumCardDetail
               term="pH"
               value={aquariumLog.pH ? aquariumLog.pH.toFixed(1).replace('.', ',') : '-'}
-              bulletColor={`bg-${pHData.color}`}
+              bulletColor={`bg-${pHData!.color}`}
             />
           </dl>
         ) : (

@@ -7,10 +7,11 @@ import { PiSpinnerGapLight } from 'react-icons/pi'
 import Header from '@/components/layout/header'
 import { Aquarium, Log } from '@/library/types'
 import AquariumControllerStatus from './aquarium-controller-status'
-import AquariumLog from './aquarium-log/aquarium-log'
+import AquariumLog from './aquarium-log'
 import AquariumTemperatureChart from './aquarium-temperature-chart'
 import AquariumCamera from './aquarium-camera'
 import { DateTime } from 'luxon'
+import AquariumPHChart from './aquarium-ph-chart'
 
 type AquariumDataProps = {
   data: {
@@ -53,9 +54,11 @@ export default function AquariumData({ data }: AquariumDataProps) {
               )}
             </div>
             {logs.length > 0 && (
-              <div>
+              <div className="flex flex-col gap-y-4 mt-6">
                 <h1 className="text-2xl font-bold">Temperatura</h1>
                 <AquariumTemperatureChart logs={logs} />
+                <h1 className="text-2xl font-bold">pH</h1>
+                <AquariumPHChart logs={logs} />
               </div>
             )}
           </div>
