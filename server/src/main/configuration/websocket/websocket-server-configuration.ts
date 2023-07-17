@@ -23,6 +23,13 @@ export const setUpWebSocketServer = (server: Express): WebSocketServerSetup => {
     socket.on('disconnect', () => {
       console.log(`${socket.id} peer disconnected from WebSocket server!`)
     })
+
+    socket.on(
+      'aquarium_camera_stream_frame',
+      ({ aquariumId, frame }: { aquariumId: string; frame: ArrayBuffer }) => {
+        webSocketServer.of('/streaming').emit(aquariumId, frame)
+      }
+    )
   })
 
   return {
