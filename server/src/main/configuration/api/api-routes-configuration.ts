@@ -1,5 +1,10 @@
 import { type Express, Router } from 'express'
-import { setUpAquariumRoutes, setUpControllerRoutes, setUpLogRoutes } from '../../routes'
+import {
+  setUpAquariumRoutes,
+  setUpCameraRoutes,
+  setUpControllerRoutes,
+  setUpLogRoutes
+} from '../../routes'
 
 export const setUpApiRoutes = (server: Express): void => {
   const router = Router()
@@ -7,6 +12,7 @@ export const setUpApiRoutes = (server: Express): void => {
   server.use('/api', router)
 
   setUpAquariumRoutes(router)
+  setUpCameraRoutes(router)
   setUpControllerRoutes(router)
   setUpLogRoutes(router)
 }

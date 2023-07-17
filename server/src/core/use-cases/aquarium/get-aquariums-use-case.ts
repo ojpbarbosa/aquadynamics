@@ -7,6 +7,7 @@ export type TGetAquariumsDTO = {
   perPage?: number
 
   logs?: boolean
+  cameras?: boolean
   controllers?: boolean
 
   id?: Aquarium['id']

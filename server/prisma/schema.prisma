@@ -13,10 +13,23 @@ model Aquarium {
   name         String   @unique
   registeredAt DateTime @default(now())
 
+  camera     Camera?
   controller Controller?
   logs       Log[]
 
   @@map("aquariums")
+}
+
+model Camera {
+  id           String   @id
+  address      String
+  aquariumId   String   @unique
+  registeredAt DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  aquarium Aquarium @relation(fields: [aquariumId], references: [id])
+
+  @@map("cameras")
 }
 
 model Controller {

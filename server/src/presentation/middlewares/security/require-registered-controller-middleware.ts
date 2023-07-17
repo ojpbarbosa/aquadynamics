@@ -2,7 +2,7 @@ import { okResponse, unauthorizedResponse } from '@presentation/responses'
 import { type IMiddleware, type IRequest, type IResponse } from '@application/ports/presentation'
 import { type IFindControllersRepository } from '@application/ports/repositories'
 import { type ICryptographyProvider } from '@application/ports/providers'
-import { CONTROLLER_ENCRYPTION_KEY } from '@main/configuration'
+import { CONTROLLER_ADDRESS_ENCRYPTION_KEY } from '@main/configuration'
 import { type Controller } from '@core/entities'
 
 export class RequireRegisteredControllerMiddleware implements IMiddleware {
@@ -20,7 +20,7 @@ export class RequireRegisteredControllerMiddleware implements IMiddleware {
       (controller) =>
         this.cryptographyProvider.decrypt(
           controller.address,
-          CONTROLLER_ENCRYPTION_KEY as string
+          CONTROLLER_ADDRESS_ENCRYPTION_KEY as string
         ) === address
     )
 

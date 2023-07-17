@@ -1,4 +1,4 @@
-import { SetControllerStatusController } from '@presentation/controllers'
+import { SetControllerStatusController } from '@presentation/controllers/index'
 import { RequiredFieldValidation } from '@presentation/validation'
 import { SetControllerStatusUseCase } from '@application/use-cases'
 import { updateControllerMysqlRepository } from '@infrastructure/repositories'

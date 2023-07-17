@@ -1,4 +1,4 @@
-import { GetControllersController } from '@presentation/controllers'
+import { GetControllersController } from '@presentation/controllers/index'
 import { GetControllersUseCase } from '@application/use-cases'
 import { findControllersMysqlRepository } from '@infrastructure/repositories'
 import { cryptoJsCryptographyProvider } from '@infrastructure/providers'

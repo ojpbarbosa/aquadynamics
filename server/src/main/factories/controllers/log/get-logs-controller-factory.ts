@@ -1,4 +1,4 @@
-import { GetLogsController } from '@presentation/controllers'
+import { GetLogsController } from '@presentation/controllers/index'
 import { GetLogsUseCase } from '@application/use-cases'
 import { findLogsMysqlRepository } from '@infrastructure/repositories'
 

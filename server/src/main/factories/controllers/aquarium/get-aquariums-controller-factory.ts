@@ -1,4 +1,4 @@
-import { GetAquariumsController } from '@presentation/controllers'
+import { GetAquariumsController } from '@presentation/controllers/index'
 import { GetAquariumsUseCase } from '@application/use-cases'
 import { findAquariumsMysqlRepository } from '@infrastructure/repositories'
 

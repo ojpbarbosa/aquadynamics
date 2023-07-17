@@ -1,6 +1,6 @@
 import { type IController, type IRequest, type IResponse } from '@application/ports/presentation'
 import { type IGetAquariumsUseCase } from '@core/use-cases'
-import { Controller, type Aquarium } from '@core/entities'
+import { Controller, type Aquarium, Camera } from '@core/entities'
 import { errorResponse, okResponse } from '@presentation/responses'
 
 export class GetAquariumsController implements IController {
@@ -10,8 +10,9 @@ export class GetAquariumsController implements IController {
     try {
       const { id } = request.parameters
       const { name, orderBy, order, page, perPage } = request.query
-      let { controllers, logs } = request.query
+      let { cameras, controllers, logs } = request.query
 
+      cameras = cameras === 'true' || controllers === 'false' ? JSON.parse(controllers) : undefined
       controllers =
         controllers === 'true' || controllers === 'false' ? JSON.parse(controllers) : undefined
       logs = logs === 'true' || logs === 'false' ? JSON.parse(logs) : undefined
@@ -19,6 +20,7 @@ export class GetAquariumsController implements IController {
       let aquariums = (await this.getAquariumsUseCase.get({
         id,
         name,
+        cameras,
         controllers,
         logs,
         orderBy,
@@ -28,6 +30,15 @@ export class GetAquariumsController implements IController {
       })) as Aquarium[]
 
       aquariums = aquariums.map((aquarium) => {
+        const { camera }: { camera?: Partial<Camera> } = aquarium
+        if (cameras && camera) {
+          delete camera.address
+
+          Object.assign(aquarium, {
+            camera
+          })
+        }
+
         if (logs && aquarium.logs)
           Object.assign(aquarium, {
             logs: aquarium.logs.map((log) => {

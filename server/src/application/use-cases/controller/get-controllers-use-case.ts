@@ -2,7 +2,7 @@ import { type IGetControllersUseCase, type TGetControllersDTO } from '@core/use-
 import { type IFindControllersRepository } from '@application/ports/repositories'
 import { type ICryptographyProvider } from '@application/ports/providers'
 import { type Controller } from '@core/entities'
-import { CONTROLLER_ENCRYPTION_KEY } from '@main/configuration'
+import { CONTROLLER_ADDRESS_ENCRYPTION_KEY } from '@main/configuration'
 import { NotFoundError } from '@application/errors'
 
 export class GetControllersUseCase implements IGetControllersUseCase {
@@ -19,7 +19,7 @@ export class GetControllersUseCase implements IGetControllersUseCase {
         (controller) =>
           this.cryptographyProvider.decrypt(
             controller.address,
-            CONTROLLER_ENCRYPTION_KEY as string
+            CONTROLLER_ADDRESS_ENCRYPTION_KEY as string
           ) === address
       )
 

@@ -6,8 +6,9 @@ export type TFindAquariumsRepositoryParameters = {
   page?: number
   perPage?: number
 
-  logs?: boolean
+  cameras?: boolean
   controllers?: boolean
+  logs?: boolean
 
   id?: Aquarium['id']
   name?: Aquarium['name']

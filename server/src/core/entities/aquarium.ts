@@ -1,4 +1,4 @@
-import { type Log, type Controller } from '.'
+import { type Log, type Camera, type Controller } from '.'
 
 export interface Aquarium {
   id: string
@@ -6,5 +6,6 @@ export interface Aquarium {
   registeredAt: Date
 
   logs?: Log[]
+  camera?: Camera
   controller?: Controller
 }

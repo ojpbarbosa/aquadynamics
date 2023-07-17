@@ -10,7 +10,7 @@ export class AquariumMysqlRepositories implements IAquariumRepositories {
 
   async find(parameters: TFindAquariumsRepositoryParameters): Promise<Aquarium[] | Aquarium> {
     if (parameters) {
-      const { id, name, controllers, logs, orderBy, order, page, perPage } = parameters
+      const { id, name, cameras, controllers, logs, orderBy, order, page, perPage } = parameters
 
       let orderOptions = {}
       if (orderBy && order) {
@@ -36,9 +36,10 @@ export class AquariumMysqlRepositories implements IAquariumRepositories {
         ...pageOptions
       }
 
-      if (controllers || logs) {
+      if (cameras || controllers || logs) {
         Object.assign(options, {
           include: {
+            camera: cameras || false,
             controller: controllers || false,
             logs: logs || false
           }
