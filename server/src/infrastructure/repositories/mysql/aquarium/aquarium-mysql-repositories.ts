@@ -41,7 +41,15 @@ export class AquariumMysqlRepositories implements IAquariumRepositories {
           include: {
             camera: cameras || false,
             controller: controllers || false,
-            logs: logs || false
+            logs: logs
+              ? {
+                  orderBy: [
+                    {
+                      timestamp: 'desc'
+                    }
+                  ]
+                }
+              : false
           }
         })
       }
