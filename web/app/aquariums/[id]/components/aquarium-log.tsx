@@ -50,7 +50,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
             {logs ? logs[logs.length - 1].temperature.toFixed(1).replace('.', ',') : '-'} °C
           </h1>
           <p className="sm:text-base text-sm">
-            A temperatura da stá{' '}
+            A temperatura da água está{' '}
             <span
               className={`text-${temperatureData.color} transition-colors duration-[2s] text-sm sm:text-base`}
             >
@@ -79,7 +79,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           </h1>
 
           <p className="sm:text-base text-sm">
-            O a stá{' '}
+            O pH da água está{' '}
             <span
               className={`text-${pHData.color} transition-colors duration-[2s] text-sm sm:text-base`}
             >
