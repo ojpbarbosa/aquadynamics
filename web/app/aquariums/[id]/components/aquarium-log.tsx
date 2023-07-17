@@ -22,7 +22,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
   const { socket } = useContext(WebSocketContext)
 
   const temperatureData = getTemperatureData(logs ? logs[logs.length - 1].temperature : 0)
-  const pHData = getPHData(logs ? logs[logs.length - 1]!.temperature : 0)
+  const pHData = getPHData(logs ? logs[logs.length - 1]!.pH : 0)
 
   const onLog = useCallback(
     (data: Log) => {

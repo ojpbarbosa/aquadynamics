@@ -48,10 +48,8 @@ export default function AquariumTemperatureChart({ logs }: AquariumTemperatureCh
         <Area
           type="monotone"
           dataKey="temperature"
-          // stroke={theme === 'light' ? '#bac5db' : '#262626'}
-          // fill={theme === 'light' ? '#bac5dbdd' : '#262626bb'}
-          stroke="#8884d8"
-          fill="#8884d8"
+          stroke={theme === 'light' ? '#aaa6fa' : '#8884d8'}
+          fill={theme === 'light' ? '#aaa6fa' : '#8884d8'}
         />
       </AreaChart>
     </ResponsiveContainer>
