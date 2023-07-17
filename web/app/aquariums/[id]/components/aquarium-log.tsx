@@ -22,7 +22,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
   const { socket } = useContext(WebSocketContext)
 
   const temperatureData = getTemperatureData(logs ? logs[logs.length - 1].temperature : 0)
-  const pHData = getPHData(logs ? logs[logs.length - 1]!.pH : 0)
+  const pHData = getPHData(logs ? logs[logs.length - 1]!.temperature : 0)
 
   const onLog = useCallback(
     (data: Log) => {
@@ -50,7 +50,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
             {logs ? logs[logs.length - 1].temperature.toFixed(1).replace('.', ',') : '-'} °C
           </h1>
           <p className="sm:text-base text-sm">
-            A temperatura da água está{' '}
+            A temperatura da stá{' '}
             <span
               className={`text-${temperatureData.color} transition-colors duration-[2s] text-sm sm:text-base`}
             >
@@ -60,26 +60,26 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           <ul>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-blue-500" />
-              <p className="text-sm sm:text-base">Água fria: Menos que 20 °C</p>
+              <p className="text-sm sm:text-base">Fria: Menos que 20 °C</p>
             </li>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-green-500" />
-              <p className="text-sm sm:text-base">Água ideal: Entre 20 e 30 °C</p>
+              <p className="text-sm sm:text-base">Ideal: Entre 20 e 30 °C</p>
             </li>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-red-500" />
-              <p className="text-sm sm:text-base">Água quente: Mais que 30 °C</p>
+              <p className="text-sm sm:text-base">Quente: Mais que 30 °C</p>
             </li>
           </ul>
         </div>
 
         <div className="flex flex-col gap-y-2 text-neutral-500">
           <h1 className="text-2xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
-            pH {logs ? logs[logs.length - 1].pH.toFixed(1).replace('.', ',') : '-'}
+            {logs ? logs[logs.length - 1].pH.toFixed(1).replace('.', ',') : '-'}
           </h1>
 
           <p className="sm:text-base text-sm">
-            O pH da água está{' '}
+            O a stá{' '}
             <span
               className={`text-${pHData.color} transition-colors duration-[2s] text-sm sm:text-base`}
             >
@@ -89,15 +89,15 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           <ul>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-orange-500" />
-              <p className='text-sm sm:text-base'>pH ácido: Menor que 6,5</p>
+              <p className="text-sm sm:text-base">Ácido: Menor que 6,5</p>
             </li>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-green-500" />
-              <p className='text-sm sm:text-base'>pH ideal: Entre 6,5 e 7,5</p>
+              <p className="text-sm sm:text-base">Ideal: Entre 6,5 e 7,5</p>
             </li>
             <li className="flex items-center gap-x-2">
               <div className="h-[10px] w-[10px] rounded-full bg-purple-500" />
-              <p className='text-sm sm:text-base'>pH alcalino: Maior que 7,5</p>
+              <p className="text-sm sm:text-base">Alcalino: Maior que 7,5</p>
             </li>
           </ul>
         </div>

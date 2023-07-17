@@ -35,7 +35,7 @@ export default function AquariumData({ data }: AquariumDataProps) {
             <div className="flex flex-col sm:justify-between sm:flex-row w-full">
               <AquariumCamera aquariumId={aquarium.id} />
               {aquarium.controller && (
-                <div className="grid grid-cols-2 w-full sm:pt-0 pt-6 sm:w-1/2 sm:pl-12 gap-1 sm:gap-5">
+                <div className="grid grid-cols-2 w-full sm:pt-0 pt-6 sm:w-1/2 sm:pl-12 gap-1 gap-y-3 sm:gap-5">
                   {logs.length > 0 && (
                     <AquariumLog aquariumId={aquarium.id} logs={logs} setLogs={setLogs} />
                   )}
