@@ -74,7 +74,7 @@ export default function AquariumControllerStatus({
                       <dt className="flex items-center gap-x-2 text-sm sm:text-base">
                         <div
                           style={{
-                            background: statusMetadata.color,
+                            background: controllerStatusMetadata.color,
                             transition: 'ease',
                             transitionDuration: '1s'
                           }}
