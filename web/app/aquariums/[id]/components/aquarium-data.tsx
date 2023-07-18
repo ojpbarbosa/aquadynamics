@@ -31,7 +31,7 @@ export default function AquariumData({ data }: AquariumDataProps) {
       <Header subtreeName={aquarium.name} subtreeUrl={pathname} />
       <main className="overflow-y-auto overflow-x-hidden h-[80vh] w-screen">
         <div className="flex w-screen h-full items-start justify-around">
-          <div className="w-5/6 flex flex-col sm:justify-between gap-4 py-14 gap-y-4">
+          <div className="w-5/6 flex flex-col sm:justify-between gap-4 py-12 gap-y-4">
             <div className="flex flex-col sm:justify-between sm:flex-row w-full">
               <AquariumCamera aquariumId={aquarium.id} />
               {aquarium.controller && (
@@ -41,7 +41,9 @@ export default function AquariumData({ data }: AquariumDataProps) {
                   )}
                   <AquariumControllerStatus aquarium={aquarium} setAquarium={setAquarium} />
                   <dl className="flex flex-col gap-y-1">
-                    <dt className="text-neutral-400 text-sm sm:text-base">Última atualização</dt>
+                    <dt className="text-neutral-400 text-sm sm:text-base font-semibold">
+                      Última atualização
+                    </dt>
                     <dd className="text-sm sm:text-base">
                       {DateTime.fromISO(logs[logs.length - 1].timestamp.toString(), {
                         zone: 'America/Sao_Paulo'

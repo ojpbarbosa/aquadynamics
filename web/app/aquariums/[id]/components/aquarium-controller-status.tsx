@@ -67,7 +67,7 @@ export default function AquariumControllerStatus({
             </PopoverTrigger>
             <PopoverContent className="space-y-1 ml-7 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border-gray-300 dark:border-neutral-800 rounded">
               <p className="font-semibold text-sm sm:text-base">
-                Status<span className="text-neutral-400">{' – '} Legenda</span>
+                Status do controlador<span className="text-neutral-400">{' – '} Legenda</span>
               </p>
               <div className="h-48 overflow-y-scroll">
                 {Object.keys(controllerStatusesMetadata).map((controllerStatus) => {

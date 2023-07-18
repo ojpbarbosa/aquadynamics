@@ -55,6 +55,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
                       style={{ backgroundColor: temperature.color }}
                       className="h-[10px] w-[10px] rounded-full text-sm sm:text-base"
                     />
+                    {temperature.term}
                   </dt>
                   <dd className="text-neutral-400">
                     {'– '}
@@ -85,6 +86,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
                       style={{ backgroundColor: pH.color }}
                       className="h-[10px] w-[10px] rounded-full text-sm sm:text-base"
                     />
+                    {pH.term}
                   </dt>
                   <dd className="text-neutral-400">
                     {'– '}
