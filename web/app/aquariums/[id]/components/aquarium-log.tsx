@@ -121,7 +121,7 @@ function AquariumLogField({
       <dd className="text-2xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
         {field}
       </dd>
-      <p className="sm:text-base text-sm align-bottom sm:pt-3">
+      <p className="align-bottom sm:pt-3">
         {fieldLabel}{' '}
         <span style={{ color: fieldMetadata.color }} className="transition-colors duration-[2s]">
           {fieldMetadata.term.toLowerCase()}
