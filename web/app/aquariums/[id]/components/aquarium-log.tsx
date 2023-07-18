@@ -5,6 +5,7 @@ import { WebSocketContext } from '@/contexts/websocket-context'
 import { Log } from '@/library/types'
 import { getPHMetadata, getTemperatureMetadata } from '@/library/metadata'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 type AquariumLogProps = {
   aquariumId: string
@@ -137,7 +138,7 @@ function AquariumLogField({
           <PopoverTrigger>
             <FiHelpCircle className="text-neutral-400" />
           </PopoverTrigger>
-          <PopoverContent className="space-y-1 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border-gray-300 dark:border-neutral-800 rounded">
+          <PopoverContent className="space-y-1 ml-10 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border-gray-300 dark:border-neutral-800 rounded">
             <p className="font-semibold text-sm sm:text-base">Legenda</p>
             {tooltip}
           </PopoverContent>

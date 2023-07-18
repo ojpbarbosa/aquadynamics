@@ -5,6 +5,7 @@ import { WebSocketContext } from '@/contexts/websocket-context'
 import { Aquarium, Controller, ControllerStatus } from '@/library/types'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { controllerStatusesMetadata, getControllerStatusMetadata } from '@/library/metadata'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 
 type AquariumControllerStatusProps = {
   aquarium: Aquarium
@@ -52,10 +53,8 @@ export default function AquariumControllerStatus({
       <dt className="text-neutral-500 text-sm sm:text-base">Status do controlador</dt>
       <div className="flex items-center gap-x-2 text-sm sm:text-base ">
         <div
-          className={
-            'h-[10px] w-[10px] rounded-full transition-colors duration-1000 text-sm sm:text-base ' +
-            statusMetadata.bulletBackgroundColor
-          }
+          style={{ background: statusMetadata.color, transition: 'ease', transitionDuration: '1s' }}
+          className="h-[10px] w-[10px] rounded-full text-sm sm:text-base"
         />
         <p>
           {statusMetadata.status}{' '}
@@ -63,9 +62,9 @@ export default function AquariumControllerStatus({
             <PopoverTrigger>
               <FiHelpCircle className="text-neutral-400" />
             </PopoverTrigger>
-            <PopoverContent className="space-y-1 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border-gray-300 dark:border-neutral-800 rounded">
+            <PopoverContent className="space-y-1 ml-10 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border-gray-300 dark:border-neutral-800 rounded">
               <p className="font-semibold text-sm sm:text-base">Legenda</p>
-              <div>
+              <div className="h-48 overflow-y-scroll">
                 {Object.keys(controllerStatusesMetadata).map((controllerStatus) => {
                   const controllerStatusMetadata =
                     controllerStatusesMetadata[controllerStatus as ControllerStatus]
@@ -74,15 +73,17 @@ export default function AquariumControllerStatus({
                     <dl className="flex flex-col text-sm sm:text-base" key={controllerStatus}>
                       <dt className="flex items-center gap-x-2 text-sm sm:text-base">
                         <div
-                          className={
-                            'h-[10px] w-[10px] rounded-full text-sm sm:text-base ' +
-                            controllerStatusMetadata.bulletBackgroundColor
-                          }
+                          style={{
+                            background: statusMetadata.color,
+                            transition: 'ease',
+                            transitionDuration: '1s'
+                          }}
+                          className="h-[10px] w-[10px] rounded-full text-sm sm:text-base"
                         />
                         {controllerStatusMetadata.status}
                       </dt>
                       <dd className="text-neutral-400">
-                        {'–'}
+                        {'– '}
                         {controllerStatusMetadata.description}
                       </dd>
                     </dl>

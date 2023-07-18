@@ -24,32 +24,32 @@ export const controllerStatusesMetadata = {
   unknown: {
     status: 'Sem informações',
     description: 'O servidor não está conectado ao controlador',
-    bulletBackgroundColor: 'bg-neutral-500'
+    color: '#737373'
   },
   booting: {
     status: 'Inicializando',
-    description: 'O contralador está inicializando os sensores e se conectando ao servidor',
-    bulletBackgroundColor: 'bg-yellow-500'
+    description: 'O contralador está inicializando os sensores para se conectar ao servidor',
+    color: '#84cc16'
   },
   idling: {
     status: 'Ocioso',
     description: 'O controlador não está realizando nenhuma tarefa ou registrando dados',
-    bulletBackgroundColor: 'bg-blue-500'
+    color: '#3b82f6'
   },
   logging: {
     status: 'Registrando',
     description: 'O controlador está capturando os parâmetros para serem enviados ao servidor',
-    bulletBackgroundColor: 'bg-green-500'
+    color: '#22c55e'
   },
   restarting: {
     status: 'Reiniciando',
     description: 'Procedimento para reinicialiazção do controlador e sensores',
-    bulletBackgroundColor: 'bg-orange-500'
+    color: '#f59e0b'
   },
   crashed: {
     status: 'Erro',
     description: 'Há algum problema com o controlador, se persistir, contate o administrador',
-    bulletBackgroundColor: 'bg-red-500'
+    color: '#ef4444'
   }
 }
 
