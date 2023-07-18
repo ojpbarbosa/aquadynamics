@@ -1,34 +1,10 @@
 import { Dispatch, SetStateAction, useCallback, useContext, useEffect, useState } from 'react'
+import { FiHelpCircle } from 'react-icons/fi'
 
 import { WebSocketContext } from '@/contexts/websocket-context'
-import { Aquarium, Controller } from '@/library/types'
-
-const controllerStatusMap = {
-  unknown: {
-    name: 'Sem informações',
-    bulletColor: 'dark:bg-neutral-500 bg-netural-400'
-  },
-  booting: {
-    name: 'Inicializando',
-    bulletColor: 'bg-yellow-500'
-  },
-  idling: {
-    name: 'Ocioso',
-    bulletColor: 'bg-blue-500'
-  },
-  logging: {
-    name: 'Registrando',
-    bulletColor: 'bg-green-500'
-  },
-  restarting: {
-    name: 'Reiniciando',
-    bulletColor: 'bg-orange-500'
-  },
-  crashed: {
-    name: 'Erro',
-    bulletColor: 'bg-red-500'
-  }
-}
+import { Aquarium, Controller, ControllerStatus } from '@/library/types'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { controllerStatusesMetadata, getControllerStatusMetadata } from '@/library/metadata'
 
 type AquariumControllerStatusProps = {
   aquarium: Aquarium
@@ -69,7 +45,7 @@ export default function AquariumControllerStatus({
     }
   }, [socket, onControllerStatusUpdate])
 
-  const status = controllerStatusMap[aquariumControllerStatus!]
+  const statusMetadata = getControllerStatusMetadata(aquariumControllerStatus!)
 
   return (
     <dl className="flex flex-col gap-y-1">
@@ -77,11 +53,45 @@ export default function AquariumControllerStatus({
       <div className="flex items-center gap-x-2 text-sm sm:text-base ">
         <div
           className={
-            'h-[10px] w-[10px] rounded-full transition-colors duration-[2s] text-sm sm:text-base ' +
-            status.bulletColor
+            'h-[10px] w-[10px] rounded-full transition-colors duration-1000 text-sm sm:text-base ' +
+            statusMetadata.bulletBackgroundColor
           }
         />
-        {status.name}
+        <p>
+          {statusMetadata.status}{' '}
+          <Popover>
+            <PopoverTrigger>
+              <FiHelpCircle className="text-neutral-400" />
+            </PopoverTrigger>
+            <PopoverContent className="space-y-1 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border-gray-300 dark:border-neutral-800 rounded">
+              <p className="font-semibold text-sm sm:text-base">Legenda</p>
+              <div>
+                {Object.keys(controllerStatusesMetadata).map((controllerStatus) => {
+                  const controllerStatusMetadata =
+                    controllerStatusesMetadata[controllerStatus as ControllerStatus]
+
+                  return (
+                    <dl className="flex flex-col text-sm sm:text-base" key={controllerStatus}>
+                      <dt className="flex items-center gap-x-2 text-sm sm:text-base">
+                        <div
+                          className={
+                            'h-[10px] w-[10px] rounded-full text-sm sm:text-base ' +
+                            controllerStatusMetadata.bulletBackgroundColor
+                          }
+                        />
+                        {controllerStatusMetadata.status}
+                      </dt>
+                      <dd className="text-neutral-400">
+                        {'–'}
+                        {controllerStatusMetadata.description}
+                      </dd>
+                    </dl>
+                  )
+                })}
+              </div>
+            </PopoverContent>
+          </Popover>
+        </p>
       </div>
     </dl>
   )

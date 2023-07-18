@@ -31,7 +31,10 @@ export default function AquariumCamera({ aquariumId }: AquariumCameraProps) {
     <div className="aspect-[5/4] w-full sm:w-1/2 rounded border border-gray-300 dark:border-neutral-800 flex items-center justify-center bg-neutral-300/20 text-neutral-500 dark:bg-neutral-800/30">
       {aquariumCameraFrame ? (
         // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
-        <img className="w-full h-full object-cover" src={aquariumCameraFrame} />
+        <img
+          className="w-full h-full object-cover rounded border border-gray-300 dark:border-neutral-800"
+          src={aquariumCameraFrame}
+        />
       ) : (
         <PiSpinnerGapLight className="text-4xl animate-spin" />
       )}

@@ -16,9 +16,8 @@ export default function AquariumCardDetail({
       <dt className="dark:text-neutral-500 text-neutral-400">{term}</dt>
       <div className="flex items-center gap-x-2">
         <div
-          className={
-            'h-[10px] w-[10px] rounded-full transition-colors duration-[2s] ' + bulletColor
-          }
+          style={{ backgroundColor: bulletColor, transition: 'ease', transitionDuration: '1s' }}
+          className="h-[10px] w-[10px] rounded-full"
         />
         <dd>{value}</dd>
       </div>

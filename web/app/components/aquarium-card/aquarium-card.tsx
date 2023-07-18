@@ -7,7 +7,7 @@ import { Aquarium, Log } from '@/library/types'
 import { WebSocketContext } from '@/contexts/websocket-context'
 import AquariumCardCamera from './aquarium-card-camera'
 import AquariumCardDetail from './aquarium-card-detail'
-import { getPHData, getTemperatureData } from '@/library/aquarium-data'
+import { getPHMetadata, getTemperatureMetadata } from '@/library/metadata'
 
 type AquariumCardProps = {
   aquarium: Aquarium
@@ -16,10 +16,11 @@ type AquariumCardProps = {
 export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumCardProps) {
   const [aquariumLog, setAquariumLog] = useState(logs ? logs[logs.length - 1] : ({} as Log))
   const { socket } = useContext(WebSocketContext)
-  let temperatureData, pHData
+
+  let temperatureMetadata, pHData
   if (aquariumLog) {
-    temperatureData = getTemperatureData(aquariumLog.temperature)
-    pHData = getPHData(aquariumLog.pH)
+    temperatureMetadata = getTemperatureMetadata(aquariumLog.temperature)
+    pHData = getPHMetadata(aquariumLog.pH)
   }
 
   const onLog = useCallback(
@@ -50,21 +51,19 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
             <AquariumCardDetail
               term="Iluminação"
               value={aquariumLog.lightning ? 'Ligada' : 'Desligada'}
-              bulletColor={
-                aquariumLog.lightning ? 'bg-green-500' : 'dark:bg-neutral-500 bg-neutral-400'
-              }
+              bulletColor={aquariumLog.lightning ? '#22c55e' : '#737373'}
             />
             <AquariumCardDetail
               term="Temperatura"
               value={`${
                 aquariumLog.temperature ? aquariumLog.temperature.toFixed(1).replace('.', ',') : '-'
               } °C`}
-              bulletColor={`bg-${temperatureData!.color}`}
+              bulletColor={temperatureMetadata!.color!}
             />
             <AquariumCardDetail
               term="pH"
               value={aquariumLog.pH ? aquariumLog.pH.toFixed(1).replace('.', ',') : '-'}
-              bulletColor={`bg-${pHData!.color}`}
+              bulletColor={pHData!.color!}
             />
           </dl>
         ) : (

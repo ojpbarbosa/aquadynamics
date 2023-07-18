@@ -1,4 +1,5 @@
 import Header from '@/components/layout/header'
+import { Button } from '@/components/ui/button'
 
 import { Newsreader, Space_Mono } from 'next/font/google'
 import Link from 'next/link'
@@ -22,16 +23,19 @@ export default function NotFound() {
             Perder-se também é caminho.
             <span className="ml-2 dark:text-neutral-500 text-neutral-400">&rdquo;</span>
           </h1>
-          <p className="sm:ml-72 ml-48 text-sm sm:text-base font-semibold dark:text-neutral-500 text-neutral-400">
+          <p className="text-sm sm:text-base font-semibold dark:text-neutral-500 text-neutral-400">
             — Clarice Lispector
           </p>
           <pre className={'mt-4 text-xl sm:text-2xl ' + spaceMono.className}>404</pre>
-          <Link
-            href="/"
-            className="mt-2 py-2 px-4 bg-neutral-300/20 hover:bg-transparent dark:bg-neutral-800/30 rounded dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 hover:bg-neutral-100 transition-colors duration-200 hover:dark:bg-neutral-800/30"
+          <Button
+            asChild
+            variant="outline"
+            className="rounded mt-2 bg-transparent dark:bg-transparent"
           >
-            Voltar para os aquários
-          </Link>
+            <Link href="/" className="sm:text-base text-sm">
+              Voltar para os aquários
+            </Link>
+          </Button>
         </div>
       </main>
     </>

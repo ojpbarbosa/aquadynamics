@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 
-import { getTemperatureData } from '@/library/aquarium-data'
+import { getTemperatureMetadata } from '@/library/metadata'
 
 type ChartTooltipProps = {
   active?: boolean
@@ -8,21 +8,26 @@ type ChartTooltipProps = {
 }
 
 export default function AquariumTemperatureChartTooltip({ active, payload }: ChartTooltipProps) {
-  let log, logData
+  let log, temperatureMetadata
   if (payload && payload[0]) {
     log = payload[0].payload
-    logData = getTemperatureData(log.temperature)
+    temperatureMetadata = getTemperatureMetadata(log.temperature)
   }
 
-  return active && logData ? (
-    <dl className="rounded p-2 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 transition-colors duration-200">
+  return active && temperatureMetadata ? (
+    <dl className="text-sm sm:text-md rounded p-2 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 transition-colors duration-200">
       <dt className="font-semibold">Temperatura</dt>
       <div className="flex items-center gap-x-2">
         <dd>{log.temperature.toFixed(1).replace('.', ',')} °C</dd>
         <div
-          className={`h-[10px] w-[10px] rounded-full transition-colors duration-[2s] bg-${logData.color}`}
+          style={{
+            background: temperatureMetadata.color,
+            transition: 'ease',
+            transitionDuration: '1s'
+          }}
+          className="h-[10px] w-[10px] rounded-full"
         />
-        {logData.term}
+        {temperatureMetadata.term}
       </div>
       <dd>
         {DateTime.fromISO(log.timestamp.toString(), {
