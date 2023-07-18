@@ -44,27 +44,24 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           fieldMetadata={getTemperatureMetadata(temperature)}
           tooltip={
             <div>
-              <dl className="flex gap-x-1 text-sm sm:text-base">
-                <dt className="flex items-center gap-x-2 text-sm sm:text-base">
-                  <div className="h-[10px] w-[10px] rounded-full text-sm sm:text-base bg-blue-500" />
-                  Baixa
-                </dt>
-                <dd className="text-neutral-400">{'–'} Menos de 20 °C</dd>
-              </dl>
-              <dl className="flex gap-x-1 text-sm sm:text-base">
-                <dt className="flex items-center gap-x-2 text-sm sm:text-base">
-                  <div className="h-[10px] w-[10px] rounded-full text-sm sm:text-base bg-green-500" />
-                  Ideal
-                </dt>{' '}
-                <dd className="text-neutral-400">{'–'} Entre 20 °C e 30 °C</dd>
-              </dl>
-              <dl className="flex gap-x-1 text-sm sm:text-base">
-                <dt className="flex items-center gap-x-2 text-sm sm:text-base">
-                  <div className="h-[10px] w-[10px] rounded-full text-sm sm:text-base bg-red-500" />
-                  Alta
-                </dt>{' '}
-                <dd className="text-neutral-400">{'–'} Mais de 30 °C</dd>
-              </dl>
+              {[
+                { term: 'Baixa', description: 'Menor que 20 °C', color: 'blue' },
+                { term: 'Ideal', description: 'Entre 20 °C e 30 °C', color: 'green' },
+                { term: 'Alta', description: 'Maior que 30 °C', color: 'red' },
+                {}
+              ].map((temperature) => (
+                <dl className="flex gap-x-1 text-sm sm:text-base" key={temperature.term}>
+                  <dt className="flex items-center gap-x-2 text-sm sm:text-base">
+                    <div
+                      className={`h-[10px] w-[10px] rounded-full text-sm sm:text-base bg-${temperature.color}-500`}
+                    />
+                  </dt>
+                  <dd className="text-neutral-400">
+                    {'– '}
+                    {temperature.description}
+                  </dd>
+                </dl>
+              ))}
             </div>
           }
         />
@@ -77,27 +74,24 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           fieldMetadata={getPHMetadata(pH)}
           tooltip={
             <div>
-              <dl className="flex gap-x-1 text-sm sm:text-base">
-                <dt className="flex items-center gap-x-2 text-sm sm:text-base">
-                  <div className="h-[10px] w-[10px] rounded-full text-sm sm:text-base bg-amber-500" />
-                  Ácido
-                </dt>
-                <dd className="text-neutral-400">{'–'} Menos de pH 6,5</dd>
-              </dl>
-              <dl className="flex gap-x-1 text-sm sm:text-base">
-                <dt className="flex items-center gap-x-2 text-sm sm:text-base">
-                  <div className="h-[10px] w-[10px] rounded-full text-sm sm:text-base bg-green-500" />
-                  Ideal
-                </dt>{' '}
-                <dd className="text-neutral-400">{'–'} Entre pH 6,5 e pH 7,5</dd>
-              </dl>
-              <dl className="flex gap-x-1 text-sm sm:text-base">
-                <dt className="flex items-center gap-x-2 text-sm sm:text-base">
-                  <div className="h-[10px] w-[10px] rounded-full text-sm sm:text-base bg-indigo-500" />
-                  Alcalino
-                </dt>{' '}
-                <dd className="text-neutral-400">{'–'} Mais de pH 7,5</dd>
-              </dl>
+              {[
+                { term: 'Ácido', description: 'pH menor que 6,5', color: 'amber' },
+                { term: 'Ideal', description: 'pH entre 6,5 e 7,5', color: 'green' },
+                { term: 'Alcalino', description: 'pH maior que 7,5', color: 'indigo' },
+                {}
+              ].map((pH) => (
+                <dl className="flex gap-x-1 text-sm sm:text-base" key={pH.term}>
+                  <dt className="flex items-center gap-x-2 text-sm sm:text-base">
+                    <div
+                      className={`h-[10px] w-[10px] rounded-full text-sm sm:text-base bg-${pH.color}-500`}
+                    />
+                  </dt>
+                  <dd className="text-neutral-400">
+                    {'– '}
+                    {pH.description}
+                  </dd>
+                </dl>
+              ))}
             </div>
           }
         />
@@ -121,7 +115,7 @@ function AquariumLogField({
 }) {
   return (
     <dl className="flex flex-col gap-y-2 text-neutral-500">
-      <dt className="text-sm sm:text-base">{fieldName}</dt>
+      <dt className="text-sm sm:text-base text-neutral-400">{fieldName}</dt>
       <dd className="text-2xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
         {field}
       </dd>
@@ -138,7 +132,10 @@ function AquariumLogField({
             <FiHelpCircle className="text-neutral-400" />
           </PopoverTrigger>
           <PopoverContent className="space-y-1 ml-10 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border-gray-300 dark:border-neutral-800 rounded">
-            <p className="font-semibold text-sm sm:text-base">Legenda</p>
+            <p>
+              {fieldName}
+              <span className="text-neutral-400">{'– '} Legenda</span>
+            </p>
             {tooltip}
           </PopoverContent>
         </Popover>

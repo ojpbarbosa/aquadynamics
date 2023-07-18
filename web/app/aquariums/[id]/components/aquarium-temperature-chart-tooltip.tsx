@@ -29,13 +29,13 @@ export default function AquariumTemperatureChartTooltip({ active, payload }: Cha
         />
         {temperatureMetadata.term}
       </div>
-      <dd>
+      <p className="text-neutral-400">
         {DateTime.fromISO(log.timestamp.toString(), {
           zone: 'America/Sao_Paulo'
         })
           .setLocale('pt-BR')
           .toLocaleString(DateTime.DATETIME_MED)}
-      </dd>
+      </p>
     </dl>
   ) : null
 }
