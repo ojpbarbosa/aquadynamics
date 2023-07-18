@@ -49,10 +49,14 @@ export default function AquariumControllerStatus({
 
   return (
     <dl className="flex flex-col gap-y-1">
-      <dt className="text-neutral-400 text-sm sm:text-base">Status do controlador</dt>
+      <dt className="text-neutral-400 text-sm sm:text-base font-semibold">Status do controlador</dt>
       <div className="flex items-center gap-x-2 text-sm sm:text-base ">
         <div
-          style={{ background: statusMetadata.color, transition: 'ease', transitionDuration: '1s' }}
+          style={{
+            backgroundColor: statusMetadata.color,
+            transition: 'ease',
+            transitionDuration: '1s'
+          }}
           className="h-[10px] w-[10px] rounded-full text-sm sm:text-base"
         />
         <p>
@@ -63,7 +67,7 @@ export default function AquariumControllerStatus({
             </PopoverTrigger>
             <PopoverContent className="space-y-1 ml-7 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border-gray-300 dark:border-neutral-800 rounded">
               <p className="font-semibold text-sm sm:text-base">
-                Status<span className="text-neutral-400">{'– '} Legenda</span>
+                Status<span className="text-neutral-400">{' – '} Legenda</span>
               </p>
               <div className="h-48 overflow-y-scroll">
                 {Object.keys(controllerStatusesMetadata).map((controllerStatus) => {
@@ -75,7 +79,7 @@ export default function AquariumControllerStatus({
                       <dt className="flex items-center gap-x-2 text-sm sm:text-base">
                         <div
                           style={{
-                            background: controllerStatusMetadata.color,
+                            backgroundColor: controllerStatusMetadata.color,
                             transition: 'ease',
                             transitionDuration: '1s'
                           }}

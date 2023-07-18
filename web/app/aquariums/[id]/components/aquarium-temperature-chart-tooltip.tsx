@@ -21,7 +21,7 @@ export default function AquariumTemperatureChartTooltip({ active, payload }: Cha
         <dd>{log.temperature.toFixed(1).replace('.', ',')} °C</dd>
         <div
           style={{
-            background: temperatureMetadata.color,
+            backgroundColor: temperatureMetadata.color,
             transition: 'ease',
             transitionDuration: '1s'
           }}

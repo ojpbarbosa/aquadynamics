@@ -45,15 +45,15 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           tooltip={
             <div>
               {[
-                { term: 'Baixa', description: 'Menor que 20 °C', color: 'blue' },
-                { term: 'Ideal', description: 'Entre 20 °C e 30 °C', color: 'green' },
-                { term: 'Alta', description: 'Maior que 30 °C', color: 'red' },
-                {}
+                { term: 'Baixa', description: 'Menor que 20 °C', color: '#3b82f6' },
+                { term: 'Ideal', description: 'Entre 20 °C e 30 °C', color: '#22c55e' },
+                { term: 'Alta', description: 'Maior que 30 °C', color: '#ef4444' }
               ].map((temperature) => (
                 <dl className="flex gap-x-1 text-sm sm:text-base" key={temperature.term}>
                   <dt className="flex items-center gap-x-2 text-sm sm:text-base">
                     <div
-                      className={`h-[10px] w-[10px] rounded-full text-sm sm:text-base bg-${temperature.color}-500`}
+                      style={{ backgroundColor: temperature.color }}
+                      className="h-[10px] w-[10px] rounded-full text-sm sm:text-base"
                     />
                   </dt>
                   <dd className="text-neutral-400">
@@ -75,15 +75,15 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           tooltip={
             <div>
               {[
-                { term: 'Ácido', description: 'pH menor que 6,5', color: 'amber' },
-                { term: 'Ideal', description: 'pH entre 6,5 e 7,5', color: 'green' },
-                { term: 'Alcalino', description: 'pH maior que 7,5', color: 'indigo' },
-                {}
+                { term: 'Ácido', description: 'pH menor que 6,5', color: '#f59e0b' },
+                { term: 'Ideal', description: 'pH entre 6,5 e 7,5', color: '#22c55e' },
+                { term: 'Alcalino', description: 'pH maior que 7,5', color: '#6366f1' }
               ].map((pH) => (
                 <dl className="flex gap-x-1 text-sm sm:text-base" key={pH.term}>
                   <dt className="flex items-center gap-x-2 text-sm sm:text-base">
                     <div
-                      className={`h-[10px] w-[10px] rounded-full text-sm sm:text-base bg-${pH.color}-500`}
+                      style={{ backgroundColor: pH.color }}
+                      className="h-[10px] w-[10px] rounded-full text-sm sm:text-base"
                     />
                   </dt>
                   <dd className="text-neutral-400">
@@ -115,7 +115,7 @@ function AquariumLogField({
 }) {
   return (
     <dl className="flex flex-col gap-y-2 text-neutral-500">
-      <dt className="text-sm sm:text-base text-neutral-400">{fieldName}</dt>
+      <dt className="text-sm sm:text-base font-semibold text-neutral-400">{fieldName}</dt>
       <dd className="text-2xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
         {field}
       </dd>
@@ -132,9 +132,9 @@ function AquariumLogField({
             <FiHelpCircle className="text-neutral-400" />
           </PopoverTrigger>
           <PopoverContent className="space-y-1 ml-10 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border-gray-300 dark:border-neutral-800 rounded">
-            <p>
+            <p className="font-semibold">
               {fieldName}
-              <span className="text-neutral-400">{'– '} Legenda</span>
+              <span className="text-neutral-400">{' – '} Legenda</span>
             </p>
             {tooltip}
           </PopoverContent>

@@ -20,7 +20,11 @@ export default function AquariumPHChartTooltip({ active, payload }: ChartTooltip
       <div className="flex items-center gap-x-2">
         <dd>{log.pH.toFixed(1).replace('.', ',')} °C</dd>
         <div
-          style={{ background: pHMetadata.color, transition: 'ease', transitionDuration: '1s' }}
+          style={{
+            backgroundColor: pHMetadata.color,
+            transition: 'ease',
+            transitionDuration: '1s'
+          }}
           className={`h-[10px] w-[10px] rounded-full`}
         />
         {pHMetadata.term}
