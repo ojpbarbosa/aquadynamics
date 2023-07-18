@@ -5,7 +5,6 @@ import { WebSocketContext } from '@/contexts/websocket-context'
 import { Log } from '@/library/types'
 import { getPHMetadata, getTemperatureMetadata } from '@/library/metadata'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { ScrollArea } from '@/components/ui/scroll-area'
 
 type AquariumLogProps = {
   aquariumId: string

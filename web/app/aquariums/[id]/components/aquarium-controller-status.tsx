@@ -5,7 +5,6 @@ import { WebSocketContext } from '@/contexts/websocket-context'
 import { Aquarium, Controller, ControllerStatus } from '@/library/types'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { controllerStatusesMetadata, getControllerStatusMetadata } from '@/library/metadata'
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 
 type AquariumControllerStatusProps = {
   aquarium: Aquarium
