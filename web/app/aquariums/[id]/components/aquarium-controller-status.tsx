@@ -49,15 +49,15 @@ export default function AquariumControllerStatus({
 
   return (
     <dl className="flex flex-col gap-y-1">
-      <dt className="text-neutral-400 text-sm sm:text-base font-semibold">Status do controlador</dt>
-      <div className="flex items-center gap-x-2 text-sm sm:text-base ">
+      <dt className="text-neutral-400 font-semibold">Status do controlador</dt>
+      <div className="flex items-center gap-x-2 ">
         <div
           style={{
             backgroundColor: statusMetadata.color,
             transition: 'ease',
             transitionDuration: '1s'
           }}
-          className="h-[10px] w-[10px] rounded-full text-sm sm:text-base"
+          className="h-[10px] w-[10px] rounded-full"
         />
         <p>
           {statusMetadata.term}{' '}
@@ -66,7 +66,7 @@ export default function AquariumControllerStatus({
               <FiHelpCircle className="text-neutral-400" />
             </PopoverTrigger>
             <PopoverContent className="space-y-1 ml-7 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border-gray-300 dark:border-neutral-800 rounded">
-              <p className="font-semibold text-sm sm:text-base">
+              <p className="font-semibold">
                 Status do controlador<span className="text-neutral-400">{' – '} Legenda</span>
               </p>
               <div className="h-48 overflow-y-scroll">
@@ -75,15 +75,15 @@ export default function AquariumControllerStatus({
                     controllerStatusesMetadata[controllerStatus as ControllerStatus]
 
                   return (
-                    <dl className="flex flex-col text-sm sm:text-base" key={controllerStatus}>
-                      <dt className="flex items-center gap-x-2 text-sm sm:text-base">
+                    <dl className="flex flex-col" key={controllerStatus}>
+                      <dt className="flex items-center gap-x-2">
                         <div
                           style={{
                             backgroundColor: controllerStatusMetadata.color,
                             transition: 'ease',
                             transitionDuration: '1s'
                           }}
-                          className="h-[10px] w-[10px] rounded-full text-sm sm:text-base"
+                          className="h-[10px] w-[10px] rounded-full"
                         />
                         {controllerStatusMetadata.term}
                       </dt>

@@ -49,11 +49,11 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
                 { term: 'Ideal', description: 'Entre 20 °C e 30 °C', color: '#22c55e' },
                 { term: 'Alta', description: 'Maior que 30 °C', color: '#ef4444' }
               ].map((temperature) => (
-                <dl className="flex gap-x-1 text-sm sm:text-base" key={temperature.term}>
-                  <dt className="flex items-center gap-x-2 text-sm sm:text-base">
+                <dl className="flex gap-x-1" key={temperature.term}>
+                  <dt className="flex items-center gap-x-2">
                     <div
                       style={{ backgroundColor: temperature.color }}
-                      className="h-[10px] w-[10px] rounded-full text-sm sm:text-base"
+                      className="h-[10px] w-[10px] rounded-full"
                     />
                     {temperature.term}
                   </dt>
@@ -80,11 +80,11 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
                 { term: 'Ideal', description: 'pH entre 6,5 e 7,5', color: '#22c55e' },
                 { term: 'Alcalino', description: 'pH maior que 7,5', color: '#6366f1' }
               ].map((pH) => (
-                <dl className="flex gap-x-1 text-sm sm:text-base" key={pH.term}>
-                  <dt className="flex items-center gap-x-2 text-sm sm:text-base">
+                <dl className="flex gap-x-1" key={pH.term}>
+                  <dt className="flex items-center gap-x-2">
                     <div
                       style={{ backgroundColor: pH.color }}
-                      className="h-[10px] w-[10px] rounded-full text-sm sm:text-base"
+                      className="h-[10px] w-[10px] rounded-full"
                     />
                     {pH.term}
                   </dt>
@@ -117,16 +117,13 @@ function AquariumLogField({
 }) {
   return (
     <dl className="flex flex-col gap-y-2 text-neutral-500">
-      <dt className="text-sm sm:text-base font-semibold text-neutral-400">{fieldName}</dt>
+      <dt className="font-semibold text-neutral-400">{fieldName}</dt>
       <dd className="text-2xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
         {field}
       </dd>
       <p className="sm:text-base text-sm align-bottom sm:pt-3">
         {fieldLabel}{' '}
-        <span
-          style={{ color: fieldMetadata.color }}
-          className="transition-colors duration-[2s] text-sm sm:text-base"
-        >
+        <span style={{ color: fieldMetadata.color }} className="transition-colors duration-[2s]">
           {fieldMetadata.term.toLowerCase()}
         </span>{' '}
         <Popover>

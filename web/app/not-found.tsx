@@ -23,7 +23,7 @@ export default function NotFound() {
             Perder-se também é caminho.
             <span className="ml-2 dark:text-neutral-500 text-neutral-400">&rdquo;</span>
           </h1>
-          <p className="text-sm sm:text-base font-semibold dark:text-neutral-500 text-neutral-400">
+          <p className="font-semibold dark:text-neutral-500 text-neutral-400">
             — Clarice Lispector
           </p>
           <pre className={'mt-4 text-xl sm:text-2xl ' + spaceMono.className}>404</pre>
