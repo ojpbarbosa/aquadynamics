@@ -32,9 +32,7 @@ export default function NotFound() {
             variant="outline"
             className="rounded mt-2 bg-transparent dark:bg-transparent"
           >
-            <Link href="/" className="sm:text-base text-sm">
-              Voltar para os aquários
-            </Link>
+            <Link href="/">Voltar para os aquários</Link>
           </Button>
         </div>
       </main>
