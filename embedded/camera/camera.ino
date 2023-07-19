@@ -10,7 +10,7 @@
 
 const char *ssid = "AquaDynamics";
 const char *password = "DynamicsAqua";
-const char *aquarium_id = "E3im225ZnLxhE7a--S6XK";
+const char *aquarium_id = "";
 
 const char *socket_io_host = "aquadynamics-core.onrender.com";
 const int socket_io_port = 443;
