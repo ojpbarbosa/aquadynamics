@@ -33,7 +33,7 @@ export default function AquariumData({ data }: AquariumDataProps) {
         <div className="flex w-screen h-full items-start justify-around">
           <div className="w-5/6 flex flex-col sm:justify-between gap-4 py-12 gap-y-4">
             <div className="flex flex-col sm:justify-between sm:flex-row w-full">
-              <AquariumCamera aquariumId={aquarium.id} />
+              {/* <AquariumCamera aquariumId={aquarium.id} /> */}
               {aquarium.controller && (
                 <div className="grid grid-cols-2 w-full sm:pt-0 pt-6 sm:w-1/2 sm:pl-12 gap-1 gap-y-3 sm:gap-5">
                   {logs.length > 0 && (

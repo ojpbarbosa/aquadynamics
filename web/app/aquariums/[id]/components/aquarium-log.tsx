@@ -73,6 +73,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           field={pH.toFixed(1).replace('.', ',')}
           fieldLabel="O pH da água está"
           fieldMetadata={getPHMetadata(pH)}
+          className="mr-10 sm:mr-0"
           tooltip={
             <div>
               {[
@@ -107,13 +108,15 @@ function AquariumLogField({
   field,
   fieldLabel,
   fieldMetadata,
-  tooltip
+  tooltip,
+  className = 'sm:ml-0 ml-8'
 }: {
   fieldName: string
   field: string
   fieldLabel: string
   fieldMetadata: { color: string; term: string }
   tooltip: ReactNode
+  className?: string
 }) {
   return (
     <dl className="flex flex-col gap-y-2 text-neutral-500">
@@ -130,7 +133,12 @@ function AquariumLogField({
           <PopoverTrigger>
             <FiHelpCircle className="text-neutral-400" />
           </PopoverTrigger>
-          <PopoverContent className="space-y-1 ml-8 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border-gray-300 dark:border-neutral-800 rounded">
+          <PopoverContent
+            className={
+              'space-y-1 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border-gray-300 dark:border-neutral-800 rounded ' +
+              className
+            }
+          >
             <p className="font-semibold">
               {fieldName}
               <span className="text-neutral-400">{' – '} Legenda</span>
