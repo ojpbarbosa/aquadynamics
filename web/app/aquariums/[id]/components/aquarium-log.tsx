@@ -73,7 +73,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           field={pH.toFixed(1).replace('.', ',')}
           fieldLabel="O pH da água está"
           fieldMetadata={getPHMetadata(pH)}
-          className="mr-10 sm:mr-0"
+          className="mr-8 sm:mr-0"
           tooltip={
             <div>
               {[
@@ -89,7 +89,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
                     />
                     {pH.term}
                   </dt>
-                  <dd className="text-neutral-400">
+                  <dd className="dark:text-neutral-400 text-neutral-500">
                     {'– '}
                     {pH.description}
                   </dd>
@@ -119,8 +119,8 @@ function AquariumLogField({
   className?: string
 }) {
   return (
-    <dl className="flex flex-col gap-y-2 text-neutral-500">
-      <dt className="font-semibold text-neutral-400">{fieldName}</dt>
+    <dl className="flex flex-col gap-y-2 dark:text-neutral-500 text-neutral-400">
+      <dt className="font-semibold dark:text-neutral-400 text-neutral-500">{fieldName}</dt>
       <dd className="text-2xl md:text-6xl font-semibold text-neutral-900 dark:text-neutral-100">
         {field}
       </dd>
@@ -131,7 +131,7 @@ function AquariumLogField({
         </span>{' '}
         <Popover>
           <PopoverTrigger>
-            <FiHelpCircle className="text-neutral-400" />
+            <FiHelpCircle className="text-neutral-500 dark:text-neutral-400" />
           </PopoverTrigger>
           <PopoverContent
             className={
@@ -141,7 +141,7 @@ function AquariumLogField({
           >
             <p className="font-semibold">
               {fieldName}
-              <span className="text-neutral-400">{' – '} Legenda</span>
+              <span className="dark:text-neutral-400 text-neutral-500">{' – '} Legenda</span>
             </p>
             {tooltip}
           </PopoverContent>

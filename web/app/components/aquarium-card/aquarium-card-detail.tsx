@@ -13,7 +13,7 @@ export default function AquariumCardDetail({
 }: AquariumCardDetailProps) {
   return (
     <div className={'flex flex-col gap-y-1 sm:gap-y-2 ' + className}>
-      <dt className="dark:text-neutral-500 text-neutral-400">{term}</dt>
+      <dt className="dark:text-neutral-400 text-neutral-500 font-semibold">{term}</dt>
       <div className="flex items-center gap-x-2">
         <div
           style={{ backgroundColor: bulletColor, transition: 'ease', transitionDuration: '1s' }}

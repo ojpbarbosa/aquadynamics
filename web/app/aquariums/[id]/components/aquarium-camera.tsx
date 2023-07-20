@@ -15,7 +15,7 @@ type AquariumCameraProps = {
 
 export default function AquariumCamera({ aquariumId }: AquariumCameraProps) {
   const { streaming } = useContext(WebSocketContext)
-  const [isStreamPaused, setIsStreamPaused] = useState(true)
+  const [isStreamPaused, setIsStreamPaused] = useState(false)
   const [fullscreen, setFullscreen] = useState(false)
   const [aquariumCameraFrame, setAquariumCameraFrame] = useState('')
 
@@ -47,7 +47,7 @@ export default function AquariumCamera({ aquariumId }: AquariumCameraProps) {
             src={aquariumCameraFrame}
           />
           {/* aquarium camera frame controls */}
-          <div className="w-full px-2 py-1 flex-row sm:py-2 bg-gradient-to-t flex from-black/75 to-transparent absolute bottom-0 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all rounded-b duration-500 dark:text-neutral-100 text-neutral-900 justify-between">
+          <div className="w-full px-2 py-1 flex-row sm:py-2 bg-gradient-to-t flex from-black/75 to-transparent absolute bottom-0 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all rounded-b duration-500 text-neutral-100 justify-between">
             {isStreamPaused ? (
               <div className="flex items-center gap-x-1">
                 <MdPlayArrow
