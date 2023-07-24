@@ -12,9 +12,12 @@ export class RequireRegisteredControllerMiddleware implements IMiddleware {
   ) {}
 
   async handle(request: IRequest): Promise<IResponse> {
-    const { address } = request.headers
+    let { address }: { address: string } = request.headers
 
     if (!address) return unauthorizedResponse('Missing address header')
+
+    // sanitize controller mac address
+    address = address.toLowerCase().replace(':', '')
 
     const controller = ((await this.findControllersRepository.find()) as Controller[]).find(
       (controller) =>

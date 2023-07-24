@@ -9,13 +9,12 @@ datasource db {
 }
 
 model Aquarium {
-  id           String   @id
-  name         String   @unique
-  registeredAt DateTime @default(now())
-
-  camera     Camera?
-  controller Controller?
-  logs       Log[]
+  id           String      @id
+  name         String      @unique
+  registeredAt DateTime    @default(now())
+  camera       Camera?
+  controller   Controller?
+  logs         Log[]
 
   @@map("aquariums")
 }
@@ -26,8 +25,7 @@ model Camera {
   aquariumId   String   @unique
   registeredAt DateTime @default(now())
   updatedAt    DateTime @updatedAt
-
-  aquarium Aquarium @relation(fields: [aquariumId], references: [id])
+  aquarium     Aquarium @relation(fields: [aquariumId], references: [id])
 
   @@map("cameras")
 }
@@ -39,24 +37,22 @@ model Controller {
   status       String   @default("unknown")
   registeredAt DateTime @default(now())
   updatedAt    DateTime @updatedAt
-
-  logs     Log[]
-  aquarium Aquarium @relation(fields: [aquariumId], references: [id])
+  logs         Log[]
+  aquarium     Aquarium @relation(fields: [aquariumId], references: [id])
 
   @@map("controllers")
 }
 
 model Log {
-  id           String   @id
+  id           String     @id
   aquariumId   String
   controllerId String
   temperature  Float
   pH           Float
   lightning    Boolean
   timestamp    DateTime
-
-  aquarium   Aquarium   @relation(fields: [aquariumId], references: [id])
-  controller Controller @relation(fields: [controllerId], references: [id])
+  aquarium     Aquarium   @relation(fields: [aquariumId], references: [id])
+  controller   Controller @relation(fields: [controllerId], references: [id])
 
   @@index([aquariumId])
   @@index([controllerId])
