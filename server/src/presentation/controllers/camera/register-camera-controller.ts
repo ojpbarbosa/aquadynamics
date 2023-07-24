@@ -15,7 +15,7 @@ export class RegisterCameraController implements IController {
 
   async handle(request: IRequest): Promise<IResponse> {
     try {
-      const { address } = request.headers
+      let { address }: { address: string } = request.headers
       const { aquariumId } = request.body
 
       const error = this.validation.validate({
@@ -24,6 +24,8 @@ export class RegisterCameraController implements IController {
       })
 
       if (error) return errorResponse(error)
+
+      address = address.toLowerCase().replace(':', '')
 
       const { id, registeredAt, updatedAt, aquarium } = await this.registerCameraUseCase.register({
         address,

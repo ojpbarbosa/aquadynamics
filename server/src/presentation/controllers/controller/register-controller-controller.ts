@@ -15,7 +15,7 @@ export class RegisterControllerController implements IController {
 
   async handle(request: IRequest): Promise<IResponse> {
     try {
-      const { address } = request.headers
+      let { address }: { address: string } = request.headers
       const { aquariumId } = request.body
 
       const error = this.validation.validate({
@@ -24,6 +24,8 @@ export class RegisterControllerController implements IController {
       })
 
       if (error) return errorResponse(error)
+
+      address = address.toLowerCase().replace(':', '')
 
       const { id, status, registeredAt, updatedAt, aquarium, logs } =
         await this.registerControllerUseCase.register({
