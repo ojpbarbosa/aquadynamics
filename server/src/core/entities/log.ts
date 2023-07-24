@@ -4,9 +4,9 @@ export interface Log {
   id: string
   aquariumId: Aquarium['id']
   controllerId: Controller['id']
-  temperature?: number
-  pH?: number
-  lightning?: boolean
+  temperature: number
+  ph: number
+  lightning: boolean
   timestamp: Date
 
   aquarium?: Aquarium

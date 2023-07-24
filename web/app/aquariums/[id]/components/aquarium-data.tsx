@@ -2,16 +2,15 @@
 
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { PiSpinnerGapLight } from 'react-icons/pi'
+import { DateTime } from 'luxon'
 
 import Header from '@/components/layout/header'
 import { Aquarium, Log } from '@/library/types'
-import AquariumControllerStatus from './aquarium-controller-status'
-import AquariumLog from './aquarium-log'
-import AquariumTemperatureChart from './aquarium-temperature-chart'
 import AquariumCamera from './aquarium-camera'
-import { DateTime } from 'luxon'
-import AquariumPHChart from './aquarium-ph-chart'
+import AquariumLog from './aquarium-log'
+import AquariumControllerStatus from './aquarium-controller-status'
+import AquariumTemperatureChart from './aquarium-temperature-chart'
+import AquariumPhChart from './aquarium-ph-chart'
 
 type AquariumDataProps = {
   data: {
@@ -60,7 +59,7 @@ export default function AquariumData({ data }: AquariumDataProps) {
                 <h1 className="text-2xl font-bold">Temperatura</h1>
                 <AquariumTemperatureChart logs={logs} />
                 <h1 className="text-2xl font-bold">pH</h1>
-                <AquariumPHChart logs={logs} />
+                <AquariumPhChart logs={logs} />
               </div>
             )}
           </div>

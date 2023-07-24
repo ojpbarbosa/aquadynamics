@@ -16,7 +16,7 @@ export function getTemperatureMetadata(temperature: number) {
     : { color: '', term: '' }
 }
 
-export function getPHMetadata(pH: number) {
+export function getPhMetadata(pH: number) {
   return pH >= PH_IDEAL_MINIMUM && pH <= PH_IDEAL_MAXIMUM
     ? { color: '#22c55e', term: 'Ideal' }
     : pH < PH_IDEAL_MINIMUM

@@ -5,7 +5,7 @@ export type Log = {
   aquariumId: Aquarium['id']
   controllerId: Controller['id']
   temperature: number
-  pH: number
+  ph: number
   lightning: boolean
   timestamp: Date
 

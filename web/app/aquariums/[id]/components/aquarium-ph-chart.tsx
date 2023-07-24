@@ -11,14 +11,14 @@ import {
 } from 'recharts'
 import { useTheme } from 'next-themes'
 
-import AquariumPHChartTooltip from './aquarium-ph-chart-tooltip'
+import AquariumPhChartTooltip from './aquarium-ph-chart-tooltip'
 import { Log } from '@/library/types'
 
 type AquariumPHChartProps = {
   logs: Log[]
 }
 
-export default function AquariumPHChart({ logs }: AquariumPHChartProps) {
+export default function AquariumPhChart({ logs }: AquariumPHChartProps) {
   const { theme } = useTheme()
 
   return (
@@ -26,7 +26,7 @@ export default function AquariumPHChart({ logs }: AquariumPHChartProps) {
       <AreaChart
         data={logs.map((log) => {
           return {
-            pH: log.pH,
+            ph: log.ph,
             timestamp: log.timestamp
           }
         })}
@@ -36,17 +36,17 @@ export default function AquariumPHChart({ logs }: AquariumPHChartProps) {
           left: 20,
           bottom: 30
         }}
-        syncId="pH"
+        syncId="ph"
       >
         <CartesianGrid strokeDasharray="3 3" color="#262626" />
 
-        <YAxis dataKey="pH" domain={[5, 10]}>
-          <Label value="pH" position="left" angle={-90} dy="-10" />
+        <YAxis dataKey="ph" domain={[5, 10]}>
+          <Label value="ph" position="left" angle={-90} dy="-10" />
         </YAxis>
-        <Tooltip content={<AquariumPHChartTooltip payload={logs[0]} />} />
+        <Tooltip content={<AquariumPhChartTooltip payload={logs[0]} />} />
         <Area
           type="monotone"
-          dataKey="pH"
+          dataKey="ph"
           stroke={theme === 'light' ? '#aaa6fa' : '#8884d8'}
           fill={theme === 'light' ? '#aaa6fa' : '#8884d8'}
         />

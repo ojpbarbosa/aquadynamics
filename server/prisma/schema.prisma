@@ -48,7 +48,7 @@ model Log {
   aquariumId   String
   controllerId String
   temperature  Float
-  pH           Float
+  ph           Float
   lightning    Boolean
   timestamp    DateTime
   aquarium     Aquarium   @relation(fields: [aquariumId], references: [id])

@@ -3,7 +3,7 @@ import { FiHelpCircle } from 'react-icons/fi'
 
 import { WebSocketContext } from '@/contexts/websocket-context'
 import { Log } from '@/library/types'
-import { getPHMetadata, getTemperatureMetadata } from '@/library/metadata'
+import { getPhMetadata, getTemperatureMetadata } from '@/library/metadata'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 type AquariumLogProps = {
@@ -15,7 +15,7 @@ type AquariumLogProps = {
 export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogProps) {
   const { socket } = useContext(WebSocketContext)
 
-  const { temperature, pH } = logs[logs.length - 1]
+  const { temperature, ph } = logs[logs.length - 1]
 
   const onLog = useCallback(
     (data: Log) => {
@@ -67,31 +67,31 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
           }
         />
       )}
-      {pH && (
+      {ph && (
         <AquariumLogField
           fieldName="pH"
-          field={pH.toFixed(1).replace('.', ',')}
+          field={ph.toFixed(1).replace('.', ',')}
           fieldLabel="O pH da água está"
-          fieldMetadata={getPHMetadata(pH)}
+          fieldMetadata={getPhMetadata(ph)}
           className="mr-8 sm:mr-0"
           tooltip={
             <div>
               {[
-                { term: 'Ácido', description: 'pH menor que 6,5', color: '#f59e0b' },
-                { term: 'Ideal', description: 'pH entre 6,5 e 7,5', color: '#22c55e' },
-                { term: 'Alcalino', description: 'pH maior que 7,5', color: '#6366f1' }
-              ].map((pH) => (
-                <dl className="flex gap-x-1" key={pH.term}>
+                { term: 'Ácido', description: 'ph menor que 6,5', color: '#f59e0b' },
+                { term: 'Ideal', description: 'ph entre 6,5 e 7,5', color: '#22c55e' },
+                { term: 'Alcalino', description: 'ph maior que 7,5', color: '#6366f1' }
+              ].map((ph) => (
+                <dl className="flex gap-x-1" key={ph.term}>
                   <dt className="flex items-center gap-x-2">
                     <div
-                      style={{ backgroundColor: pH.color }}
+                      style={{ backgroundColor: ph.color }}
                       className="h-[10px] w-[10px] rounded-full"
                     />
-                    {pH.term}
+                    {ph.term}
                   </dt>
                   <dd className="dark:text-neutral-400 text-neutral-500">
                     {'– '}
-                    {pH.description}
+                    {ph.description}
                   </dd>
                 </dl>
               ))}

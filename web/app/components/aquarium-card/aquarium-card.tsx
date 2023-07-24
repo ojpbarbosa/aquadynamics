@@ -7,7 +7,7 @@ import { Aquarium, Log } from '@/library/types'
 import { WebSocketContext } from '@/contexts/websocket-context'
 import AquariumCardCamera from './aquarium-card-camera'
 import AquariumCardDetail from './aquarium-card-detail'
-import { getPHMetadata, getTemperatureMetadata } from '@/library/metadata'
+import { getPhMetadata, getTemperatureMetadata } from '@/library/metadata'
 
 type AquariumCardProps = {
   aquarium: Aquarium
@@ -20,7 +20,7 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
   let temperatureMetadata, pHData
   if (aquariumLog) {
     temperatureMetadata = getTemperatureMetadata(aquariumLog.temperature)
-    pHData = getPHMetadata(aquariumLog.pH)
+    pHData = getPhMetadata(aquariumLog.ph)
   }
 
   const onLog = useCallback(
@@ -61,8 +61,8 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
               bulletColor={temperatureMetadata!.color!}
             />
             <AquariumCardDetail
-              term="pH"
-              value={aquariumLog.pH ? aquariumLog.pH.toFixed(1).replace('.', ',') : '-'}
+              term="ph"
+              value={aquariumLog.ph ? aquariumLog.ph.toFixed(1).replace('.', ',') : '-'}
               bulletColor={pHData!.color!}
             />
           </dl>

@@ -5,7 +5,7 @@ export type TCreateLogRepositoryDTO = {
   aquariumId: Aquarium['id']
   controllerId: Controller['id']
   temperature: Log['temperature']
-  pH: Log['pH']
+  ph: Log['ph']
   lightning: Log['lightning']
   timestamp: Log['timestamp']
 }
