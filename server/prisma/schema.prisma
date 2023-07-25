@@ -25,7 +25,7 @@ model Camera {
   aquariumId   String   @unique
   registeredAt DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  aquarium     Aquarium @relation(fields: [aquariumId], references: [id])
+  aquarium     Aquarium @relation(fields: [aquariumId], references: [id], onDelete: Cascade)
 
   @@map("cameras")
 }
@@ -38,21 +38,21 @@ model Controller {
   registeredAt DateTime @default(now())
   updatedAt    DateTime @updatedAt
   logs         Log[]
-  aquarium     Aquarium @relation(fields: [aquariumId], references: [id])
+  aquarium     Aquarium @relation(fields: [aquariumId], references: [id], onDelete: Cascade)
 
   @@map("controllers")
 }
 
 model Log {
-  id           String     @id
+  id           String      @id
   aquariumId   String
   controllerId String
   temperature  Float
   ph           Float
   lightning    Boolean
   timestamp    DateTime
-  aquarium     Aquarium   @relation(fields: [aquariumId], references: [id])
-  controller   Controller @relation(fields: [controllerId], references: [id])
+  aquarium     Aquarium    @relation(fields: [aquariumId], references: [id], onDelete: Cascade)
+  controller   Controller? @relation(fields: [controllerId], references: [id], onDelete: Cascade)
 
   @@index([aquariumId])
   @@index([controllerId])

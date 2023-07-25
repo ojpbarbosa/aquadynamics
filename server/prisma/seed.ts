@@ -1,18 +1,15 @@
 import { PrismaClient } from '@prisma/client'
-import { nanoid } from 'nanoid'
+import { nanoIdUniqueIdProvider } from '@infrastructure/providers/security'
 
 const prisma = new PrismaClient()
 
 async function main() {
   await prisma.aquarium.deleteMany()
-  await prisma.camera.deleteMany()
-  await prisma.controller.deleteMany()
-  await prisma.log.deleteMany()
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 6; i++) {
     const aquarium = await prisma.aquarium.create({
       data: {
-        id: nanoid(),
+        id: nanoIdUniqueIdProvider.generate(),
         name: `Aquário ${i + 1}`,
         registeredAt: new Date()
       }
@@ -20,16 +17,6 @@ async function main() {
 
     console.log(aquarium)
   }
-
-  console.log(
-    await prisma.aquarium.create({
-      data: {
-        id: nanoid(),
-        name: `Aquário Teste`,
-        registeredAt: new Date()
-      }
-    })
-  )
 }
 
 main()

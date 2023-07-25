@@ -15,5 +15,5 @@
       "@main/*": ["./src/main/*"]
     }
   },
-  "include": ["./src"]
+  "include": ["./src", "./prisma"]
 }
