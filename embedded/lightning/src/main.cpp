@@ -1,9 +1,7 @@
 // aquadynamics/embedded/lightning
 
 #include <Arduino.h>
-
 #include <SPI.h>
-
 #include "RTClib.h"
 
 #define RELAY_PIN 2 // relay pin definition
@@ -18,15 +16,20 @@
 // RTC object initialization
 RTC_DS1307 rtc;
 
-const int LDR_THRESHOLD = 384; // LDR threshold value
+const int LDR_THRESHOLD = 384;
 
-const int LIGHTNING_START_HOUR = 8;   // start hour for lightning
-const int LIGHTNING_START_MINUTE = 0; // start minute for lightning
-const int LIGHTNING_END_HOUR = 16;    // end hour for lightning
-const int LIGHTNING_END_MINUTE = 0;   // end minute for lightning
+const int LIGHTNING_START_HOUR = 8;
+const int LIGHTNING_START_MINUTE = 0;
+const int LIGHTNING_END_HOUR = 17;
+const int LIGHTNING_END_MINUTE = 0;
 
 bool button_override = false; // button lightning override flag
-String mode = "Auto";         // mode flag
+enum LightningMode
+{
+  AUTO,
+  MANUAL
+};
+LightningMode lightning_mode = AUTO; // lightning mode flag
 
 String to_string(int number)
 {
@@ -61,13 +64,17 @@ void log(String label, String message)
 }
 
 // method to hard reset the relay in order to fix mechanical issues
-void hard_reset_relay(int attempt)
+void hard_reset_relay(int attempt, bool (*is_lightning_wrong)())
 {
   log("WARNING", "Event: Hard reset relay | Attempt: " + String(attempt));
 
   // hard reset the relay - turn it off and then on
   digitalWrite(RELAY_PIN, LOW);
   delay(1000);
+
+  if (!is_lightning_wrong())
+    return;
+
   digitalWrite(RELAY_PIN, HIGH);
   delay(1000);
 }
@@ -85,6 +92,8 @@ bool is_lightning_on()
 // method to verify if the relay is in its wrong state and fix its mechanical issues
 void verify_mechanical_relay_issues(bool (*is_lightning_wrong)())
 {
+  delay(50);
+
   // if relay is in its wrong state
   if (is_lightning_wrong())
   {
@@ -95,8 +104,12 @@ void verify_mechanical_relay_issues(bool (*is_lightning_wrong)())
 
     // while the relay is in its incorrect state
     while (is_lightning_wrong())
+    {
       // hard reset the relay in order to fix mechanical issues
-      hard_reset_relay(reset_attempt++);
+      hard_reset_relay(reset_attempt++, is_lightning_wrong);
+
+      delay(50);
+    }
 
     // print the event to the serial monitor
     log("WARNING", "Event: End relay hard reset");
@@ -112,6 +125,7 @@ bool is_lightning_time()
   int minute = timestamp.minute();
 
   int current_time = hour * 60 + minute;
+
   int lightning_start_time = LIGHTNING_START_HOUR * 60 + LIGHTNING_START_MINUTE;
   int lightning_end_time = LIGHTNING_END_HOUR * 60 + LIGHTNING_END_MINUTE;
 
@@ -120,27 +134,23 @@ bool is_lightning_time()
 
 void setup()
 {
-  // set relay pin as output
   pinMode(RELAY_PIN, OUTPUT);
-  // turn off relay
+  // turn off relay by default
   digitalWrite(RELAY_PIN, HIGH);
 
   // initialize RTC
   rtc.begin();
 
   if (!rtc.isrunning())
-    // set the time to the compile time, if the RTC is not running
+    // set the time to the compile time, if the RTC is not running yet
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
 
-  // set button pin as input
   pinMode(BUTTON_PIN, INPUT);
 
-  // set green LED pin as output
   pinMode(GREEN_LED_PIN, OUTPUT);
   // turn on green LED by default
   digitalWrite(GREEN_LED_PIN, HIGH);
 
-  // set red LED pin as output
   pinMode(RED_LED_PIN, OUTPUT);
   // turn off red LED by default
   digitalWrite(RED_LED_PIN, LOW);
@@ -184,7 +194,7 @@ void loop()
     digitalWrite(RED_LED_PIN, !digitalRead(RED_LED_PIN));
 
     // set the mode flag
-    mode = button_override ? "Manual" : "Auto";
+    lightning_mode = button_override ? MANUAL : AUTO;
 
     // print the button override message
     log("WARNING", "Event: Button override");
@@ -192,8 +202,8 @@ void loop()
 
   String relay_state = digitalRead(RELAY_PIN) ? "OFF" : "ON";
 
-  log("LOG", "Relay state: " + relay_state + " | Mode: " + mode);
+  log("LOG", "Relay state: " + relay_state + " | Mode: " + (lightning_mode == AUTO ? "Auto" : "Manual"));
 
-  // wait for 1 second
-  delay(1000);
+  // wait for 950 milliseconds (the remaining 50 milliseconds are used for the delay deboucing)
+  delay(950);
 }
