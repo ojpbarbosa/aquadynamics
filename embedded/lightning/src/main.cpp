@@ -92,7 +92,7 @@ bool is_lightning_on()
 // method to verify if the relay is in its wrong state and fix its mechanical issues
 void verify_mechanical_relay_issues(bool (*is_lightning_wrong)())
 {
-  delay(50);
+  delay(50); // debounce delay before checking if the lightning is wrong
 
   // if relay is in its wrong state
   if (is_lightning_wrong())
@@ -108,6 +108,8 @@ void verify_mechanical_relay_issues(bool (*is_lightning_wrong)())
       // hard reset the relay in order to fix mechanical issues
       hard_reset_relay(reset_attempt++, is_lightning_wrong);
 
+      // debounce delay before verifying if the
+      // lightning is wrong and hard reseting again
       delay(50);
     }
 
@@ -200,7 +202,7 @@ void loop()
     log("WARNING", "Event: Button override");
   }
 
-  String relay_state = digitalRead(RELAY_PIN) ? "OFF" : "ON";
+  String relay_state = digitalRead(RELAY_PIN) ? "Off" : "On";
 
   log("LOG", "Relay state: " + relay_state + " | Mode: " + (lightning_mode == AUTO ? "Auto" : "Manual"));
 
