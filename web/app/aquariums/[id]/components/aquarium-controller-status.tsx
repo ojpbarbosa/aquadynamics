@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useCallback, useContext, useEffect, useState 
 import { FiHelpCircle } from 'react-icons/fi'
 
 import { WebSocketContext } from '@/contexts/websocket-context'
-import { Aquarium, Controller, ControllerStatus } from '@/library/types'
+import { type Aquarium, type Controller, type ControllerStatus } from '@/library/types'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { controllerStatusesMetadata, getControllerStatusMetadata } from '@/library/metadata'
 

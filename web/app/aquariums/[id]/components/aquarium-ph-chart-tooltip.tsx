@@ -18,7 +18,7 @@ export default function AquariumPhChartTooltip({ active, payload }: ChartTooltip
     <dl className="text-sm md:text-base rounded p-2 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 transition-colors duration-200">
       <dt className="font-semibold">pH</dt>
       <div className="flex items-center gap-x-2">
-        <dd>{log.ph.toFixed(1).replace('.', ',')} °C</dd>
+        <dd>{log.ph.toString().replace('.', ',')}°C</dd>
         <div
           style={{
             backgroundColor: phMetadata.color,

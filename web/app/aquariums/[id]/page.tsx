@@ -1,4 +1,5 @@
-import { Metadata, ResolvingMetadata } from 'next'
+import { type Metadata, type ResolvingMetadata } from 'next'
+import { redirect } from 'next/navigation'
 
 import { getAquarium, getLogs } from '@/library/api'
 import AquariumData from './components/aquarium-data'
@@ -13,14 +14,24 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const aquarium = await getAquarium(id)
 
+  if (aquarium)
+    return {
+      title: 'AquaDynamics | ' + aquarium.name
+    }
+
   return {
-    title: 'AquaDynamics | ' + aquarium.name
+    title: 'AquaDynamics'
   }
 }
 
 export default async function Aquarium({ params: { id } }: AquariumProps) {
-  const aquarium = await getAquarium(id, { include: { controllers: true } })
+  const aquarium = await getAquarium(id, {
+    include: { controllers: true }
+  })
+
+  if (!aquarium) return redirect('/aquariums')
+
   const logs = await getLogs({ where: { aquariumId: id }, order: 'asc', orderBy: 'timestamp' })
 
-  return <AquariumData data={{ aquarium, logs }} />
+  if (aquarium && logs) return <AquariumData data={{ aquarium, logs }} />
 }

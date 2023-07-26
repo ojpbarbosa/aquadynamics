@@ -12,7 +12,7 @@ import {
 import { useTheme } from 'next-themes'
 
 import AquariumPhChartTooltip from './aquarium-ph-chart-tooltip'
-import { Log } from '@/library/types'
+import { type Log } from '@/library/types'
 
 type AquariumPHChartProps = {
   logs: Log[]

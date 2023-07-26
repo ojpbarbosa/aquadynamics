@@ -10,9 +10,9 @@ export function getTemperatureMetadata(temperature: number) {
   return temperature >= TEMPERATURE_IDEAL_MINIMUM && temperature <= TEMPERATURE_IDEAL_MAXIMUM
     ? { color: '#22c55e', term: 'Ideal' }
     : temperature < TEMPERATURE_IDEAL_MINIMUM
-    ? { color: '#3b82f6', term: 'Fria' }
+    ? { color: '#3b82f6', term: 'Baixa' }
     : temperature > TEMPERATURE_IDEAL_MAXIMUM
-    ? { color: '#ef4444', term: 'Quente' }
+    ? { color: '#ef4444', term: 'Alta' }
     : { color: '', term: '' }
 }
 

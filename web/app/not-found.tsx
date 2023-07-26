@@ -1,11 +1,18 @@
 import Header from '@/components/layout/header'
 import { Button } from '@/components/ui/button'
+import { type Metadata } from 'next'
 
 import { Newsreader, Space_Mono } from 'next/font/google'
 import Link from 'next/link'
 
 const newsreader = Newsreader({ style: 'italic', subsets: ['latin'] })
 const spaceMono = Space_Mono({ weight: '400', subsets: ['latin'] })
+
+export function generateMetadata(): Metadata {
+  return {
+    title: 'AquaDynamics - Página não encontrada'
+  }
+}
 
 export default function NotFound() {
   return (
@@ -19,14 +26,14 @@ export default function NotFound() {
               newsreader.className
             }
           >
-            <span className="mr-2 dark:text-neutral-500 text-neutral-400">&ldquo;</span>
+            <span className="mr-1 dark:text-neutral-500 text-neutral-400">&ldquo;</span>
             Perder-se também é caminho.
-            <span className="ml-2 dark:text-neutral-500 text-neutral-400">&rdquo;</span>
+            <span className="ml-1 dark:text-neutral-500 text-neutral-400">&rdquo;</span>
           </h1>
           <p className="font-semibold dark:text-neutral-500 text-neutral-400">
             — Clarice Lispector
           </p>
-          <pre className={'mt-4 text-xl sm:text-2xl ' + spaceMono.className}>404</pre>
+          <pre className={'text-xl sm:text-3xl ' + spaceMono.className}>404</pre>
           <Button
             asChild
             variant="outline"

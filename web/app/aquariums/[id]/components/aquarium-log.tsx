@@ -1,8 +1,9 @@
 import { Dispatch, ReactNode, SetStateAction, useCallback, useContext, useEffect } from 'react'
 import { FiHelpCircle } from 'react-icons/fi'
+import { DateTime } from 'luxon'
 
 import { WebSocketContext } from '@/contexts/websocket-context'
-import { Log } from '@/library/types'
+import { type Log } from '@/library/types'
 import { getPhMetadata, getTemperatureMetadata } from '@/library/metadata'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
@@ -15,7 +16,7 @@ type AquariumLogProps = {
 export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogProps) {
   const { socket } = useContext(WebSocketContext)
 
-  const { temperature, ph } = logs[logs.length - 1]
+  const { id, temperature, ph, lightning, timestamp } = logs[logs.length - 1]
 
   const onLog = useCallback(
     (data: Log) => {
@@ -35,19 +36,19 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
   }, [socket, onLog])
 
   return (
-    <>
-      {temperature && (
+    id && (
+      <>
         <AquariumLogField
           fieldName="Temperatura"
-          field={temperature.toFixed(1).replace('.', ',') + ' °C'}
-          fieldLabel="A temperatura da aguá está"
+          field={temperature.toFixed(2).replace('.', ',') + '°C'}
+          fieldLabel="A temperatura da água está"
           fieldMetadata={getTemperatureMetadata(temperature)}
           tooltip={
             <div>
               {[
-                { term: 'Baixa', description: 'Menor que 20 °C', color: '#3b82f6' },
-                { term: 'Ideal', description: 'Entre 20 °C e 30 °C', color: '#22c55e' },
-                { term: 'Alta', description: 'Maior que 30 °C', color: '#ef4444' }
+                { term: 'Baixa', description: 'Menor que 20°C', color: '#3b82f6' },
+                { term: 'Ideal', description: 'Entre 20°C e 30°C', color: '#22c55e' },
+                { term: 'Alta', description: 'Maior que 30°C', color: '#ef4444' }
               ].map((temperature) => (
                 <dl className="flex gap-x-1" key={temperature.term}>
                   <dt className="flex items-center gap-x-2">
@@ -66,11 +67,10 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
             </div>
           }
         />
-      )}
-      {ph && (
+
         <AquariumLogField
           fieldName="pH"
-          field={ph.toFixed(1).replace('.', ',')}
+          field={ph.toFixed(2).replace('.', ',')}
           fieldLabel="O pH da água está"
           fieldMetadata={getPhMetadata(ph)}
           className="mr-8 sm:mr-0"
@@ -98,8 +98,41 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
             </div>
           }
         />
-      )}
-    </>
+
+        <dl className="flex flex-col gap-y-1">
+          <dt className="dark:text-neutral-400 text-neutral-500 font-semibold">Iluminação</dt>
+          <dd className="flex flex-col">
+            <p className="flex items-center gap-x-2">
+              <div
+                style={{
+                  backgroundColor: lightning ? '#22c55e' : '#737373',
+                  transition: 'ease',
+                  transitionDuration: '1s'
+                }}
+                className="h-[10px] w-[10px] rounded-full"
+              />
+              {lightning ? 'Ligada' : 'Desligada'}
+            </p>
+            <span className="dark:text-neutral-500 text-neutral-400 pt-2">
+              Fotoperíodo de 9 horas, das 8:00 às 17:00
+            </span>
+          </dd>
+        </dl>
+
+        <dl className="flex flex-col gap-y-1">
+          <dt className="dark:text-neutral-400 text-neutral-500 font-semibold">
+            Última atualização
+          </dt>
+          <dd>
+            {DateTime.fromISO(logs[logs.length - 1].timestamp.toString(), {
+              zone: 'America/Sao_Paulo'
+            })
+              .setLocale('pt-BR')
+              .toLocaleString(DateTime.DATETIME_MED)}
+          </dd>
+        </dl>
+      </>
+    )
   )
 }
 
@@ -126,7 +159,7 @@ function AquariumLogField({
       </dd>
       <p className="align-bottom sm:pt-3">
         {fieldLabel}{' '}
-        <span style={{ color: fieldMetadata.color }} className="transition-colors duration-[2s]">
+        <span style={{ color: fieldMetadata.color, transition: 'ease', transitionDuration: '1s' }}>
           {fieldMetadata.term.toLowerCase()}
         </span>{' '}
         <Popover>

@@ -12,7 +12,7 @@ import {
 import { useTheme } from 'next-themes'
 
 import AquariumTemperatureChartTooltip from './aquarium-temperature-chart-tooltip'
-import { Log } from '@/library/types'
+import { type Log } from '@/library/types'
 
 type AquariumTemperatureChartProps = {
   logs: Log[]

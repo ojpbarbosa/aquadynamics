@@ -44,7 +44,9 @@ function convertParametersToQueryString(parameters: GetEntityParameters): string
   return queryString !== '?' ? queryString.slice(0, -1) : ''
 }
 
-export async function getAquariums(parameters: GetEntityParameters = {}): Promise<Aquarium[]> {
+export async function getAquariums(
+  parameters: GetEntityParameters = {}
+): Promise<Aquarium[] | undefined> {
   const queryString = convertParametersToQueryString(parameters)
   const url = `${apiUrl}/aquariums${queryString}`
 
@@ -52,28 +54,34 @@ export async function getAquariums(parameters: GetEntityParameters = {}): Promis
     cache: 'no-cache'
   })
 
-  if (!response.ok) return []
+  if (!response.ok) return undefined
 
   const data = await response.json()
+
+  if (Object.keys(data).length === 0) return undefined
+
   return data
 }
 
 export async function getAquarium(
   id: string,
   parameters: GetEntityParameters = {}
-): Promise<Aquarium> {
+): Promise<Aquarium | undefined> {
   const queryString = convertParametersToQueryString(parameters)
   const url = `${apiUrl}/aquariums/${id}` + queryString
 
   const response = await fetch(url, { cache: 'no-cache' })
 
-  if (!response.ok) return {} as Aquarium
+  if (!response.ok) return undefined
 
   const data = await response.json()
+
+  if (Object.keys(data).length === 0) return undefined
+
   return data
 }
 
-export async function getLogs(parameters: GetEntityParameters = {}): Promise<Log[]> {
+export async function getLogs(parameters: GetEntityParameters = {}): Promise<Log[] | undefined> {
   const queryString = convertParametersToQueryString(parameters)
   const url = `${apiUrl}/logs${queryString}`
 
@@ -81,8 +89,11 @@ export async function getLogs(parameters: GetEntityParameters = {}): Promise<Log
     cache: 'no-cache'
   })
 
-  if (!response.ok) return []
+  if (!response.ok) return undefined
 
   const data = await response.json()
+
+  if (Object.keys(data).length === 0) return undefined
+
   return data
 }
