@@ -1,4 +1,4 @@
-# todo: use external i2c rtc instead of internal https://github.com/mcauser/micropython-tinyrtc-i2c
+# todo: use external i2c rtc instead of internal: https://github.com/mcauser/micropython-tinyrtc-i2c
 from machine import RTC
 
 rtc = RTC()
@@ -13,5 +13,3 @@ print(iso_string)
 
 print("RTC datetime: ", rtc_datetime)
 print("ISO format: ", iso_string)
-
-
