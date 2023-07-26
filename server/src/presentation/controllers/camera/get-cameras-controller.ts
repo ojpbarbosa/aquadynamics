@@ -40,7 +40,7 @@ export class GetCamerasController implements IController {
         return camera
       }) as Camera[]
 
-      return okResponse(cameras.length === 1 && id ? cameras[0] : cameras)
+      return okResponse(id ? (cameras.length === 1 ? cameras[0] : {}) : cameras)
     } catch (error) {
       console.error('ControllerError: ', error)
       return errorResponse(error)
