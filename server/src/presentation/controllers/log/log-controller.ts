@@ -1,9 +1,14 @@
-import { type IController, type IRequest, type IResponse } from '@application/ports/presentation'
+import {
+  IValidator,
+  type IController,
+  type IRequest,
+  type IResponse
+} from '@application/ports/presentation'
 import { type ILogUseCase } from '@core/use-cases'
 import { createdResponse, errorResponse, unauthorizedResponse } from '@presentation/responses'
 
 export class LogController implements IController {
-  constructor(private readonly logUseCase: ILogUseCase) {}
+  constructor(private readonly validation: IValidator, private readonly logUseCase: ILogUseCase) {}
 
   async handle(request: IRequest): Promise<IResponse> {
     try {
@@ -11,8 +16,13 @@ export class LogController implements IController {
 
       if (!controller) return unauthorizedResponse('Unregistered controller')
 
-      const { id: controllerId, aquariumId } = controller
       const { temperature, ph, lightning, timestamp } = request.body
+
+      const error = this.validation.validate({ temperature, ph, lightning })
+
+      if (error) return errorResponse(error)
+
+      const { id: controllerId, aquariumId } = controller
 
       const log = await this.logUseCase.log({
         aquariumId,
@@ -20,7 +30,8 @@ export class LogController implements IController {
         temperature,
         ph,
         lightning,
-        timestamp: new Date(timestamp)
+        // timestamp: new Date(timestamp)
+        timestamp: new Date()
       })
 
       delete log.aquarium
