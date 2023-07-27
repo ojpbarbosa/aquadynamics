@@ -8,8 +8,7 @@ export const logControllerFactory = (): LogController => {
   return new LogController(
     new CompositeValidation([
       new RequiredFieldValidation('temperature'),
-      new RequiredFieldValidation('ph'),
-      new RequiredFieldValidation('lightning')
+      new RequiredFieldValidation('ph')
     ]),
     new LogUseCase(createLogMysqlRepository, nanoIdUniqueIdProvider)
   )
