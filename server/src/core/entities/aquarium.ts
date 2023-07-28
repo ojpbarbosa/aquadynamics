@@ -3,7 +3,7 @@ import { type Log, type Camera, type Controller } from '.'
 export interface Aquarium {
   id: string
   name: string
-  youTubeRecordingsPlaylistId: string
+  playlistId: string
   registeredAt: Date
 
   logs?: Log[]

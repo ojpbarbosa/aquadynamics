@@ -9,13 +9,13 @@ datasource db {
 }
 
 model Aquarium {
-  id                          String      @id
-  name                        String      @unique
-  youTubeRecordingsPlaylistId String      @default("")
-  registeredAt                DateTime    @default(now())
-  camera                      Camera?
-  controller                  Controller?
-  logs                        Log[]
+  id           String      @id
+  name         String      @unique
+  playlistId   String      @default("")
+  registeredAt DateTime    @default(now())
+  camera       Camera?
+  controller   Controller?
+  logs         Log[]
 
   @@map("aquariums")
 }
