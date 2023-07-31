@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-07-31T01:52:34.295Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="8C7lze1qP2a8HK6JvPyF" version="21.6.6" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2023-07-31T01:55:17.360Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="xe8MV1z2pc8WkmdRTNi0" version="21.6.6" type="github" pages="2">
   <diagram name="English" id="EDI8gtddxYuzMvr2oFBx">
-    <mxGraphModel dx="1434" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1195" dy="633" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="WuIyrmQVyQ9rkiY1ifRZ-0" />
         <mxCell id="WuIyrmQVyQ9rkiY1ifRZ-1" parent="WuIyrmQVyQ9rkiY1ifRZ-0" />
@@ -209,14 +209,14 @@
             <mxPoint x="9" y="1" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="BrJOlLW2vVz8gPNd1whd-0" value="Arduino UNO, ESP32&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;and ESP32-CAM devices" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="WuIyrmQVyQ9rkiY1ifRZ-1">
+        <mxCell id="BrJOlLW2vVz8gPNd1whd-0" value="Arduino Uno, ESP32&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;and ESP32-CAM devices" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="WuIyrmQVyQ9rkiY1ifRZ-1">
           <mxGeometry x="184.03" y="630" width="160" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram name="Português" id="byU7topS99mr_FfxvGcA">
-    <mxGraphModel dx="1434" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1304" dy="691" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -419,7 +419,7 @@
             <mxPoint x="9" y="1" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="mgqe8w8JpylWEjAE40u9-1" value="Dispositivos Arduino UNO,&lt;br&gt;ESP32 e ESP32-CAM" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+        <mxCell id="mgqe8w8JpylWEjAE40u9-1" value="Dispositivos Arduino Uno,&lt;br&gt;ESP32 e ESP32-CAM" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="186.01" y="625" width="160" height="40" as="geometry" />
         </mxCell>
         <mxCell id="9bzy8EOZ3xym4p1rz7Lv-29" value="Worker" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://www.pngkey.com/png/full/353-3538564_hard-hat-icon-png-download-blue-collar-worker.png;" parent="1" vertex="1">
