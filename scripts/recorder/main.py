@@ -21,16 +21,17 @@ SOCKET_IO_AQUARIUM_CAMERAS_STREAM_NAMESPACE = '/streaming'
 load_dotenv()
 
 DAILYMOTION_API_KEY = os.environ['DAILYMOTION_API_KEY']
-DAILYMOTION_API_SECRET= os.environ['DAILYMOTION_API_SECRET']
+DAILYMOTION_API_SECRET = os.environ['DAILYMOTION_API_SECRET']
 DAILYMOTION_USERNAME = os.environ['DAILYMOTION_USERNAME']
 DAILYMOTION_PASSWORD = os.environ['DAILYMOTION_PASSWORD']
 
 VIDEO_RECORDING_DURATION = 1 * 60 * 60  # 1 hour
 
-LIGHTNING_START_HOUR = 8
-LIGHTNING_START_MINUTE = 0
-LIGHTNING_END_HOUR = 17
-LIGHTNING_END_MINUTE = 0
+PHOTOPERIODS = [
+    (8, 9),
+    (13, 14),
+    (16, 17)
+]
 
 
 def get_aquariums():
@@ -132,16 +133,6 @@ def record_videos():
     return start_time, end_time
 
 
-def is_within_lightning_time():
-    now = datetime.now().time()
-    lightning_start_time = datetime.now().replace(hour=LIGHTNING_START_HOUR,
-                                                  minute=LIGHTNING_START_MINUTE).time()
-    lightning_end_time = datetime.now().replace(
-        hour=LIGHTNING_END_HOUR, minute=LIGHTNING_END_MINUTE).time()
-
-    return lightning_start_time <= now <= lightning_end_time
-
-
 def upload_videos(start_time, end_time):
     if not os.path.exists('videos'):
         print('[LOG] No videos to upload')
@@ -185,23 +176,43 @@ def upload_videos(start_time, end_time):
             )
 
             print(f'[LOG] Uploaded video {video.get("id")} in ')
-            print(f'[LOG] Connecting video {video_path} to playlist {aquarium_data["playlistId"]}')
+            print(
+                f'[LOG] Connecting video {video_path} to playlist {aquarium_data["playlistId"]}')
 
             d.post(f'/playlist/{playlist_id}/videos/{video.get("id")}')
 
-            print(f'[LOG] Connected video {video.get("id")} to playlist {playlist_id}')
+            print(
+                f'[LOG] Connected video {video.get("id")} to playlist {playlist_id}')
 
 
-if __name__ == '__main__':
+def is_within_any_photoperiod():
+    now = datetime.now().time()
+    for start_hour, end_hour in PHOTOPERIODS:
+        start_time = datetime.now().replace(hour=start_hour, minute=0).time()
+        end_time = datetime.now().replace(hour=end_hour, minute=0).time()
+        if start_time <= now <= end_time:
+            return True
+    return False
+
+
+# todo: change logic
+def record_and_upload_videos():
     while True:
-        if is_within_lightning_time():
+        if is_within_any_photoperiod():
             print('[LOG] Service is running...')
-            # delete_old_videos()
-            # start_time, end_time = record_videos()
-            # print(start_time, end_time)
-            upload_videos(datetime.now(), datetime.now())
+            start_time, end_time = record_videos()
+            print(start_time, end_time)
             sleep(1 * 60 * 60)  # sleep for 1 hour
-
         else:
             print('[LOG] Service is sleeping...')
             sleep(1 * 60)  # sleep for 1 minute
+
+    print('[LOG] Saving recordings...')
+    for aquarium_id in image_frames:
+        create_mp4_video(aquarium_id)
+
+    upload_videos()
+
+
+if __name__ == '__main__':
+    record_and_upload_videos()
