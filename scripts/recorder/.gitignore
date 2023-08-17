@@ -1,5 +1,6 @@
 /venv
 
+/images
 /videos
 
 *.env
