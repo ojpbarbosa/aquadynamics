@@ -18,8 +18,8 @@ SOCKET_IO_AQUARIUM_CAMERAS_STREAM_NAMESPACE = '/streaming'
 PHOTOPERIODS = [
     # (8, 9),
     # (13, 14),
-    (19, 31, 19, 32),
-    (19, 32, 19, 33)
+    (17, 17, 17, 18),
+    (17, 18, 17, 19),
 ]
 
 load_dotenv()
@@ -66,6 +66,7 @@ def on_aquarium_camera_stream_frame(aquarium_id, aquarium_camera_stream_frame):
     except Exception as error:
         print('[ERROR] Error processing the image frame:', error)
 
+
 def create_mp4_video(aquarium_id, start_time, end_time):
     try:
         if aquarium_id not in image_frames or not image_frames[aquarium_id]:
@@ -73,8 +74,8 @@ def create_mp4_video(aquarium_id, start_time, end_time):
                 f'[ERROR] No image frames for aquarium {aquarium_id} to create video')
             return
 
-        start_time_str = f'{start_time.hour:02d}h00'
-        end_time_str = f'{end_time.hour:02d}h00'
+        start_time_str = f'{start_time.hour:02d}h{start_time.minute:02d}'
+        end_time_str = f'{end_time.hour:02d}h{end_time.minute:02d}'
 
         video_filename = os.path.join('videos', f'{aquarium_id}_{start_time_str}_{end_time_str}.mp4')
         height, width, _ = image_frames[aquarium_id][0].shape
@@ -91,6 +92,7 @@ def create_mp4_video(aquarium_id, start_time, end_time):
         print(f'[LOG] {aquarium_id} MP4 video created successfully')
     except Exception as error:
         print('[ERROR] Error creating the MP4 video:', error)
+
 
 def compile_videos(video_paths, output_path):
     if len(video_paths) == 1:
@@ -167,6 +169,90 @@ def record_videos(aquariums, start_time, end_time):
     for aquarium_id in image_frames:
         create_mp4_video(aquarium_id, start_time, end_time)
         image_frames[aquarium_id].clear()
+        generate_and_insert_photoperiod_images(aquarium_id, start_time, end_time)
+
+
+def generate_and_insert_photoperiod_images(aquarium_id, start_time, end_time):
+    photoperiods = []
+    for start_hour, start_minute, end_hour, end_minute in PHOTOPERIODS:
+        start_time = datetime.now().replace(
+            hour=start_hour, minute=start_minute).time()
+        end_time = datetime.now().replace(
+            hour=end_hour, minute=end_minute).time()
+        photoperiods.append((start_time, end_time))
+
+    video_path = os.path.join(
+        'videos', f'compiled_{aquarium_id}.mp4')
+
+    if os.path.exists(video_path):
+        generate_photoperiod_images(video_path, photoperiods)
+        compile_and_insert_photoperiod_images(
+            video_path, aquarium_id, photoperiods)
+
+
+def compile_and_insert_photoperiod_images(video_path, aquarium_id, photoperiods):
+    video_clips = [f for f in os.listdir(os.path.join(os.getcwd(), 'videos')) if f.startswith(aquarium_id)]
+
+    if video_clips:
+        video_clips.sort()
+        compiled_video_path = os.path.join('videos', f'compiled_{aquarium_id}.mp4')
+
+        compile_videos([os.path.join('videos', clip) for clip in video_clips], compiled_video_path)
+
+        for clip in video_clips:
+            os.remove(os.path.join('videos', clip))
+
+        insert_photoperiod_images(compiled_video_path, photoperiods)
+
+        upload_video(compiled_video_path, aquarium_id)
+
+        os.remove(compiled_video_path)
+    else:
+        print(
+            f'[LOG] No video clips to compile and insert photoperiod images for aquarium {aquarium_id}')
+
+
+def insert_photoperiod_images(video_path, photoperiods):
+    video = cv2.VideoCapture(video_path)
+    frame_rate = int(video.get(cv2.CAP_PROP_FPS))
+    frame_width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frame_height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    frames_per_photoperiod = frame_rate * 10  # 10 seconds per photoperiod
+
+    output_frames = []
+    current_photoperiod_index = 0
+    current_photoperiod_frame = 0
+
+    while True:
+        ret, frame = video.read()
+        if not ret:
+            break
+
+        output_frames.append(frame)
+
+        if current_photoperiod_frame < frames_per_photoperiod:
+            current_photoperiod_frame += 1
+        else:
+            current_photoperiod_index += 1
+            current_photoperiod_frame = 0
+
+            if current_photoperiod_index < len(photoperiods):
+                photoperiod_image_path = os.path.join('images', f'photoperiod_{current_photoperiod_index}.png')
+                photoperiod_image = cv2.imread(photoperiod_image_path)
+
+                for _ in range(frames_per_photoperiod):
+                    output_frames.append(photoperiod_image)
+
+    video.release()
+
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    video_writer = cv2.VideoWriter(
+        video_path, fourcc, frame_rate, (frame_width, frame_height))
+
+    for frame in output_frames:
+        video_writer.write(frame)
+
+    video_writer.release()
 
 
 def compile_and_upload_videos():
@@ -202,6 +288,7 @@ def compile_video_and_upload(aquarium_id, photoperiods):
         print(
             f'[LOG] No video clips to compile and upload for aquarium {aquarium_id}')
 
+
 def generate_photoperiod_images(video_path, photoperiods):
     video = cv2.VideoCapture(video_path)
     frame_rate = int(video.get(cv2.CAP_PROP_FPS))
@@ -213,8 +300,11 @@ def generate_photoperiod_images(video_path, photoperiods):
         start_frame = i * frames_per_photoperiod
         end_frame = (i + 1) * frames_per_photoperiod
 
-        output_image_path = os.path.join('images', f'photoperiod_{i}.png')
-        output_video_path = os.path.join('videos', f'photoperiod_{i}.mp4')
+        start_time_str = f'{start_time.hour:02d}h{start_time.minute:02d}'
+        end_time_str = f'{end_time.hour:02d}h{end_time.minute:02d}'
+        base_path = f'photoperiod_{start_time_str}_{end_time_str}'
+        output_image_path = os.path.join('images', base_path + '.png')
+        output_video_path = os.path.join('videos', base_path + '.mp4')
 
         generate_image_with_text(output_image_path, start_time, end_time)
 
@@ -278,5 +368,10 @@ def upload_video(video_path, aquarium_id):
     except Exception as error:
         print('[ERROR] Error uploading video:', error)
 
+
 if __name__ == '__main__':
-    record_and_upload_videos()
+    for dir in ['videos', 'images']:
+        if not os.path.exists(dir):
+            os.mkdir(dir)
+
+    # record_and_upload_videos()
