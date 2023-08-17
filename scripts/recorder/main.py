@@ -232,30 +232,30 @@ def upload_video(video_path, aquarium_id):
     try:
         aquarium = get_aquarium(aquarium_id)
 
-        # title = f'{aquarium["name"]} - {datetime.now().strftime("%d/%m/%Y")}'
+        title = f'{aquarium["name"]} - {datetime.now().strftime("%d/%m/%Y")}'
 
-        # url = d.upload(video_path)
-        # video = d.post('/me/videos',
-        #                {
-        #                    'url': url,
-        #                    'title': title,
-        #                    'published': 'true',
-        #                    'channel': 'animals',
-        #                    'is_created_for_kids': 'false',
-        #                }
-        #                )
+        url = d.upload(video_path)
+        video = d.post('/me/videos',
+                       {
+                           'url': url,
+                           'title': title,
+                           'published': 'true',
+                           'channel': 'animals',
+                           'is_created_for_kids': 'false',
+                       }
+                       )
 
-        # video_id = video.get('id')
-        # playlist_id = aquarium['playlistId']
+        video_id = video.get('id')
+        playlist_id = aquarium['playlistId']
 
-        # print(f'[LOG] Uploaded video {video_id}')
-        # print(
-        #     f'[LOG] Connecting compiled video {video_path} to playlist {playlist_id}')
+        print(f'[LOG] Uploaded video {video_id}')
+        print(
+            f'[LOG] Connecting compiled video {video_path} to playlist {playlist_id}')
 
-        # d.post(f'/playlist/{playlist_id}/videos/{video_id}')
+        d.post(f'/playlist/{playlist_id}/videos/{video_id}')
 
-        # print(
-        #     f'[LOG] Connected video {video_id} to playlist {playlist_id}')
+        print(
+            f'[LOG] Connected video {video_id} to playlist {playlist_id}')
     except Exception as error:
         print('[ERROR] Error uploading video', error)
 
