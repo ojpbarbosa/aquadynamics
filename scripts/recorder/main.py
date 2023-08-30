@@ -15,12 +15,12 @@ CORE_BASE_URL = 'https://aquadynamics-core.onrender.com'
 SOCKET_IO_PORT = 443
 SOCKET_IO_AQUARIUM_CAMERAS_STREAM_NAMESPACE = '/streaming'
 
-AQUARIUM_CAMERAS_STREAM_AVERAGE_FPS = 14
+AQUARIUM_CAMERAS_STREAM_AVERAGE_FPS = 10
 
 PHOTOPERIODS = [
     (8, 0, 9, 0),
     (12, 0, 13, 0),
-    (16, 0, 17, 0),
+    (16, 0, 17, 0)
 ]
 
 load_dotenv()
@@ -133,11 +133,11 @@ def record_and_upload_videos():
     aquariums = get_aquariums()
 
     while True:
-        now = datetime.now().time()
-
         for photoperiod in PHOTOPERIODS:
             start_hour, start_minute, end_hour, end_minute = photoperiod
+            
             start_time = datetime.now().replace(hour=start_hour, minute=start_minute).time()
+            now = datetime.now().time()
             end_time = datetime.now().replace(hour=end_hour, minute=end_minute).time()
 
             if start_time <= now <= end_time:
