@@ -1,6 +1,7 @@
 import { Aquarium, Log } from './types'
 
-const API_URL = 'https://aquadynamics-core-dipb.onrender.com/api'
+export const CORE_URL = 'https://aquadynamics-core-dipb.onrender.com'
+const API_URL = CORE_URL + '/api'
 
 type GetEntityParameters = {
   orderBy?: string
