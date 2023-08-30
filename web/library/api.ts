@@ -1,6 +1,6 @@
 import { Aquarium, Log } from './types'
 
-const apiUrl = 'https://aquadynamics-core.onrender.com/api'
+const API_URL = 'https://aquadynamics-core-dipb.onrender.com/api'
 
 type GetEntityParameters = {
   orderBy?: string
@@ -48,7 +48,7 @@ export async function getAquariums(
   parameters: GetEntityParameters = {}
 ): Promise<Aquarium[] | undefined> {
   const queryString = convertParametersToQueryString(parameters)
-  const url = `${apiUrl}/aquariums${queryString}`
+  const url = `${API_URL}/aquariums${queryString}`
 
   const response = await fetch(url, {
     cache: 'no-cache'
@@ -68,7 +68,7 @@ export async function getAquarium(
   parameters: GetEntityParameters = {}
 ): Promise<Aquarium | undefined> {
   const queryString = convertParametersToQueryString(parameters)
-  const url = `${apiUrl}/aquariums/${id}` + queryString
+  const url = `${API_URL}/aquariums/${id}` + queryString
 
   const response = await fetch(url, { cache: 'no-cache' })
 
@@ -83,7 +83,7 @@ export async function getAquarium(
 
 export async function getLogs(parameters: GetEntityParameters = {}): Promise<Log[] | undefined> {
   const queryString = convertParametersToQueryString(parameters)
-  const url = `${apiUrl}/logs${queryString}`
+  const url = `${API_URL}/logs${queryString}`
 
   const response = await fetch(url, {
     cache: 'no-cache'
