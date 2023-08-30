@@ -3,8 +3,10 @@
 import { createContext, ReactNode } from 'react'
 import io from 'socket.io-client'
 
-export const socket = io('wss://aquadynamics-core.onrender.com')
-export const streaming = io('wss://aquadynamics-core.onrender.com/streaming')
+import { CORE_URL } from '@/library/api'
+
+export const socket = io('wss://' + CORE_URL)
+export const streaming = io('wss://' + CORE_URL + '/streaming')
 export const WebSocketContext = createContext({ socket, streaming })
 
 type WebSocketProviderProps = {
