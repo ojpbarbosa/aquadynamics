@@ -91,7 +91,9 @@ export default function AquariumCamera({ aquariumId }: AquariumCameraProps) {
           </div>
         </FullScreen>
       ) : (
-        <PiSpinnerGapLight className="text-4xl animate-spin" />
+        <video controls autoPlay muted playsInline loop className="w-full h-full">
+          <source src={`/videos/recordings/${aquariumId}.mp4`} type="video/mp4" />
+        </video>
       )}
     </div>
   )

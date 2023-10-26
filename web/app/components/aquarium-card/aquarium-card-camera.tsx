@@ -33,7 +33,9 @@ export default function AquariumCardCamera({ aquariumId }: AquariumCardCameraPro
         // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
         <img className="w-full h-full object-cover rounded-t" src={aquariumCameraFrame} />
       ) : (
-        <FaVideoSlash className="text-4xl" />
+        <video autoPlay muted playsInline loop className="w-full h-full">
+          <source src={`/videos/recordings/${aquariumId}.mp4`} type="video/mp4" />
+        </video>
       )}
     </div>
   )
