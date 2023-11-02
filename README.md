@@ -14,7 +14,7 @@
 # AquaDynamics
 AquaDynamics is an aquarium automation solution using Arduino, ESP32, IoT, and embedded developed as a scientific initiation research.
 
-## About
+## Abstract
 The automation, monitoring, and remote control of aquariums to study the reproduction of Betta spp. represents an innovative and technologically advanced approach to scientific research through the use of technology. In this context, the integration of microcontrollers and microcomputers plays a key role. This research project has implemented a system that uses microcontrollers, such as Arduino Uno, ESP32, and ESP32-CAM, together with modern programming techniques and tools, such as Node.js, C, C++, and MicroPython, in order to establish a modern way for researchers to study the reproduction of this species. The choice of technologies employed makes it possible to automate critical tasks, accurately monitor the parameters of the aquatic environment, and remotely control the system. In addition, the front-end web application developed with React.js through Next.js and WebSocket communication plays a central role in the user interface, making the system accessible and interactive. Explore the AquaDyanamics architecture below or read the [article](https://drive.google.com/file/d/16vz3WENcYiL0AsAz-VDRkILq1R-d74Ie/view) for more details.
 
 ## Architecture
