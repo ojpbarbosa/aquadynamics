@@ -8,7 +8,6 @@
   <a href="https://github.com/ojpbarbosa/aquadynamics/commits">
     <img src="https://img.shields.io/github/last-commit/ojpbarbosa/aquadynamics.svg" alt="Last commit">
   </a>
-  <img src="https://img.shields.io/github/license/ojpbarbosa/aquadynamics.svg" alt="License">
 </div>
 
 # AquaDynamics
