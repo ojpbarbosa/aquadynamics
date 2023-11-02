@@ -3,12 +3,16 @@ import { Inter } from 'next/font/google'
 
 import Footer from '@/components/layout/footer'
 import Providers from './providers'
+
 import './globals.css'
+
+import Icon from '@/public/favicon.ico'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'AquaDynamics'
+  title: 'AquaDynamics',
+  icons: [{ rel: 'icon', url: Icon.src }]
 }
 
 type RootLayoutProps = {
