@@ -38,7 +38,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         now = chrono::Local::now();
         println!(
-            "Succesfully fetched {} logs at {} ({} ms)",
+            "Succesfully fetched {} logs at {} ({} ms)\n",
             logs.len(),
             now.format("%H:%M:%S").to_string(),
             elapsed_time.as_millis()
