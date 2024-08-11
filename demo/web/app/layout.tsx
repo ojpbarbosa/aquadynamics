@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import { Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/react'
 
 import Footer from '@/components/layout/footer'
 import Providers from './providers'
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Banner />
         <Providers>{children}</Providers>
         <Footer />
+        <Analytics />
       </body>
     </html>
   )
