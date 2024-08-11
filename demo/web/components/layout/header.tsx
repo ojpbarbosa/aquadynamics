@@ -41,14 +41,14 @@ export default function Header({ subtreeName, subtreeUrl, showSubtreeSkeleton }:
               </Link>
             </>
           )}
+          {showSubtreeSkeleton && (
+            <>
+              <span className="px-3 text-neutral-300 dark:text-neutral-600">/</span>
+              <div className="h-8 bg-neutral-200 block dark:bg-neutral-800 rounded-sm w-40 animate-pulse" />
+            </>
+          )}
         </div>
         <ThemeSelector />
-        {showSubtreeSkeleton && (
-          <>
-            <span className="px-3 text-neutral-300 dark:text-neutral-600">/</span>
-            <div className="h-8 bg-neutral-200 block dark:bg-neutral-800 rounded-sm w-40 animate-pulse" />
-          </>
-        )}
       </div>
     </header>
   )

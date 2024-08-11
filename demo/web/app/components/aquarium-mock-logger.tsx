@@ -6,7 +6,9 @@ import { log } from '../actions'
 export default function AquariumMockLogger() {
   useEffect(() => {
     const interval = setInterval(async () => {
-      await log()
+      try {
+        await log()
+      } catch {}
     }, 15 * 1000)
 
     return () => clearInterval(interval)

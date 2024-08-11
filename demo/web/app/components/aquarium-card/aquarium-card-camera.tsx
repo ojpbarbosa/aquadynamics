@@ -34,7 +34,7 @@ export default function AquariumCardCamera({ aquariumId }: AquariumCardCameraPro
           <source src={`/videos/recordings/${aquariumId}.mp4`} type="video/mp4" />
         </video>
       ) : (
-        <BsCameraVideoOffFill className="text-2xl" />
+        <BsCameraVideoOffFill className="text-3xl" />
       )}
     </div>
   )
