@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model Aquarium {
+  id           String      @id
+  name         String      @unique
+  registeredAt DateTime    @default(now())
+  controller   Controller?
+  logs         Log[]
+
+  @@map("aquariums")
+}
+
+enum ControllerStatus {
+  unknown
+  booting
+  idling
+  logging
+  restarting
+  crashed
+}
+
+model Controller {
+  id           String           @id
+  aquariumId   String           @unique
+  status       ControllerStatus
+  registeredAt DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  logs         Log[]
+  aquarium     Aquarium         @relation(fields: [aquariumId], references: [id], onDelete: Cascade)
+
+  @@map("controllers")
+}
+
+model Log {
+  id           String      @id
+  aquariumId   String
+  controllerId String
+  temperature  Float
+  ph           Float
+  lightning    Boolean
+  timestamp    DateTime
+  aquarium     Aquarium    @relation(fields: [aquariumId], references: [id], onDelete: Cascade)
+  controller   Controller? @relation(fields: [controllerId], references: [id], onDelete: Cascade)
+
+  @@index([aquariumId])
+  @@index([controllerId])
+  @@map("logs")
+}
