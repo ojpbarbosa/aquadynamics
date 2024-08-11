@@ -1,4 +1,4 @@
-import { Aquarium, Log } from './types'
+import { Aquarium, ControllerStatus, Log } from './types'
 
 export const CORE_URL = 'aquadynamics-core-demo.onrender.com'
 const API_URL = 'https://' + CORE_URL + '/api'
@@ -97,4 +97,34 @@ export async function getLogs(parameters: GetEntityParameters = {}): Promise<Log
   if (Object.keys(data).length === 0) return []
 
   return data
+}
+
+export async function setControllerStatus(controllerId: string, status: ControllerStatus) {
+  const url = `${API_URL}/controllers/${controllerId}`
+
+  const response = await fetch(url, {
+    body: JSON.stringify({ status }),
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+}
+
+export async function logData(
+  temperature: number,
+  ph: number,
+  lightning: boolean,
+  aquariumId: string,
+  controllerId: string
+) {
+  const url = `${API_URL}/logs`
+
+  const response = await fetch(url, {
+    body: JSON.stringify({ temperature, ph, lightning, aquariumId, controllerId }),
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
 }

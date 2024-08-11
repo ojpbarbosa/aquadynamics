@@ -16,9 +16,9 @@ export default function AquariumTemperatureChartTooltip({ active, payload }: Cha
 
   return active && temperatureMetadata ? (
     <dl className="text-sm sm:text-md rounded p-2 bg-neutral-300/60 dark:bg-neutral-800/70 backdrop-blur filter dark:text-neutral-100 text-neutral-900 border justify-between border-gray-300 dark:border-neutral-800 transition-colors duration-200">
-      <dt className="font-semibold">Temperatura</dt>
+      <dt className="font-semibold">Temperature</dt>
       <div className="flex items-center gap-x-2">
-        <dd>{log.temperature.toString().replace('.', ',')}°C</dd>
+        <dd>{Math.floor(parseFloat(log.temperature) * 100) / 100}°C</dd>
         <div
           style={{
             backgroundColor: temperatureMetadata.color,
@@ -33,7 +33,7 @@ export default function AquariumTemperatureChartTooltip({ active, payload }: Cha
         {DateTime.fromISO(log.timestamp.toString(), {
           zone: 'America/Sao_Paulo'
         })
-          .setLocale('pt-BR')
+          .setLocale('en-UK')
           .toLocaleString(DateTime.DATETIME_MED)}
       </p>
     </dl>

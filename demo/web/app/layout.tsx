@@ -9,6 +9,7 @@ import './globals.css'
 
 import Icon from '@/public/favicon.ico'
 import Banner from '@/components/layout/banner'
+import AquariumMockLogger from './components/aquarium-mock-logger'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Providers>{children}</Providers>
         <Footer />
         <Analytics />
+        <AquariumMockLogger />
       </body>
     </html>
   )

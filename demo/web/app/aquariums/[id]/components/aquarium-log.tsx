@@ -39,16 +39,16 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
     id && (
       <>
         <AquariumLogField
-          fieldName="Temperatura"
-          field={temperature.toFixed(2).replace('.', ',') + '°C'}
-          fieldLabel="A temperatura da água está"
+          fieldName="Temperature"
+          field={temperature.toFixed(1) + '°C'}
+          fieldLabel="The water temperature is"
           fieldMetadata={getTemperatureMetadata(temperature)}
           tooltip={
             <div>
               {[
-                { term: 'Baixa', description: 'Menor que 20°C', color: '#3b82f6' },
-                { term: 'Ideal', description: 'Entre 20°C e 30°C', color: '#22c55e' },
-                { term: 'Alta', description: 'Maior que 30°C', color: '#ef4444' }
+                { term: 'Low', description: 'Above 20°C', color: '#3b82f6' },
+                { term: 'Ideal', description: 'Between 20°C and 30°C', color: '#22c55e' },
+                { term: 'High', description: 'Below 30°C', color: '#ef4444' }
               ].map((temperature) => (
                 <dl className="flex gap-x-1" key={temperature.term}>
                   <dt className="flex items-center gap-x-2">
@@ -58,8 +58,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
                     />
                     {temperature.term}
                   </dt>
-                  <dd className="text-neutral-400">
-                    {'– '}
+                  <dd className="dark:text-neutral-400 text-neutral-500">
                     {temperature.description}
                   </dd>
                 </dl>
@@ -70,16 +69,16 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
 
         <AquariumLogField
           fieldName="pH"
-          field={ph.toFixed(2).replace('.', ',')}
-          fieldLabel="O pH da água está"
+          field={ph.toFixed(1)}
+          fieldLabel="The water pH is"
           fieldMetadata={getPhMetadata(ph)}
           className="mr-8 sm:mr-0"
           tooltip={
             <div>
               {[
-                { term: 'Ácido', description: 'ph menor que 6,5', color: '#f59e0b' },
-                { term: 'Ideal', description: 'ph entre 6,5 e 7,5', color: '#22c55e' },
-                { term: 'Alcalino', description: 'ph maior que 7,5', color: '#6366f1' }
+                { term: 'Acidic', description: 'pH below 6.5', color: '#f59e0b' },
+                { term: 'Ideal', description: 'pH between 6.5 and 7.5', color: '#22c55e' },
+                { term: 'Alkaline', description: 'pH above 7.5', color: '#6366f1' }
               ].map((ph) => (
                 <dl className="flex gap-x-1" key={ph.term}>
                   <dt className="flex items-center gap-x-2">
@@ -89,10 +88,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
                     />
                     {ph.term}
                   </dt>
-                  <dd className="dark:text-neutral-400 text-neutral-500">
-                    {'– '}
-                    {ph.description}
-                  </dd>
+                  <dd className="dark:text-neutral-400 text-neutral-500">{ph.description}</dd>
                 </dl>
               ))}
             </div>
@@ -100,7 +96,7 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
         />
 
         <dl className="flex flex-col gap-y-1">
-          <dt className="dark:text-neutral-400 text-neutral-500 font-semibold">Iluminação</dt>
+          <dt className="dark:text-neutral-400 text-neutral-500 font-semibold">Lightning</dt>
           <dd className="flex flex-col">
             <p className="flex items-center gap-x-2">
               <div
@@ -111,23 +107,21 @@ export default function AquariumLog({ aquariumId, logs, setLogs }: AquariumLogPr
                 }}
                 className="h-[10px] w-[10px] rounded-full"
               />
-              {lightning ? 'Ligada' : 'Desligada'}
+              {lightning ? 'On' : 'Off'}
             </p>
             <span className="dark:text-neutral-500 text-neutral-400 pt-2">
-              Fotoperíodo de 9 horas, das 8:00 às 17:00
+              9-hour photoperiod, from 08:00 to 17:00.
             </span>
           </dd>
         </dl>
 
         <dl className="flex flex-col gap-y-1">
-          <dt className="dark:text-neutral-400 text-neutral-500 font-semibold">
-            Última atualização
-          </dt>
+          <dt className="dark:text-neutral-400 text-neutral-500 font-semibold">Updated at</dt>
           <dd>
             {DateTime.fromISO(logs[logs.length - 1].timestamp.toString(), {
               zone: 'America/Sao_Paulo'
             })
-              .setLocale('pt-BR')
+              .setLocale('en-UK')
               .toLocaleString(DateTime.DATETIME_MED)}
           </dd>
         </dl>
@@ -172,10 +166,7 @@ function AquariumLogField({
               className
             }
           >
-            <p className="font-semibold">
-              {fieldName}
-              <span className="dark:text-neutral-400 text-neutral-500">{' – '} Legenda</span>
-            </p>
+            <p className="font-semibold">{fieldName}</p>
             {tooltip}
           </PopoverContent>
         </Popover>

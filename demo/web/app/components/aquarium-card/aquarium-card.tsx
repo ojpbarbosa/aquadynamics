@@ -49,18 +49,20 @@ export default function AquariumCard({ aquarium: { id, name, logs } }: AquariumC
         {log ? (
           <dl className="font-normal grid grid-cols-2 2xl:grid-cols-3 gap-y-1 sm:gap-y-2 gap-x-4">
             <AquariumCardDetail
-              term="Lights"
+              term="Lightning"
               value={log.lightning ? 'On' : 'Off'}
               bulletColor={log.lightning ? '#22c55e' : '#737373'}
             />
             <AquariumCardDetail
               term="Temperature"
-              value={`${log.temperature ? log.temperature.toFixed(2).replace('.', ',') : '-'}°C`}
+              value={`${
+                log.temperature ? (Math.floor(log.temperature * 100) / 100).toString() : '-'
+              }°C`}
               bulletColor={temperatureMetadata!.color!}
             />
             <AquariumCardDetail
               term="pH"
-              value={log.ph ? log.ph.toFixed(2).replace('.', ',') : '-'}
+              value={log.ph ? (Math.floor(log.ph * 100) / 100).toString() : '-'}
               bulletColor={pHData!.color!}
             />
           </dl>
