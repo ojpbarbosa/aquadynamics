@@ -12,17 +12,11 @@ export class LogController implements IController {
 
   async handle(request: IRequest): Promise<IResponse> {
     try {
-      const { controller } = request
-
-      if (!controller) return unauthorizedResponse('Unregistered controller')
-
-      const { temperature, ph, lightning } = request.body
+      const { temperature, ph, lightning, controllerId, aquariumId } = request.body
 
       const error = this.validation.validate({ temperature, ph, lightning })
 
       if (error) return errorResponse(error)
-
-      const { id: controllerId, aquariumId } = controller
 
       const log = await this.logUseCase.log({
         aquariumId,

@@ -23,6 +23,8 @@ export class SetControllerStatusController implements IController {
       const { id } = request.parameters
       const { status } = request.body
 
+      console.log(id, status)
+
       const error = this.validator.validate({
         id,
         status
