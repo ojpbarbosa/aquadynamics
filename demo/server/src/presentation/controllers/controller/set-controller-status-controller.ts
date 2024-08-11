@@ -20,12 +20,8 @@ export class SetControllerStatusController implements IController {
 
   async handle(request: IRequest): Promise<IResponse> {
     try {
-      let { controller } = request
-
-      if (!controller) return unauthorizedResponse('Unregistered controller')
-
-      const { id } = controller
-      const { status } = request.query
+      const { id } = request.parameters
+      const { status } = request.body
 
       const error = this.validator.validate({
         id,
@@ -34,9 +30,7 @@ export class SetControllerStatusController implements IController {
 
       if (error) return errorResponse(error)
 
-      if (controller.status === status) return notModifiedResponse()
-
-      controller = await this.setStatusControllerUseCase.setStatus({
+      const controller = await this.setStatusControllerUseCase.setStatus({
         id,
         status
       })

@@ -20,7 +20,7 @@ export const setUpAfterEntityControllerMiddlewareRoutes = (
   )
 
   router.patch(
-    '/api/controllers',
+    '/api/controllers/:id',
     adaptController(
       setControllerStatusControllerFactory(),
       webSocketEmitEventMiddlewareFactory('controller_status_update', webSocketServer)
